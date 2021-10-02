@@ -60,24 +60,24 @@
 <style>
     .custom-tags>div a{
         background-color: rgba(231, 231, 231, 0.897);
-        padding: 3px;
-        border-radius: 5px;
+        padding: 2px 8px;
+        border-radius: 3px;
     }
     .custom-social-link-box{
         text-align: center;
     }
     .custom-social-link{
-        font-size: 2rem;
+        font-size: 2em;
         margin-right: 15px;
-        color: rgb(83, 79, 79);
+        color: rgb(104, 98, 98);
     }
     .custom-profile-imgbox{
         width: 100%;
         height: 100%;
     }
     .custom-profile-img{
-        width: 100%;
-        height: 100%;
+        width: 90%;
+        height: 80%;
         border: 1px solid lightgray;
         border-radius: 100%;
         opacity: 0.8;
@@ -101,7 +101,7 @@
     }
 
     main{
-        margin-top: 50px;
+        margin-top: 2%;
     }
     header .header {
         height: 100px;
@@ -111,7 +111,20 @@
     .post-summary{
         cursor: pointer;
     }
+
+    .sidebar{
+        padding: 0 !important;
+    }
+
+    .sidebar-item>h3{
+        border-bottom: 1px solid lightgray;
+        margin-bottom: 10px;
+    }
     
+    .container-lg{
+        max-width: 1200px !important;
+    }
+
 </style>
 
 </head>
@@ -146,7 +159,7 @@
     <main>
         <div class="container-lg clearfix">
             
-            <div class="col-12 col-md-9 float-left content custom-content">
+            <div class="col-12 col-md-12 float-left content custom-content">
                 
 <article>
     
@@ -350,7 +363,7 @@
     
     
     <div class="sidebar-item sidebar-toc">
-        <h3>Table of Contents</h3><nav id="TableOfContents">
+        <nav id="TableOfContents">
   <ul>
     <li><a href="#1-didependency-injection-의존성-주입">1. DI(Dependency Injection, 의존성 주입)</a></li>
     <li><a href="#2-iocinversion-of-conrol">2. IoC(Inversion of Conrol)</a></li>
@@ -362,12 +375,9 @@
 
         </div>
         <div class="btn">
-    <div class="btn-menu custom-btn-menu" id="btn-menu">
-        <i class="fas fa-arrow-circle-up"></i>
-    </div>
     
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
     </div>
     
     <div class="btn-scroll-top">
