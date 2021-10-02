@@ -19,10 +19,6 @@
 <title>Spring DI와 IoC - Junu-Devlog</title>
 
 
-<meta name="author" content="junu0516" />
-
-
-<meta name="description" content="배운 것을 기록하고 공유합니다." />
 
 
 <meta name="keywords" content="spring, java" />
@@ -31,7 +27,7 @@
 <meta property="og:title" content="Spring DI와 IoC" />
 <meta name="twitter:title" content="Spring DI와 IoC" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://junu0516.github.io/2021/09/spring-di%EC%99%80-ioc/" /><meta property="og:description" content="Spring DI와 IoC의 개념에 대해 알아보자.
+<meta property="og:url" content="https://junu0516.github.io/posts/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%EC%9D%98_di%EC%99%80_ioc/" /><meta property="og:description" content="Spring DI와 IoC의 개념에 대해 알아보자.
 1. DI(Dependency Injection, 의존성 주입) DI(Dependency Injection) 은 스프링 프레임워크의 의존성 주입을 일컫는 말로, 특정 객체를 미리 생성 후 주입하는 것을 말한다." />
 <meta name="twitter:description" content="Spring DI와 IoC의 개념에 대해 알아보자.
 1. DI(Dependency Injection, 의존성 주입) DI(Dependency Injection) 은 스프링 프레임워크의 의존성 주입을 일컫는 말로, 특정 객체를 미리 생성 후 주입하는 것을 말한다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2021-09-20T00:00:00+00:00" /><meta property="article:modified_time" content="2021-09-20T00:00:00+00:00" />
@@ -60,6 +56,63 @@
 
 
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<style>
+    .custom-tags>div a{
+        background-color: rgba(231, 231, 231, 0.897);
+        padding: 3px;
+        border-radius: 5px;
+    }
+    .custom-social-link-box{
+        text-align: center;
+    }
+    .custom-social-link{
+        font-size: 2rem;
+        margin-right: 15px;
+        color: rgb(83, 79, 79);
+    }
+    .custom-profile-imgbox{
+        width: 100%;
+        height: 100%;
+    }
+    .custom-profile-img{
+        width: 100%;
+        height: 100%;
+        border: 1px solid lightgray;
+        border-radius: 100%;
+        opacity: 0.8;
+    }
+
+    .post+.post{
+        border-top: 0.5px solid rgb(226, 226, 226) !important;
+    }
+
+    .custom-content{
+        margin-right: 5%;
+    }
+
+    header{
+        background-color: rgba(232, 247, 252, 0.89);
+        border-bottom: 0px !important;
+    }
+
+    .custom-header{
+        height: 30%;
+    }
+
+    main{
+        margin-top: 50px;
+    }
+    header .header {
+        height: 100px;
+        padding: 1.2rem 1rem 1rem 1.22rem;
+    }
+
+    .post-summary{
+        cursor: pointer;
+    }
+    
+</style>
 
 </head>
 
@@ -83,7 +136,7 @@
 
     <header>
     <div class="container-lg clearfix">
-        <div class="col-12 header">
+        <div class="header">
             <a class="title-main" href="https://junu0516.github.io/">Junu-Devlog</a>
             
         </div>
@@ -93,12 +146,12 @@
     <main>
         <div class="container-lg clearfix">
             
-            <div class="col-12 col-md-9 float-left content">
+            <div class="col-12 col-md-9 float-left content custom-content">
                 
 <article>
     
     <h2 class="post-item post-title">
-        <a href="https://junu0516.github.io/2021/09/spring-di%EC%99%80-ioc/">Spring DI와 IoC</a>
+        <a href="https://junu0516.github.io/posts/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%EC%9D%98_di%EC%99%80_ioc/">Spring DI와 IoC</a>
     </h2>
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-20</span>
@@ -111,10 +164,10 @@
     
     <div class="post-content markdown-body">
         <p>Spring DI와 IoC의 개념에 대해 알아보자.</p>
-<!-- raw HTML omitted -->
+<br>  
 <p><img class="img-zoomable" src="https://t1.daumcdn.net/cfile/tistory/2434D33454E702B835" alt="이러쿵저러쿵 :: 스프링(Spring) 프레임워크 기본 개념 강좌 (3) - IoC" />
 </p>
-<!-- raw HTML omitted -->
+<br>
 <h2 id="1-didependency-injection-의존성-주입">1. DI(Dependency Injection, 의존성 주입)</h2>
 <p><strong><code>DI(Dependency Injection)</code></strong> 은 스프링 프레임워크의 의존성 주입을 일컫는 말로, 특정 객체를 미리 생성 후 주입하는 것을 말한다. 여기서 특정 클래스가 제 기능을 다하기 위해, 다른 클래스의 생성을 필요로하는 경우 클래스 간에  <strong><code>의존성</code></strong> 이 존재한다고 표현한다.</p>
 <p>아래의 코드를 통해 의존성에 대해 살펴보도록 하자</p>
@@ -139,7 +192,7 @@
         <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">tire</span> <span style="color:#f92672">=</span> tire<span style="color:#f92672">;</span>
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><br>
 <h2 id="2-iocinversion-of-conrol">2. IoC(Inversion of Conrol)</h2>
 <p>스프링 프레임워크에서는 주입 대상이 되는 의존성 객체를 Bean이라고 한다. 처음 프로젝트가 실행될 때 Bean을 생성하여 Bean 컨테이너에서 관리하게 되고, 이후 필요시 컨테이너로부터 Bean을 주입받아 활용하는 것이다.</p>
 <p>이러한 방식은 Bean 객체의 생성 및 소멸을 개발자가 아닌 프레임워크가 주도하게 함으로써, Singleton Pattern의 특징에서 알 수 있듯 빈번한 객체의 생성 및 소멸로 인한 자원 낭비를 줄이고 재사용성을 높인다는 이점이 있다.</p>
@@ -154,7 +207,7 @@
 </li>
 <li>의존성 객체 메소드가 호출된다.</li>
 </ol>
-<!-- raw HTML omitted -->
+<br>
 <p>여기서 의존성 객체를 주입할 때 스프링에서 권장하는 방식은 <strong>생성자방식</strong> 이다. 다양한 이유가 있겠지만, 공식문서에 의하면 주된 이유로 <strong>순환참조로 인한 에러를 사전에 방지</strong> 할 수 있다는 점을 언급하고 있다.</p>
 <p>아래의 코드를 통해 살펴보도록 하자.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Component</span>
@@ -213,7 +266,7 @@
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 </code></pre></div><p>위의 코드는 생성자 주입 방식을 적용한 것이다. 보통 단일 생성자만 존재하면 <code>@Autowired</code>를 사용하지 않아도 되지만, 2개 이상인 경우에는 반드시 어노테이션을 선언해야 한다.</p>
-<!-- raw HTML omitted -->
+<br>
 <h2 id="3-스프링에서-bean-호출해보기">3. 스프링에서 Bean 호출해보기</h2>
 <p>이번에는 간단한 예제를 통해 스프링의 Bean Container에서 IoC가 어떻게 이루어지는지 살펴보도록 하자. 여기서는 JDK1.5 이후 사용 가능한 Java Config 클래스를 통해 Bean Container를 구현하였다.</p>
 <p>먼저, Bean으로 활용될 Car, Engine 두 개의 클래스를 아래와 같이 생성하였다.</p>
@@ -239,7 +292,7 @@
 		System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;엔진 동작&#34;</span><span style="color:#f92672">);</span>
 	<span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
-</code></pre></div><!-- raw HTML omitted -->
+</code></pre></div><br>
 <p>이후 Bean Container로 기능할 Java Config 클래스를 생성한다.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#a6e22e">@Configuration</span> <span style="color:#75715e">//해당 어노테이션을 읽고 해당 클래스가 config 파일임을 인지(스프링 설정 클래스)
 </span><span style="color:#75715e"></span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ApplicationConfig</span> <span style="color:#f92672">{</span>
@@ -277,7 +330,7 @@
 <span style="color:#f92672">}</span>
 </code></pre></div><p>여기서는 컨테이너의 구현체로 <strong><code>AnnotationConfigApplicationContext</code></strong> 클래스를 사용하였고, 매개변수로 앞서 생성한 <strong>ApplicationConfig</strong> 클래스를 넣어주었다.</p>
 <p>이후 메인 메소드가 호출되면, AnnotationConfigApplicationContext는 생성자로 주입받은 config 클래스를 읽어 IoC를 적용하게 되며, config 클래스 내에 선언된 여러 Bean들이 싱글톤 방식으로 관리된다.</p>
-<!-- raw HTML omitted -->
+<br>
 <hr>
 <h2 id="reference">Reference</h2>
 <ul>
@@ -295,46 +348,7 @@
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
     
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-        </ul>
-    </div>
     
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/cs%EC%8A%A4%ED%84%B0%EB%94%94/">CS스터디</a>
-            </span>
-            
-            <span>
-                <a href="/tags/java/">java</a>
-            </span>
-            
-            <span>
-                <a href="/tags/spring/">spring</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
-            </span>
-            
-        </div>
-    </div>
     <div class="sidebar-item sidebar-toc">
         <h3>Table of Contents</h3><nav id="TableOfContents">
   <ul>
@@ -348,12 +362,10 @@
 
         </div>
         <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
+    <div class="btn-menu custom-btn-menu" id="btn-menu">
+        <i class="fas fa-arrow-circle-up"></i>
     </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
+    
     <div class="btn-scroll-top">
         <i class="iconfont icon-chevron-up-circle-sharp"></i>
     </div>
@@ -371,6 +383,18 @@
     <div class="sidebar-item sidebar-links">
         <h3>Links</h3>
         <ul>
+            
+            <li>
+                <a href="https://github.com/junu0516" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Linkedin</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>Instagram</span></a>
+            </li>
             
         </ul>
     </div>
@@ -414,7 +438,7 @@
         <div class="col-12 footer">
             
             <span>&copy; 2021
-                <a href="https://junu0516.github.io/">junu0516</a>
+                <a href="https://junu0516.github.io/"></a>
                 
                 | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
                    target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"

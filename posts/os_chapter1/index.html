@@ -19,10 +19,6 @@
 <title>Operating System Concepts - Chapter 1 요약 - Junu-Devlog</title>
 
 
-<meta name="author" content="junu0516" />
-
-
-<meta name="description" content="배운 것을 기록하고 공유합니다." />
 
 
 <meta name="keywords" content="운영체제, CS스터디" />
@@ -31,7 +27,7 @@
 <meta property="og:title" content="Operating System Concepts - Chapter 1 요약" />
 <meta name="twitter:title" content="Operating System Concepts - Chapter 1 요약" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://junu0516.github.io/2021/09/operating-system-concepts-chapter-1-%EC%9A%94%EC%95%BD/" /><meta property="og:description" content="공룡책 Ch 1 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." />
+<meta property="og:url" content="https://junu0516.github.io/posts/os_chapter1/" /><meta property="og:description" content="공룡책 Ch 1 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." />
 <meta name="twitter:description" content="공룡책 Ch 1 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2021-09-21T00:00:00+00:00" /><meta property="article:modified_time" content="2021-10-02T20:29:07+09:00" />
 
 
@@ -58,6 +54,63 @@
 
 
 
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<style>
+    .custom-tags>div a{
+        background-color: rgba(231, 231, 231, 0.897);
+        padding: 3px;
+        border-radius: 5px;
+    }
+    .custom-social-link-box{
+        text-align: center;
+    }
+    .custom-social-link{
+        font-size: 2rem;
+        margin-right: 15px;
+        color: rgb(83, 79, 79);
+    }
+    .custom-profile-imgbox{
+        width: 100%;
+        height: 100%;
+    }
+    .custom-profile-img{
+        width: 100%;
+        height: 100%;
+        border: 1px solid lightgray;
+        border-radius: 100%;
+        opacity: 0.8;
+    }
+
+    .post+.post{
+        border-top: 0.5px solid rgb(226, 226, 226) !important;
+    }
+
+    .custom-content{
+        margin-right: 5%;
+    }
+
+    header{
+        background-color: rgba(232, 247, 252, 0.89);
+        border-bottom: 0px !important;
+    }
+
+    .custom-header{
+        height: 30%;
+    }
+
+    main{
+        margin-top: 50px;
+    }
+    header .header {
+        height: 100px;
+        padding: 1.2rem 1rem 1rem 1.22rem;
+    }
+
+    .post-summary{
+        cursor: pointer;
+    }
+    
+</style>
 
 </head>
 
@@ -81,7 +134,7 @@
 
     <header>
     <div class="container-lg clearfix">
-        <div class="col-12 header">
+        <div class="header">
             <a class="title-main" href="https://junu0516.github.io/">Junu-Devlog</a>
             
         </div>
@@ -91,12 +144,12 @@
     <main>
         <div class="container-lg clearfix">
             
-            <div class="col-12 col-md-9 float-left content">
+            <div class="col-12 col-md-9 float-left content custom-content">
                 
 <article>
     
     <h2 class="post-item post-title">
-        <a href="https://junu0516.github.io/2021/09/operating-system-concepts-chapter-1-%EC%9A%94%EC%95%BD/">Operating System Concepts - Chapter 1 요약</a>
+        <a href="https://junu0516.github.io/posts/os_chapter1/">Operating System Concepts - Chapter 1 요약</a>
     </h2>
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-21</span>
@@ -142,7 +195,7 @@
 <li><strong>System Program</strong> : 운영체제의 동작과 연관되있지만 커널의 일부는 아닌 프로그램을 말함</li>
 <li><strong>Application Program</strong> : 시스템 프로그램을 제외한 나머지 프로그램들을 말함</li>
 </ul>
-<!-- raw HTML omitted -->
+<br>
 <p>​</p>
 <h2 id="2-computer-system-organization">2. Computer-System Organization</h2>
 <p><img class="img-zoomable" src="https://user-images.githubusercontent.com/68586291/134381350-def6d3ee-6e71-45be-a362-815c6bce5332.png" alt="2" />
@@ -165,7 +218,7 @@
 <p><em>(provides the rest of the operating system with a uniform interface to the device.)</em></p>
 </li>
 </ul>
-<!-- raw HTML omitted -->
+<br>
 <p>​</p>
 <h3 id="2-1-interrupts">2-1. Interrupts</h3>
 <p><img class="img-zoomable" src="https://user-images.githubusercontent.com/68586291/134777879-7838d9af-f3de-410c-bb87-3d4f1f2bfd26.PNG" alt="3" />
@@ -214,13 +267,13 @@
 <li>
 <p>인터럽트가 발생하면 해당 인터럽트에 대한 벡터 내 요소가 가리키는 리스트가 호출되고, 리스트의 각 인터럽트 핸들러를 하나씩 보면서 적절한 핸들러를 찾게되는 것</p>
 <p>(<em>&hellip;interrupt chaining, in which each element in the interrupt vector points to the head of a list of interrupt handlers. When an interrupt is raised, the handlers on the corresponding list are called one by one, until one is found tha can service the request.</em>)</p>
-<!-- raw HTML omitted -->
+<br>
 </li>
 </ul>
 </li>
 <li>
 <p><strong><code>인터럽트 우선순위(Interrupt Priority Levels)</code></strong> 를 정해놓기도 하는데, 이는 동시다발적인 인터럽트 발생 시 CPU로 하여금 전원공급 이상이나 CPU의 기계적 오류 등의 높은 우선순위를 가지는 인터럽트를 먼저 처리할 수 있도록 하기 위함</p>
-<!-- raw HTML omitted -->
+<br>
 </li>
 </ul>
 <p>​</p>
@@ -285,7 +338,7 @@
 <p>비휘발성 메모리는 Secondary 레벨 외에도, 더욱 하위 개념인 <strong><code>Tertiary Storage</code></strong> 로도 나눠볼 수 있는데, CD-ROM이나 블루레이 등과 같은 특수 목적의 메모리 디바이스가 여기에 속함</p>
 </li>
 </ul>
-<!-- raw HTML omitted -->
+<br>
 <p>​</p>
 <h3 id="2-3-io-structure">2-3. I/O Structure</h3>
 <p>​</p>
@@ -304,46 +357,7 @@
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
     
-    <div class="sidebar-item sidebar-pages">
-        <h3>Pages</h3>
-        <ul>
-            
-        </ul>
-    </div>
     
-    <div class="sidebar-item sidebar-links">
-        <h3>Links</h3>
-        <ul>
-            
-        </ul>
-    </div>
-    
-    <div class="sidebar-item sidebar-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/cs%EC%8A%A4%ED%84%B0%EB%94%94/">CS스터디</a>
-            </span>
-            
-            <span>
-                <a href="/tags/java/">java</a>
-            </span>
-            
-            <span>
-                <a href="/tags/spring/">spring</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
-            </span>
-            
-        </div>
-    </div>
     <div class="sidebar-item sidebar-toc">
         <h3>Table of Contents</h3><nav id="TableOfContents">
   <ul>
@@ -368,12 +382,10 @@
 
         </div>
         <div class="btn">
-    <div class="btn-menu" id="btn-menu">
-        <i class="iconfont icon-grid-sharp"></i>
+    <div class="btn-menu custom-btn-menu" id="btn-menu">
+        <i class="fas fa-arrow-circle-up"></i>
     </div>
-    <div class="btn-toggle-mode">
-        <i class="iconfont icon-contrast-sharp"></i>
-    </div>
+    
     <div class="btn-scroll-top">
         <i class="iconfont icon-chevron-up-circle-sharp"></i>
     </div>
@@ -391,6 +403,18 @@
     <div class="sidebar-item sidebar-links">
         <h3>Links</h3>
         <ul>
+            
+            <li>
+                <a href="https://github.com/junu0516" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Linkedin</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>Instagram</span></a>
+            </li>
             
         </ul>
     </div>
@@ -434,7 +458,7 @@
         <div class="col-12 footer">
             
             <span>&copy; 2021
-                <a href="https://junu0516.github.io/">junu0516</a>
+                <a href="https://junu0516.github.io/"></a>
                 
                 | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
                    target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
