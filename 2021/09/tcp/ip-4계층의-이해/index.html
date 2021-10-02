@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<meta property="og:title" content="TCP/IP 4계층의 이해" />
+<meta property="og:description" content="TCP/IP 4계층에서 각각의 계층별 특징에 대해 알아보도록 하자.
+​
+네트워크 이론에서 흔히 접하는 OSI 7계층은 1984년 ISO에서 개발한 네트워크 통신 모델로, 네트워크 통신 구조를 크게 7개의 계층(Layer) 개념으로 나눠 설명한 것이다." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/" />
+<meta property="article:published_time" content="2021-09-25T00:00:00+00:00" />
+<meta property="article:modified_time" content="2021-09-25T00:00:00+00:00" />
+
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TCP/IP 4계층의 이해"/>
+<meta name="twitter:description" content="TCP/IP 4계층에서 각각의 계층별 특징에 대해 알아보도록 하자.
+​
+네트워크 이론에서 흔히 접하는 OSI 7계층은 1984년 ISO에서 개발한 네트워크 통신 모델로, 네트워크 통신 구조를 크게 7개의 계층(Layer) 개념으로 나눠 설명한 것이다."/>
+<meta name="generator" content="Hugo 0.87.0" />
+
+
+    
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org",
+  "@type": "BlogPosting",
+  "headline": "TCP/IP 4계층의 이해",
+  "url": "https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/",
+  "wordCount": "1385",
+  "datePublished": "2021-09-25T00:00:00+00:00",
+  "dateModified": "2021-09-25T00:00:00+00:00",
+  "author": {
+    "@type": "Person",
+    "name": "junu0516"
+  },
+  "keywords": "네트워크, CS스터디"
+}
+</script>
+
+
+
+    <link rel="canonical" href="https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/">
+
+    <title>TCP/IP 4계층의 이해 | Junu-Devlog</title>
+
+    
+    <!-- combined, minified CSS -->
+    
+    <link href="https://junu0516.github.io/css/style.876bbe11cfbbf3aedf883f4804dc283a275cd7f8b4ed0b540812126132c20313.css" rel="stylesheet" integrity="sha256-h2u&#43;Ec&#43;7867fiD9IBNwoOidc1/i07QtUCBISYTLCAxM=" crossorigin="anonymous">
+    
+
+    <!-- minified Font Awesome for SVG icons -->
+    
+    <script defer src="https://junu0516.github.io/js/fontawesome.min.a290d22177f491b8a83b0ee7eb739224c57ab052d8fab69d8f52aab860e42027.js" integrity="sha256-opDSIXf0kbioOw7n63OSJMV6sFLY&#43;radj1KquGDkICc=" crossorigin="anonymous"></script>
+
+    <!-- RSS 2.0 feed -->
+    
+
+    
+
+  </head>
+
+  <body>
+
+    
+    <div class="blog-masthead">
+      <div class="container">
+        <nav class="nav blog-nav">
+          <a class="nav-link " href="https://junu0516.github.io/">Home</a>
+        </nav>
+      </div>
+    </div>
+    
+
+    
+    
+    <header class="blog-header">
+      <div class="container">
+        <h1 class="blog-title" dir="auto"><a href="https://junu0516.github.io/" rel="home">Junu-Devlog</a></h1>
+        <p class="lead blog-description" dir="auto">배운 것을 기록하고 공유합니다.</p>
+      </div>
+    </header>
+    
+    
+
+    
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-8 blog-main">
+
+          
+
+
+<article class="blog-post">
+  <header>
+    <h2 class="blog-post-title" dir="auto"><a href="https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/">TCP/IP 4계층의 이해</a></h2>
+    <p class="blog-post-meta">
+<time datetime="2021-09-25T00:00:00Z">2021-09-25</time>
+ in 
+<span class="fas fa-folder" aria-hidden="true"></span>&nbsp;<a href="/categories/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/" rel="category tag">네트워크</a>
+
+
+<span class="fas fa-tag" aria-hidden="true"></span>&nbsp;<a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/" rel="tag">네트워크</a>, <a href="/tags/cs%EC%8A%A4%ED%84%B0%EB%94%94/" rel="tag">CS스터디</a>
+
+</p>
+  </header>
+  <p>TCP/IP 4계층에서 각각의 계층별 특징에 대해 알아보도록 하자.</p>
+<p><img src="https://microchip.wdfiles.com/local--files/tcpip:tcp-ip-five-layer-model/tcpip_5_layer_overview.png" alt="Chapter 02 TCP/IP Packet Transmission - 1"></p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<p>네트워크 이론에서 흔히 접하는 OSI 7계층은 1984년 ISO에서 개발한 네트워크 통신 모델로, 네트워크 통신 구조를 크게 7개의 계층(Layer) 개념으로 나눠 설명한 것이다. TCP/IP 4계층은 오늘날 흔히 쓰이는 TCP/IP 프로토콜이 미 국방성 통신 표준으로 채택되면서, 해당 프로토콜의 통신 과정을 크게 4개의 계층 구조로 나눠 설명한 것이다.</p>
+<p>2개 모델은 엄밀히 말하면 서로 다른 탄생 배경을 가지지만, 쉽고 간단하게 이해하고자 한다면 전반적인 네트워크 전송 표준의 전반이 OSI 7계층이고, TCP/IP 프로토콜에 이러한 계층구조 개념을 적용하여 좀 더 단순화시킨 모형이 TCP/IP 4계층이라 할 수 있다.</p>
+<p>여기서는 오늘날 흔히 쓰이는 TCP/IP 프로토콜에 초점을 맞춰 TCP/IP 4계층에 대해 살펴보고자 한다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h2 id="1-tcpip의-계층구조">1. TCP/IP의 계층구조</h2>
+<p>위에서 언급한대로 TCP/IP 프로토콜에서 네트워크 통신을 위해, 각종 기능을 계층화하고 복수의 프로토콜을 조합하여 실현시킨 것이 TCP/IP 4계층 모델이다.</p>
+<p><strong>네트워크 연결 계층, 인터넷 계층, 트랜스포트 계층, 어플리케이션 계층</strong> 의 총 4계층으로 구성되며, 이런 식의 구분을 통해  각 기능들의 <strong>서로 간에 간섭을 최소화</strong> 할 수 있으므로, 유지와 보수에 있어 편리하다는 이점이 있다. 특정 계층에서 문제가 생기면, 그 계층을 살펴보면 되기 때문이다.</p>
+<p>서로 다른 계층들 끼리는 데이터의 전달 과정을 구체적으로 알 필요가 없기 때문에, <strong>데이터의 캡슐화</strong> 와 은닉이 가능하며,  이러한 캡슐화는 계층별로 데이터가 전달되면서 특정 정보를 담고 있는 헤더의 첨부를 통해 가능해진다.</p>
+<p>그렇다면 각 계층별로 어떤 특징을 가지고 있는 지 살펴보자</p>
+<!-- raw HTML omitted -->
+<p>​    <img src="https://www.elprocus.com/wp-content/uploads/Data-Flow-of-TCP-IP-protocol.jpg" alt="Data-Flow-of-TCP/IP-protocol"></p>
+<h3 id="1-1-제-4계층--어플리케이션-계층application-layer">1-1. 제 4계층 : 어플리케이션 계층(Application Layer)</h3>
+<p>응용계층이라고도 하며, 사용자와 가장 가까운 계층으로 사용자-소프트웨어 간 소통을 담당하는 계층이다. 웹프로그래밍을 하면서 흔히 접하는 여러 서버나 클라이언트 관련 응용 프로그램들이 동작하는 계층이다.</p>
+<p>어플리케이션 계층에서는 어플리케이션의 기능을 실행하기 위한 데이터의 형식 및 처리절차 등을 결정하며, 데이터는 인간이 인식할 수 있는 문자나 이미지와 같은 형식으로 표현된다. 다양한 프로토콜이 사용되는데, 대표적으로 80번 포트를 사용하는 <strong>http 프로토콜</strong> 이 여기에 속한다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h3 id="1-2-제-3계층--트랜스포트-계층transport-layer">1-2. 제 3계층 : 트랜스포트 계층(Transport Layer)</h3>
+<p>전송계층이라고도 하며, 데이터의 전송 및 흐름에 있어 <strong>신뢰성 보장</strong> 을 담당한다. 이는 다시말해 데이터를 적절한 어플리케이션에 제대로 전달되도록 배분함을 의미하며 다른 말로 <strong>End-to-End의 신뢰성을 확보</strong> 한다고도 표현할 수 있다.</p>
+<p>흔히 어플리케이션 계층에서 트랜스포트 계층까지 바르게 동작하면, 출발지와 목적지 어플리케이션 간에 제대로 된 데이터의 송수신이 가능해진다고 할 수 있는데, 이는 앞서 말한대로 신뢰성이 보장되었기 때문이다.</p>
+<p>트랜스포트 계층에 사용되는 대표적인 프로토콜로는 <strong><code>TCP</code></strong> 와 <strong><code>UDP</code></strong> 가 있다. 크게 <strong>TCP</strong> 는 연결지향형 프로토콜로, 패킷에 하나의 오류라도 있으면 재전송을 통해 에러를 복구하는 반면, <strong>UDP</strong> 는 패킷을 중간에 잃거나 오류가 발생해도 이에 대처하지 않고 계속해서 데이터를 전송하는 TCP에 비해 간단한 구조를 가지는 프로토콜이란 차이가 있다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h4 id="tcp-프로토콜과-tcp-헤더">TCP 프로토콜과 TCP 헤더</h4>
+<blockquote>
+<p>전송 과정에서 나오는 각각의 개념들은 TCP 헤더 부분에서 살펴보도록 하자.</p>
+</blockquote>
+<p>앞서 언급한대로 TCP 프로토콜은 신뢰성이 보장되는 연결지향형 프로토콜이다. TCP에서는 목적지로 어플리케이션 계층에서 전달받은 데이터를 전송에 알맞게 <strong><code>세그먼트(Segment)</code></strong> 단위로 나눠 전송하기 되는데, 여기서 세그먼트들은 <strong><code>검사합(Checksum)</code></strong> 이라 불리는 일종의 중복 및 오류 검사의 수행을 거쳐 일정한 순서에 맞춰서 전송된다.</p>
+<p><img src="http://itwiki.kr/images/thumb/a/a6/3-way-handshake.png/500px-3-way-handshake.png" alt="http://www.mdpi.com/2076-3417/6/11/358/htm"></p>
+<p>신뢰성 보장은 연결지향적 특징으로 이어지는데, 이를 위한 대표적인 것이 위의 그림에서 설명하고 있는 <strong><code>3 Way Handshake</code></strong> 과정이다. 이는 사전에 통신이 정상적으로 이루어질 수 있는 지를 확인하는 과정으로, 상태 확인을 위한 데이터 패킷을 보내고 받는 과정을 통해 이루어진다.</p>
+<p>우선 클라이언트가 서버에 접속을 요청하는 <strong><code>SYN 패킷</code></strong> 을 보내며, 응답을 기다리는 <strong><code>SYN_SENT</code></strong> 상태가 된다. 이후 서버가 포트가 열린 상태(<strong><code>Listen</code></strong>)에서 패킷을 받으면 <strong><code>SYN_RESEIVED</code></strong> 상태가 되며, 데이터를 송신해도 좋다는 의미로 <strong><code>ACK 패킷</code></strong> 으로 응답하고 클라이언트로부터의 응답을 기다리게 된다. 이후 클라이언트는 응답을 받으면 다시 서버로 <strong><code>ACK패킷</code></strong> 보내고, 이후부터는 TCP 커넥션이 이루어진 <strong><code>ESTABLISHED</code></strong> 상태가 되어 데이터를 주고받을 수 있게 되는 것이다.</p>
+<p>이 외에도 <strong>흐름 제어</strong> , <strong>혼잡 제어</strong> 등의 역할을 수행하는데, 여기서 흐름제어는 <strong>수신 측 버퍼의 오버플로우를 방지하는 것을 의미하며</strong> , 혼잡제어는 <strong>전송되는 패킷 데이터가 과도하게 많아져 혼잡을 초래하는 상황을 방지하는 것을 의미한다.</strong></p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<p><img src="https://t1.daumcdn.net/cfile/tistory/9990713359CD072F27" alt="TCP Flags: PSH 그리고 URG :: 하얀쿠아의 이것저것 만들기 Blog"></p>
+<p>앞서 TCP 프로토콜에서는 데이터가 세그먼트 단위로 전송된다고 하였다. 보통 TCP 세그먼트라고 함은, 어플리케이션 계층에서 보내진 데이터에 TCP 헤더가 추가된 것을 말한다. TCP 헤더에는 출발지와 목적지 포트번호, 시퀀스 번호, ACK 번호, 검사합 등의 요소가 존재하는데 각각의 요소에 대한 설명은 아래와 같다.</p>
+<ul>
+<li><strong>시퀀스 번호</strong> : 데이터 전송의 순서 보장을 위한 정보로, 데이터가 분할된 경우에는 시퀀스 번호를 통해 어떻게 분할되었는 지 알 수 있음(전송되는 바이트 수를 기준으로 점점 증가)
+<ul>
+<li>앞서 언급한 <strong><code>MSS</code></strong> 기준 세그먼트가 분할되는 것과 대응되는 내용!</li>
+</ul>
+</li>
+<li><strong>ACK 번호</strong> : 응답 번호라고도 하며 수신측 프로세스에서 수신한 바이트 수를 제대로 응답하기 위해 사용됨</li>
+<li><strong>Flags</strong> : SYN, ACK 등의 제어 번호가 담긴 제어 비트 영역</li>
+<li><strong>Window Size</strong> : 수신 윈도우의 버퍼 크기를 지정할 때 사용되는데, 사이즈가 0일 경우에는 송신 프로세스가 전송을 중지함</li>
+<li><strong>포트 번호</strong> : TCP 프로토콜을 통해 연결되는 송, 수신측(출발지-목적지 양 끝)에 할당되는 포트 번호</li>
+<li><strong>검사합(checksum)</strong> : 세그먼트에 포함된 헤더 및 데이터에 대한 오류 검출 용도</li>
+</ul>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h4 id="udp-프로토콜">UDP 프로토콜</h4>
+<p><img src="https://www.bluesplatter.com/assets/images/posts/UDP_header.png" alt="정보보안 - 네트워크 UDP 프로토콜 | Bluesplatter"></p>
+<p>UDP 프로토콜은 TCP와 대비되는 <strong>비연결, 비신뢰적 특징</strong> 을 갖는 전송계층의 프로토콜이다. TCP와 달리 사전 연결 과정 없이 일단 데이터그램을 전송하고 보기 때문에, 빠른 전송이 가능하지만 신뢰성은 그만큼 떨어진다.</p>
+<p>UDP가 제공하는 서비스는 최소한의 신뢰성을 위한 오류제어 메커니즘으로 <strong>검사합(checksum)</strong> 기능을 옵션으로 제공할 뿐이며,  UDP 헤더는 TCP 헤더에 비해 포트번호에 검사합 관련 정보 정도가 추가된 정도로 비교적 간단한 구조를 보인다.</p>
+<p>동일하게 데이터그램(여기서는 세그먼트가 아닌 데이터그램 단위로 데이터가 전송된다.)의 전송 순서 또한 보장되지 않으며 중간에 유실되어도 이를 재전송하지 않는다. 하지만 TCP와 달리 UDP는 데이터를 분할하는 과정을 거치지 않기 때문에, 전체 데이터의 경계가 구분될 뿐더러 1:1, 1:N, N:N 통신이 모두 가능해진다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h3 id="1-3-제-2계층--인터넷-계층internet-layer">1-3. 제 2계층 : 인터넷 계층(Internet Layer)</h3>
+<p><img src="https://download.huawei.com/mdl/image/download?uuid=d4bba2bb38274f32b0d5b61e0002966a" alt="Routing Table and FIB Table - S2720, S5700, and S6700 V200R020C00  Configuration Guide - IP Unicast Routing - Huawei"></p>
+<p>네트워크 상에서 데이터의 전송(패킷의 이동)을 담당하는 계층으로 서로 다른 네트워크 간의 통신을 가능하게 하는 역할을 수행한다.</p>
+<p>인터넷 계층에서는 네트워크 상에서의 데이터의 이동경로를 다루는데, 여기서 출발지와 목적지의 표시를 위한 논리적인 주소로 <strong><code>IP주소</code></strong> 를 할당하게 된다. IP주소는 네트워크 상에서 컴퓨터를 식별하는 번호로 기능하며, 보통은 32비트의 숫자롤 8비트씩 끊어서 표현한 <strong><code>IPv4</code></strong> 가 보편적이지만, 오늘날 이것이 포화상태이기 때문에 범위를 확장시켜 128비트의 주소 체계를 활용한 <strong><code>IPv6</code></strong> 가 사용되고 있다.</p>
+<p>네트워크끼리 연결하고 데이터를 전송하는 기기를 <strong><code>라우터</code></strong> 라고 하며, 라우터에 의한 네트워크 간 전송을 <strong><code>라우팅</code></strong> 이라고 한다. 라우터는 내부의 <strong><code>라우팅 테이블(Routing Table)</code></strong> 을 통해 경로 정보를 등록하여 데이터 전송을 위한 최적의 경로를 찾는데, 이렇게 출발지와 목적지 간의 데이터 전송 과정을 가리켜 <strong><code>End-to-End 통신</code></strong> 이라고 부른다.</p>
+<p>쉽게 말해, 출발지에서 목적지까지 여러 라우팅 과정을 거쳐 최종적으로 End-to-End 통신이 수행되는 셈이다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h3 id="1-4-제-1계층--네트워크-연결-계층network-access-layer">1-4. 제 1계층 : 네트워크 연결 계층(Network Access Layer)</h3>
+<p>네트워크 연결 계층은 물리적인 데이터의 전송을 담당하는 계층으로, 여기서는 인터넷 계층과 달리 같은 네트워크 안에서 데이터가 전송된다.</p>
+<p>제 1계층을 <strong><code>물리적 계층(Physical Layer)</code></strong> 과 <strong><code>데이터 링크 계층(Data Link Layer)</code></strong> 로 나눠서 TCP/IP 계층구조를 5개로 나누기도 하는데, 여기서 물리적 계층은 하드웨어적 측면의 기능을 담당하며, 네트워크 간의 데이터의 전송은 데이터 링크 계층이 담당하게 된다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h4 id="데이터-링크-계층data-link-layer">데이터 링크 계층(Data Link Layer)</h4>
+<p>네트워크 장비 간에 데이터를 전송하는 역할을 수행하며, <strong><code>이더넷(Ethernet)</code></strong> 프로토콜을 사용한다. 데이터 링크 계층에서는 데이터 전송 과정에서의 오류를 감지하는 역할도 하는데, 이는 <strong><code>이더넷 헤더</code></strong> 와 함께 인터넷 계층에서 전달받은 <strong><code>패킷</code></strong> 의 반대쪽 끝에 <strong><code>트레일러(trailer)</code></strong> 을 붙임으로써 수행된다.</p>
+<p>이더넷은 LAN과 WAN에서 사용되는 기술규격으로 MAC 패킷과 프로토콜의 형식을 정의한다. 실제로 뒤이어 언급할 물리 계층을 거쳐 들어온 데이터가 통신망 내에서 최종적으로 전송될 목적지를 식별하기 위해 <strong><code>MAC 주소</code></strong> 를 사용하는데, 이는 논리적 주소인 IP와 달리 제조사에 의해 할당된 고유 주소로 컴퓨터의 물리적인 주소를 나타내는 것이다.</p>
+<blockquote>
+<p><strong>LAN(Local Area Network) &amp; WAN(Wide Area Network)</strong></p>
+<p>LAN은 근거리 통신망을 의미하며 특정 거점 내의 PC나 서버의 통신을 가능하게 하며, 복수의 거점에서 통신을 하기 위해 LAN끼리 연결한 것을 WAN이라고 한다.</p>
+</blockquote>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h4 id="물리-계층physical-layer">물리 계층(Physical Layer)</h4>
+<p>물리 계층은 0과 1로 표현된 이진 데이터를 전기 신호로 변환하거나, 전기 신호를 이진 데이터로 변환하는 역할 수행한다. 여기서 전기 신호의 전달은 유, 무선의 전송매체를 통해 이루어지는데, 대표적으로 <strong><code>허브(hub)</code></strong> 라는 장비가 사용되며 전기 신호를 전형하고 증폭하는 기능을 한다.</p>
+<p>허브에는 보통 여러 개의 포트가 있어 여러 컴퓨터와의 연결이 가능한데, 특정 포트에 연결된 컴퓨터로부터 데이터를 받았을 때 여기서 어떤 포트로 전송할 지 결정하지 않고 일단 나머지 모든 포트로 받은 데이터를 전송한다. 앞서 언급한대로 최종 목적지 컴퓨터로의 데이터 전송 판단은 이후 데이터 링크 계층에서 헤더에 나타난 MAC 주소를 보고 최종 판별하게 된다.</p>
+<!-- raw HTML omitted -->
+<p>​</p>
+<h2 id="2-데이터-전송의-흐름">2. 데이터 전송의 흐름</h2>
+<p><img src="https://blog.kakaocdn.net/dn/drvQM4/btqSdt4T2TY/xckBtJ9gBIlIknEI7lAymK/img.png" alt="img"></p>
+<p>앞서 4개 계층의 각 역할에 대해서 간단히 살펴보았다. 똑같은 데이터이지만 각 계층별로 이를 부르는 명칭이 다른데, 이는  TCP/IP의 각 계층을 거치면서 데이터에는 여러 프로토콜의 헤더가 추가됨에 따라 명칭을 달리했기 때문이다.</p>
+<p>맨 처음 언급했지만 이런 식으로 각 계층별로 헤더를 추가하여 정보를 감싸는 것을 <strong><code>캡슐화(Encapsulation)</code></strong> 라고 한다. 반복해서 말하지만 보통 제 4계층에서 1계층으로 데이터가 전송되면서 헤더가 추가되며, 데이터를 역으로 수신할 경우에는 1계층에서 4계층으로 가면서 해당 계층별로 필요한 헤더를 확인 후 헤더를 삭제하게 된다.</p>
+<p>데이터의 전송 과정에서 1계층에서 4계층까지 순서대로 <strong><code>프레임(frame)</code></strong> , <strong><code>패킷(packet) 혹은 데이터그램(datagram)</code></strong> , <strong><code>세그먼트(segment) 혹은 데이터그램</code></strong> , <strong><code>메시지(message)</code></strong> 로 데이터를 구분해서 표현한다. 웹 브라우저에서의 http 통신을 예로 들면 아래와 같이 표현할 수 있다.</p>
+<ol>
+<li>전형적인 웹브라우저에서의 통신의 경우, 우선 데이터에 <strong><code>http 헤더</code></strong> 가 추가되면서 http 메시지가 된다.</li>
+<li>트랜스포트 계층을 거치면서 http 메시지에 <strong><code>TCP 헤더</code></strong> 가 추가되면서 세그먼트가 된다.
+<ul>
+<li>만일 UDP 프로토콜을 사용할 경우에는 데이터를 분할하지 않았기 때문에 세그먼트 대신 <strong><code>데이터그램</code></strong> 이 될 것이다.</li>
+</ul>
+</li>
+<li>인터넷 계층을 거치면서 IP 주소 정보가 포함된 <strong><code>IP 헤더</code></strong> 가 추가되어 패킷이 된다.</li>
+<li>패킷에 <strong><code>이더넷 헤더</code></strong> 와 FCS가 추가되어 <strong><code>프레임</code></strong> 이 된다.</li>
+</ol>
+<!-- raw HTML omitted -->
+<p>​</p>
+<hr>
+<h2 id="reference">Reference</h2>
+<ul>
+<li><a href="https://www.guru99.com/tcp-ip-model.html">TCP/IP Model: Layers &amp; Protocol | What is the TCP IP Stack?</a></li>
+<li>[<a href="https://zion830.tistory.com/104">네트워크] TCP/IP 5계층에서 일어나는 일 (1)</a></li>
+<li><a href="https://velog.io/@jehjong/%EA%B0%9C%EB%B0%9C%EC%9E%90-%EC%9D%B8%ED%84%B0%EB%B7%B0-TCPIP-4%EA%B3%84%EC%B8%B5">TCP/IP 4계층</a></li>
+</ul>
+
+
+  
+
+  
+  <hr>
+  <footer>
+
+  
+    <section>
+    <h4>Share</h4>
+    <nav class="nav sharing-icons">
+      <a class="nav-item" href="https://www.facebook.com/sharer/sharer.php?u=https%3a%2f%2fjunu0516.github.io%2f2021%2f09%2ftcp%2fip-4%25EA%25B3%2584%25EC%25B8%25B5%25EC%259D%2598-%25EC%259D%25B4%25ED%2595%25B4%2f" title="Share on Facebook"><span class="fab fa-facebook-f fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3a%2f%2fjunu0516.github.io%2f2021%2f09%2ftcp%2fip-4%25EA%25B3%2584%25EC%25B8%25B5%25EC%259D%2598-%25EC%259D%25B4%25ED%2595%25B4%2f" title="Share on LinkedIn"><span class="fab fa-linkedin-in fa-2x" aria-hidden="true"></span></a>
+      <a class="nav-item" href="https://twitter.com/intent/tweet?url=https%3a%2f%2fjunu0516.github.io%2f2021%2f09%2ftcp%2fip-4%25EA%25B3%2584%25EC%25B8%25B5%25EC%259D%2598-%25EC%259D%25B4%25ED%2595%25B4%2f&amp;text=TCP%2fIP%204%ea%b3%84%ec%b8%b5%ec%9d%98%20%ec%9d%b4%ed%95%b4" title="Tweet this"><span class="fab fa-twitter fa-2x"></span></a>
+    </nav>
+  </section>
+
+  
+
+  
+  </footer>
+  
+
+</article> 
+
+
+
+        </div> <!-- /.blog-main -->
+
+        <aside class="col-sm-3 ml-auto blog-sidebar">
+  
+  <section class="sidebar-module sidebar-module-inset">
+    <h4>About</h4>
+    <p dir="auto">About me</p>
+  </section>
+  
+
+  
+        <section class="sidebar-module">
+    <h4>Recent Posts</h4>
+    <ol class="list-unstyled">
+
+
+<li><a href="/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/">TCP/IP 4계층의 이해</a></li>
+
+<li><a href="/2021/09/operating-system-concepts-chapter-1-%EC%9A%94%EC%95%BD/">Operating System Concepts - Chapter 1 요약</a></li>
+
+<li><a href="/2021/09/spring-di%EC%99%80-ioc/">Spring DI와 IoC</a></li>
+
+    </ol>
+  </section>
+
+  
+
+  
+  <section class="sidebar-module">
+    <h4>Links</h4>
+    <ol class="list-unstyled">
+      
+      <li><a href="https://example.com">Link 1</a></li>
+      
+      <li><a href="https://example.org">Link 2</a></li>
+      
+    </ol>
+  </section>
+  
+</aside>
+
+
+      </div> <!-- /.row -->
+    </div> <!-- /.container -->
+    
+
+    
+    <footer class="blog-footer">
+      <p dir="auto">
+      
+      Hugo Theme Bootstrap v4 Blog(<a href="https://github.com/alanorth/hugo-theme-bootstrap4-blog">https://github.com/alanorth/hugo-theme-bootstrap4-blog</a>)
+      
+      </p>
+      <p>
+      <a href="#">Back to top</a>
+      </p>
+    </footer>
+    
+
+  </body>
+
+</html>

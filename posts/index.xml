@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on Junu-Devlog</title>
+    <link>https://junu0516.github.io/posts/</link>
+    <description>Recent content in Posts on Junu-Devlog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Hugo Theme Bootstrap v4 Blog(https://github.com/alanorth/hugo-theme-bootstrap4-blog)</copyright>
+    <lastBuildDate>Sat, 25 Sep 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TCP/IP 4계층의 이해</title>
+      <link>https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/</link>
+      <pubDate>Sat, 25 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/2021/09/tcp/ip-4%EA%B3%84%EC%B8%B5%EC%9D%98-%EC%9D%B4%ED%95%B4/</guid>
+      <description>TCP/IP 4계층에서 각각의 계층별 특징에 대해 알아보도록 하자.
+​
+네트워크 이론에서 흔히 접하는 OSI 7계층은 1984년 ISO에서 개발한 네트워크 통신 모델로, 네트워크 통신 구조를 크게 7개의 계층(Layer) 개념으로 나눠 설명한 것이다.</description>
+    </item>
+    
+    <item>
+      <title>Operating System Concepts - Chapter 1 요약</title>
+      <link>https://junu0516.github.io/2021/09/operating-system-concepts-chapter-1-%EC%9A%94%EC%95%BD/</link>
+      <pubDate>Tue, 21 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/2021/09/operating-system-concepts-chapter-1-%EC%9A%94%EC%95%BD/</guid>
+      <description>공룡책 Ch 1 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다.</description>
+    </item>
+    
+    <item>
+      <title>Spring DI와 IoC</title>
+      <link>https://junu0516.github.io/2021/09/spring-di%EC%99%80-ioc/</link>
+      <pubDate>Mon, 20 Sep 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/2021/09/spring-di%EC%99%80-ioc/</guid>
+      <description>Spring DI와 IoC의 개념에 대해 알아보자.
+1. DI(Dependency Injection, 의존성 주입) DI(Dependency Injection) 은 스프링 프레임워크의 의존성 주입을 일컫는 말로, 특정 객체를 미리 생성 후 주입하는 것을 말한다.</description>
+    </item>
+    
+  </channel>
+</rss>
