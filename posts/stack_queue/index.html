@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://junu0516.github.io/posts/stack_queue/" /><meta property="og:description" content="자바로 스택과 큐에 대해 알아보도록 하자
  1. 스택(Stack) 스택의 개념과 활용, 자바를 통한 스택 구현 세 가지를 학습해보자!" />
 <meta name="twitter:description" content="자바로 스택과 큐에 대해 알아보도록 하자
- 1. 스택(Stack) 스택의 개념과 활용, 자바를 통한 스택 구현 세 가지를 학습해보자!" /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2021-10-10T00:00:00+00:00" /><meta property="article:modified_time" content="2021-10-10T00:00:00+00:00" />
+ 1. 스택(Stack) 스택의 개념과 활용, 자바를 통한 스택 구현 세 가지를 학습해보자!" /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2021-10-10T00:00:00+00:00" /><meta property="article:modified_time" content="2021-10-11T02:23:34+09:00" />
 
 
 <style>
@@ -202,6 +202,8 @@
     <i class="iconfont icon-today-sharp"></i>&nbsp;2021-10-10
 </span>
 
+<span>
+    <i class="iconfont icon-sync-circle-sharp"></i>&nbsp;2021-10-11</span>
 
 
 <span class="custom-post-meta-tags">
@@ -463,7 +465,17 @@
     <span style="color:#f92672">}</span>
 <span style="color:#f92672">}</span>
 
-</code></pre></div><hr>
+</code></pre></div><br>
+<ul>
+<li>배열과 리스트 구조를 통한 스택 구현은 효율성 측면에서 차이가 있음</li>
+<li>배열은 기본적으로 각 인덱스에 할당된 메모리 주소값을 통해 직접 데이터에 접근하기 때문에, 데이터에 대한 접근 속도가 빠름</li>
+<li>하지만 데이터를 추가, 삭제할 경우에는 나머지 데이터의 인덱스값들을 모두 조정해야 하기 때문에 잦은 push, pop이 일어나는 경우에는 맞지 않음</li>
+<li>반면 리스트 구조를 활용할 경우에는, 삽입 혹은 삭제 대상 노드와 인접한 노드들의 포인터만 바꿔주면 되기 때문에 더욱 효율적</li>
+<li>결국 LinkedList와 배열의 특성 차이를 생각해보면 되겠다..</li>
+</ul>
+<br>
+<h2 id="2-큐queue">2. 큐(Queue)</h2>
+<hr>
 <h2 id="reference">Reference</h2>
 <ul>
 <li></li>
@@ -497,6 +509,7 @@
         <li><a href="#1-3-스택-구현하기">1-3. 스택 구현하기</a></li>
       </ul>
     </li>
+    <li><a href="#2-큐queue">2. 큐(Queue)</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
