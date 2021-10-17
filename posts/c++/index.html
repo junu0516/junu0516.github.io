@@ -305,7 +305,11 @@
 <br>
 <h3 id="1-3-명칭공간namespace">1-3 명칭공간(namespace)</h3>
 <ul>
-<li>특정한 이름들이 인식되는 프로그램의 부분을 말하며, 동일한 명칭이라도 서로 다른 명칭공간에 정의되어 있다면 별개의 것으로 구분함</li>
+<li>특정한 이름들이 인식되는 프로그램의 부분을 말하며, 동일한 명칭이라도 서로 다른 명칭공간에 정의되어 있다면 별개의 것으로 구분함
+<ul>
+<li>다른 언어와 굳이 비교하면 <strong>자바(java)의 패키지</strong> 가 명칭공간과 비슷한 역할을 수행함</li>
+</ul>
+</li>
 <li>여러 프로그래머가 협업시 각자의 필요에 따라 독립적으로 명칭공간을 만들어 사용할 수 있음</li>
 <li><strong>전역 명칭공간</strong> : 특정 명칭공간에 속하지 않는 기본 명칭공간을 의미함</li>
 <li><strong>std 명칭공간</strong> : 표준 C++ 라이브러리 명칭들이 정의된 명칭공간을 의미함</li>
@@ -780,6 +784,31 @@ std:cin <span style="color:#f92672">&gt;&gt;</span> a;
 </li>
 </ul>
 <br>
+<h3 id="3-6-r-value와-l-value">3-6. r-value와 l-value</h3>
+<ul>
+<li>r-value : 우항에 위치한 일시적인 값을 담은 변수
+<ul>
+<li>주소가 없는 개체, 리터럴, 참조로 반환되지 않는 함수 호출 등</li>
+</ul>
+</li>
+<li>l-value : 좌항에 존재하는 주소와 이름이 존재하는 일반적인 방식으로 선언된 변수</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> a <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+<span style="color:#66d9ef">int</span> b <span style="color:#f92672">=</span> a<span style="color:#f92672">++</span>; <span style="color:#75715e">//b에 a의 값을 대입한 후, a=a+1 수행
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span> c <span style="color:#f92672">=</span> a<span style="color:#f92672">++</span>; <span style="color:#75715e">//a+1을 거쳐, c에 11을 대입
+</span></code></pre></div><ul>
+<li>위의 코드에서 두번째 줄은 정확히 아래와 같은 수행을 의미함</li>
+</ul>
+<pre tabindex="0"><code>a의 값을 복사하여 임시 변수(r-value)에 저장한 후, 원래 a(l-value)의 값을 변경한다.
+</code></pre><ul>
+<li>다시 말해  <strong><code>a++</code></strong> 와 같은 경우에는 임시 변수이기 때문에 맨 처음 선언한 a와는 다른 변수인 것
+<ul>
+<li>보통 주소값을 가져오는 <strong><code>&amp;</code></strong> 는 엄밀히 말해, l-value에 해당하는 변수의 주소를 가져오는 연산자임</li>
+<li>따라서 위의 경우 <strong><code>&amp;(a++));</code></strong> 과 같은 선언하면 컴파일 에러가 발생</li>
+</ul>
+</li>
+</ul>
+<br>
 <h2 id="4-함수function">4. 함수(Function)</h2>
 <h3 id="4-1-함수의-정의와-호출">4-1. 함수의 정의와 호출</h3>
 <ul>
@@ -1214,7 +1243,7 @@ std:cin <span style="color:#f92672">&gt;&gt;</span> a;
     <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
       Counter() <span style="color:#f92672">:</span> value{<span style="color:#ae81ff">0</span>} {
             <span style="color:#75715e">// value =0은 위에서 정의하고, 이후에 수행할 내용을 명시
-</span><span style="color:#75715e"></span>        }
+</span><span style="color:#75715e"></span>      }
 }
 </code></pre></div></li>
 </ul>
@@ -1356,9 +1385,210 @@ Person<span style="color:#f92672">::</span>Person(<span style="color:#66d9ef">co
 </span><span style="color:#75715e"></span>}
 </code></pre></div></li>
 </ul>
+<br>
 <h3 id="6-2-복사-생성자">6-2. 복사 생성자</h3>
+<ul>
+<li>
+<p>같은 클래스의 객체를 복사하여 객체를 만드는 생성자</p>
+</li>
+<li>
+<p>자신의 같은 클래스 타입의 다른 객체에 대한 참조를 전달받아 해당 참조를 가지고 자신을 초기화하는 방법</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//명시적인 복사 생성자 정의 방식
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClassName</span>{
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+      ClassName(<span style="color:#66d9ef">const</span> ClassName <span style="color:#f92672">&amp;</span>obj){
+      <span style="color:#75715e">//생성되는 객체에 매개변수로 받은 obj객체 자체를 복사
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div><ul>
+<li>여기서 <strong><code>&amp;</code></strong> 연산자는, 해당 객체의 참조(레퍼런스)를 가리킴</li>
+</ul>
+</li>
+<li>
+<p><strong>묵시적 복사 생성자</strong> : 객체의 멤버를 그대로 복사하여 객체를 만들도록 <strong>묵시적으로 정의된</strong> 복사 생성자</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Counter</span>{
+  <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">int</span> maxValue;
+  <span style="color:#66d9ef">int</span> value;
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+      <span style="color:#75715e">//값에 의한 호출(Call by Value)
+</span><span style="color:#75715e"></span>      Counter(<span style="color:#66d9ef">int</span> maxValue)
+      <span style="color:#f92672">:</span> maxValue{maxValue}, value{<span style="color:#ae81ff">0</span>} {<span style="color:#ae81ff">0</span>}
+
+      <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">reset</span>(){
+      value <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+};
+</code></pre></div><ul>
+<li>위와 같은 클래스가 있다고 했을 때, 메인함수에 아래와 같은 방식으로 객체를 생성하면서 묵시적인 복사 생성자를 적용할 수 있음</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+  <span style="color:#75715e">//중괄호 초기화 : 초기 멤버 값을 중괄호 안의 값으로 초기화
+</span><span style="color:#75715e"></span>  Counter counter1{<span style="color:#ae81ff">99</span>}; <span style="color:#75715e">//maxValue = 99;
+</span><span style="color:#75715e"></span>
+  <span style="color:#75715e">//복사 생성자 자동 호출(객체로 초기화한 경우)
+</span><span style="color:#75715e"></span>  Counter counter2{counter1};
+  Counter counter3 <span style="color:#f92672">=</span> counter1;
+
+  <span style="color:#75715e">//아래의 경우는 복사 생성자를 호출하지 않음
+</span><span style="color:#75715e"></span>  Counter counter4;
+  counter4 <span style="color:#f92672">=</span> counter1; <span style="color:#75715e">//이 경우는 대입 연산자를 실행
+</span><span style="color:#75715e"></span>}
+</code></pre></div></li>
+<li>
+<p><strong>얕은 복사의 문제점</strong> : 단순히 포인터만을 복사해서 쓰면, 결국에는 같은 주소를 참조하기 때문에 어느 한 포인터에 의해 객체를 변경하게 되면, 전체 구조에 영향을 끼치는 문제가 생김</p>
+<ul>
+<li>쉽게 말해 어느 한 포인터에 의한 변경이, 다른 포인터의 참조에도 영향을 끼치는 것</li>
+<li>단순히 스택 영역에만 저장되는 원형 타입의 변수라면 문제가 되지 않지만, 힙 영역을 참조하는 멤버를 가지는 객체일 경우에는 문제가 발생할 수 있음</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">/*
+</span><span style="color:#75715e">	ClassEx 타입의 class1 객체가 존재한다고 할 경우,
+</span><span style="color:#75715e">	아래와 같이 대입연산자를 사용해서 객체를 대입할 경우 얕은 복사가 수행됨
+</span><span style="color:#75715e">*/</span>
+ClassEx class2 <span style="color:#f92672">=</span> class1;
+</code></pre></div><ul>
+<li>이럴 경우 사용하는 것이 <strong>깊은 복사</strong> 인데, 이는 주소값이 아닌 주소가 가리키는 값, 즉 대상 자체를 복사하는 방식임</li>
+<li>포인터가 새로 할당받은 복사한 객체의 주소를 참조하기 때문에 상대적으로 안전함</li>
+<li>기본적으로 제공되는 생성자는 얕은 복사를 사용하기 때문에, 깊은 복사를 원할 경우에는 복사 생성자를 사용해야 함</li>
+</ul>
+</li>
+</ul>
+<br>
 <h3 id="6-3-이동-생성자">6-3. 이동 생성자</h3>
+<ul>
+<li>
+<p>3-6에서 언급한대로, r-value를 일반적인 방식으로 참조할 경우(ex. <strong><code>&amp;a++</code></strong> ) 컴파일 에러가 발생함</p>
+</li>
+<li>
+<p>아래와 같은 복사 생서자의 활용이 있다고 가정하자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VecF</span>{
+  <span style="color:#66d9ef">int</span> n; <span style="color:#75715e">//배열의 사이즈 n
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">float</span> <span style="color:#f92672">*</span>arr; <span style="color:#75715e">//float 타입 변수를 담을 배열
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+      VecF(<span style="color:#66d9ef">int</span> d, <span style="color:#66d9ef">float</span><span style="color:#f92672">*</span> a<span style="color:#f92672">=</span><span style="color:#66d9ef">nullptr</span>) <span style="color:#f92672">:</span> n{d}{
+      arr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">float</span>[d]; <span style="color:#75715e">//매개변수로 받은 d 크기 만큼의 float 배열 초기화
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">if</span>(a) memcpy(arr,a,<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>)<span style="color:#f92672">*</span>n); <span style="color:#75715e">//a의 포인터가 존재할 경우, a를 멤버 arr 배열로 복사
+</span><span style="color:#75715e"></span>
+      <span style="color:#75715e">/*
+</span><span style="color:#75715e">          memcpy : memory + copy, 즉 메모리의 값을 복사하는 기능을 가진 함수
+</span><span style="color:#75715e">          첫번째 인자 : 복사받을 메모리를 가리키는 포인터
+</span><span style="color:#75715e">          두번째 인자 : 박사할 메모리를 가리키는 포인터
+</span><span style="color:#75715e">          세번째 인자 : 복사할 데이터(혹은 값)의 길이(바이트 단위)
+</span><span style="color:#75715e">      */</span>
+    }
+
+      <span style="color:#75715e">//복사생성자 선언
+</span><span style="color:#75715e"></span>      VecF(<span style="color:#66d9ef">const</span> VecF<span style="color:#f92672">&amp;</span> fv) <span style="color:#f92672">:</span> n{fv.n}{ <span style="color:#75715e">//매개변수로 VecF 타입의 객체 fv의 참조를 넘겨준 것
+</span><span style="color:#75715e"></span>      arr <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#66d9ef">float</span>[n];
+      memcpy(arr,fv.arr,<span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">float</span>)<span style="color:#f92672">*</span>n);
+    }
+
+      <span style="color:#75715e">//소멸자
+</span><span style="color:#75715e"></span>      <span style="color:#f92672">~</span>VecF(){<span style="color:#75715e">//...}
+</span><span style="color:#75715e"></span>
+    <span style="color:#75715e">//인자로 받은 배열의 원소와 합한 결과를 리턴
+</span><span style="color:#75715e"></span>    VecF <span style="color:#a6e22e">add</span>(<span style="color:#66d9ef">const</span> VecF<span style="color:#f92672">&amp;</span> fv) <span style="color:#66d9ef">const</span>{
+      VecF temp(n); <span style="color:#75715e">//크기 n인 임시 배열 공간 선언
+</span><span style="color:#75715e"></span>      <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+          temp.arr[i] <span style="color:#f92672">=</span> arr[i] <span style="color:#f92672">+</span> fv.arr[i];
+      }
+      <span style="color:#66d9ef">return</span> temp; <span style="color:#75715e">//덧셈 결과를 담은 배열 리턴
+</span><span style="color:#75715e"></span>    }
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">print</span>() <span style="color:#66d9ef">const</span>{
+      <span style="color:#66d9ef">for</span>(<span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;i<span style="color:#f92672">&lt;</span>n;i<span style="color:#f92672">++</span>){
+        cout<span style="color:#f92672">&lt;&lt;</span>arr[i]<span style="color:#f92672">&lt;&lt;</span><span style="color:#e6db74">&#34; , &#34;</span>;
+      }
+    }
+}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;iostream&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">using</span> <span style="color:#66d9ef">namespace</span> std;
+<span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;VecF.h&#34;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+  <span style="color:#66d9ef">float</span> a[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">3</span>};
+  <span style="color:#66d9ef">float</span> b[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> {<span style="color:#ae81ff">4</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">6</span>};
+  VecF v1(<span style="color:#ae81ff">3</span>,a);
+  VecF v2(<span style="color:#ae81ff">3</span>,b);
+  <span style="color:#75715e">//여기서 add() 메소드 수행한 후 리턴한 temp 객체는, v3로 복사된 후 제거됨
+</span><span style="color:#75715e"></span>  VecF v3(v1.add(v2));
+}
+</code></pre></div></li>
+<li>
+<p>위와 같은 상황에서 <strong>add()</strong> 를 활용하게 되면, 메소드 수행 후 리턴한 임시 객체가 복사생성자를 통해  v3로 복사된 후 제거됨</p>
+<ul>
+<li>규모가 좀 더 큰 프로그래밍에서 위와 같은 상황이 많아지면, 결과적으로 임시로 사용하는 객체의 복사가 너무 많이 일어나는 비효율이 발생할 수 있음</li>
+<li>위의 예로 치면  add() 메소드의 잦은 수행으로 인해 , temp 객체에 대해 <strong>생성-&gt;복사-&gt;제거</strong> 의 과정이 너무 많이 일어나는 비효율이 발생하는 것</li>
+</ul>
+</li>
+<li>
+<p>C++ 11 이후부터는 수식을 아래와 같이 분류하여 xvalue, prvalue에 대해 r-value의 참조를 가능하게 하였음</p>
+<ul>
+<li>이전까지는 임시로 사용되는 r-value의 참조가 불가능하기 때문에, 위와 같이 복사 후 제거하는 방식을 사용할 수 밖에 없던 것</li>
+<li>r-value의 참조는 <strong><code>&amp;&amp;</code></strong> 연산자를 사용</li>
+</ul>
+</li>
+</ul>
+<p><img class="img-zoomable" src="https://docs.microsoft.com/ko-kr/cpp/cpp/media/value_categories.png?view=msvc-160" alt="값 범주: Lvalues 및 Rvalue(C&#43;&#43;) | Microsoft Docs" />
+</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> num <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; <span style="color:#75715e">//일반적인 int 변수 선언
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;</span> num2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; <span style="color:#75715e">//l-value의 참조로 r-value를 참조할 수 없음
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span> rNum1 <span style="color:#f92672">=</span> num; <span style="color:#75715e">//num은 l-value이기 때문에, r-value의 참조로 참조할 수 없음
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">int</span><span style="color:#f92672">&amp;&amp;</span> rNum2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>; <span style="color:#75715e">//10은 r-value이기 때문에, r-value의 참조로 r-value를 참조할 수 있음
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">float</span><span style="color:#f92672">&amp;&amp;</span> rAvg <span style="color:#f92672">=</span> CalAvg(); <span style="color:#75715e">//함수의 반환 객체가 r-value이므로, r-value 참조로 참조 가능
+</span></code></pre></div><pre tabindex="0"><code>주의) 위의 예에서 int&amp;&amp; rNum1 = num; 과 같이 우항에 있다고 무조건 r-value로 판단하지 말자
+</code></pre><ul>
+<li>
+<p><strong>이동생성자</strong> : r-value 참조로 전달된 같은 클래스의 객체의 내용을 이동하여 객체를 만드는 생성자</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">//이동 생성자 선언 형식
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ClassName</span>{
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+      ClassName(ClassName<span style="color:#f92672">&amp;&amp;</span> obj){
+      <span style="color:#75715e">//생성되는 객체에 매개변수로 받은 obj의 내용을 이동
+</span><span style="color:#75715e"></span>    }
+}
+</code></pre></div></li>
+<li>
+<p>이동생성자를 활용하여 위의 add() 메소드를 불필요한 복사 없이 효율적으로 바꿀 수 있음</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">VecF</span>{
+  <span style="color:#66d9ef">public</span><span style="color:#f92672">:</span>
+  <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>    VecF(VecF<span style="color:#f92672">&amp;&amp;</span> fv) <span style="color:#f92672">:</span> n{fv.n},arr{fv.arr}{
+      fv.arr <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+      fv.n <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+    }
+	<span style="color:#75715e">//...      
+</span><span style="color:#75715e"></span>}
+</code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+  <span style="color:#75715e">//...
+</span><span style="color:#75715e"></span>  VecF v3(v1.add(v2));
+}
+</code></pre></div><ul>
+<li>add() 가 리턴하는 메소드(r-value)의 참조를 매개변수로 받았기 때문에, 값을 굳이 재할당하지 않고 소멸되지 않은 임시 객체의 참조를 받아서 실행한 것</li>
+<li>메모리 재할당이 없기 때문에 복사 생성자보다 더욱 속도가 빠름</li>
+</ul>
+</li>
+</ul>
+<br>
 <h3 id="6-4-static-키워드">6-4. static 키워드</h3>
+<ul>
+<li><strong>static 멤버</strong> : 클래스에 속하는 모든 객체들이 공유하는 데이터 멤버
+<ul>
+<li>객체의 생성과 관계 없이, 프로그램이 시작되면 static 멤버를 위한 별도의 메모리 공간이 할당됨</li>
+<li>static 멤버는 <strong>클래스 선언문 내에서는 선언만 하고 클래스 외부에서는 별도로 정의해야 함</strong></li>
+</ul>
+</li>
+<li><strong>static 멤버함수</strong> : 특정 객체에 대한 처리가 아닌, 클래스 전체의 작업을 수행하는 함수
+<ul>
+<li>static 멤버함수는 따라서 객체가 정의되지 않아도 사용 가능함</li>
+<li>단,  static 멤버 함수 안에서 일반 멤버를 사용할 수는 없음(statoc 멤버만 사용)</li>
+</ul>
+</li>
+</ul>
+<br>
+<h2 id="7-클래스와-객체3">7. 클래스와 객체(3)</h2>
+<h3 id="7-1-스택-클래스">7-1. 스택 클래스</h3>
+<h3 id="7-2-복소수-클래스">7-2. 복소수 클래스</h3>
 
     </div>
     <hr>
@@ -1404,6 +1634,7 @@ Person<span style="color:#f92672">::</span>Person(<span style="color:#66d9ef">co
         <li><a href="#3-3-배열">3-3. 배열</a></li>
         <li><a href="#3-4-포인터와-동적-메모리의-할당">3-4. 포인터와 동적 메모리의 할당</a></li>
         <li><a href="#3-5-참조reference">3-5. 참조(Reference)</a></li>
+        <li><a href="#3-6-r-value와-l-value">3-6. r-value와 l-value</a></li>
       </ul>
     </li>
     <li><a href="#4-함수function">4. 함수(Function)</a>
@@ -1428,6 +1659,12 @@ Person<span style="color:#f92672">::</span>Person(<span style="color:#66d9ef">co
         <li><a href="#6-2-복사-생성자">6-2. 복사 생성자</a></li>
         <li><a href="#6-3-이동-생성자">6-3. 이동 생성자</a></li>
         <li><a href="#6-4-static-키워드">6-4. static 키워드</a></li>
+      </ul>
+    </li>
+    <li><a href="#7-클래스와-객체3">7. 클래스와 객체(3)</a>
+      <ul>
+        <li><a href="#7-1-스택-클래스">7-1. 스택 클래스</a></li>
+        <li><a href="#7-2-복소수-클래스">7-2. 복소수 클래스</a></li>
       </ul>
     </li>
   </ul>
