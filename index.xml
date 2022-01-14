@@ -8,13 +8,14 @@
     <language>en-us</language>
     <lastBuildDate>Fri, 14 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>[자료구조] 스위프트로 연결리스트(Linked List) 구현하기</title>
+      <title>스위프트로 연결리스트(Linked List) 구현하기</title>
       <link>https://junu0516.github.io/posts/linked_list_swift/</link>
       <pubDate>Fri, 14 Jan 2022 00:00:00 +0000</pubDate>
       
       <guid>https://junu0516.github.io/posts/linked_list_swift/</guid>
-      <description> 연결리스트에 대해 알아보고 스위프트로 연결리스트를 구현해보았다 &amp;hellip;
- 1. 연결리스트 </description>
+      <description>연결리스트에 대해 알아보고 스위프트로 연결리스트를 구현해보았다 &amp;hellip;
+ ​
+1. 연결리스트 ​</description>
     </item>
     
     <item>
@@ -27,22 +28,22 @@
     </item>
     
     <item>
-      <title>[자료구조] 자바로 스택과 큐 구현하기</title>
-      <link>https://junu0516.github.io/posts/stack_queue/</link>
-      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
-      
-      <guid>https://junu0516.github.io/posts/stack_queue/</guid>
-      <description>자바로 스택과 큐에 대해 알아보도록 하자
- 1. 스택(Stack) 스택의 개념과 활용, 자바를 통한 스택 구현 세 가지를 학습해보자!</description>
-    </item>
-    
-    <item>
       <title>Http 메시지와 Https 통신</title>
       <link>https://junu0516.github.io/posts/httpmsg_https/</link>
       <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
       
       <guid>https://junu0516.github.io/posts/httpmsg_https/</guid>
       <description>Http 메시지의 구조와, 암호화가 추가된 Https 통신의 특징에 대해 알아보도록 한다.</description>
+    </item>
+    
+    <item>
+      <title>자바로 스택과 큐 구현하기</title>
+      <link>https://junu0516.github.io/posts/stack_queue/</link>
+      <pubDate>Sun, 10 Oct 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/posts/stack_queue/</guid>
+      <description>자바로 스택과 큐에 대해 알아보도록 하자
+ 1. 스택(Stack) 스택의 개념과 활용, 자바를 통한 스택 구현 세 가지를 학습해보자!</description>
     </item>
     
     <item>
