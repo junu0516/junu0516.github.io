@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://junu0516.github.io/posts/linked_list_swift/" /><meta property="og:description" content="​
 1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." />
 <meta name="twitter:description" content="​
-1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T23:00:56+09:00" />
+1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T23:10:50+09:00" />
 
 
 <style>
@@ -222,6 +222,7 @@
   <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">remove</span>(data: T)
 }
 </code></pre></div><p>​</p>
+<h4 id="리스트가-비어있는-지-검증하기">리스트가 비어있는 지 검증하기</h4>
 <ul>
 <li>우선 노드가 비어있는 지의 판단은 단순히 <strong>헤드 노드가 nil인 지를 검증</strong> 하면 된다.
 <ul>
@@ -233,8 +234,9 @@
   <span style="color:#66d9ef">return</span> head==<span style="color:#66d9ef">nil</span>
 }
 </code></pre></div><p>​</p>
+<h4 id="리스트-맨-끝에-노드-추가하기">리스트 맨 끝에 노드 추가하기</h4>
 <ul>
-<li>연결 리스트에서 노드의 추가는 __리스트의 맨 끝__에서만 일어난다.
+<li>기본적으로 연결 리스트에서 노드의 추가는 __리스트의 맨 끝__에서만 일어난다.(중간에 노드를 삽입하는 과정은 이후에 언급한다.)
 <ul>
 <li>리스트가 비어있다면 헤드 노드와 테일 노드를 추가할 노드로 두면 된다.</li>
 <li>리스트가 비어있지 않다면 현재 테일 노드의 다음 노드로 추가할 노드를 두고, 추가한 노드를 테일 노드로 바꾸면 된다.
@@ -256,10 +258,31 @@
   }
 }
 </code></pre></div><p>​</p>
+<h4 id="노드-탐색하기">노드 탐색하기</h4>
 <ul>
-<li>연결 리스트에서 노드의 탐색은 노드의 시작부터 끝까지 순서대로 노드를 살펴보는 식으로 구현한다.
+<li>연결 리스트에서 특정 노드의 탐색은 노드의 시작부터 끝까지 순서대로 노드를 살펴보는 식으로 구현한다.
 <ul>
 <li>노드는 배열과 달리, 순차적으로 탐색해야 하기 때문에 시간복잡도가 O(N)이 된다.</li>
+<li>구현할 <strong><code>search</code></strong> 함수는 파라미터로 찾고자 하는 데이터 타입 <strong><code>T</code></strong> 를 받게 된다.</li>
+<li>리스트 클래스에서 제네릭으로 선언한 <strong><code>T</code></strong> 는 <strong><code>Equatable</code></strong> 하기 때문에, 안에 들어있는 데이터의 참조가 서로 동일한 객체를 바라보는 지 비교하는 과정을 순차적으로 거치게 된다.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">search</span>(data: T)-&gt;Node&lt;T&gt;{
+  <span style="color:#66d9ef">var</span> curr: Node&lt;T&gt; = <span style="color:#66d9ef">self</span>.head!
+  <span style="color:#66d9ef">while</span> curr.next <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span>{
+    <span style="color:#66d9ef">if</span>(curr.data == data){
+      <span style="color:#66d9ef">return</span> curr
+    }
+    curr = curr.next!
+  }
+  <span style="color:#66d9ef">return</span> curr
+}
+</code></pre></div><ul>
+<li>파라미터로 찾고자 하는 데이터 외에, <strong><code>Int</code></strong> 타입의 인덱스값을 받아, 리스트의 해당 인덱스에 어떤 노드가 존재하는 지 탐색할 수도 있다.
+<ul>
+<li>인덱스 0부터 파라미터로 받은 인덱스 직전까지 반복문을 돌면서, 헤드노드부터 <strong><code>curr</code></strong> 이 참조하는 변수를 순서대로 <strong><code>next</code></strong> 로 바꿔가면 된다.</li>
+<li>반복문을 빠져나왔을 떄의 <strong><code>curr</code></strong> 이 최종적으로 찾고자 하는 노드가 된다.</li>
 </ul>
 </li>
 </ul>
@@ -276,11 +299,55 @@
   }<span style="color:#66d9ef">else</span>{
     <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
   }
-
   <span style="color:#66d9ef">return</span> curr
 }
 </code></pre></div><p>​</p>
-<h4 id="노드-삭제">노드 삭제</h4>
+<h4 id="원하는-위치에-노드-넣기">원하는 위치에 노드 넣기</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">insert</span>(node: Node&lt;T&gt;, index: Int){
+  <span style="color:#66d9ef">if</span>(head == <span style="color:#66d9ef">nil</span>){
+    head = node
+    tail = node
+    <span style="color:#66d9ef">return</span>
+  }
+
+  <span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> prevTemp = search(index: index<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#66d9ef">else</span>{
+    node.next = head
+    head = node
+    <span style="color:#66d9ef">return</span>
+  }
+
+  <span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> nextTemp = prevTemp.next <span style="color:#66d9ef">else</span>{
+    prevTemp.next = node
+    tail = node
+    <span style="color:#66d9ef">return</span>
+  }
+
+  node.next = nextTemp
+  prevTemp.next = node
+}
+</code></pre></div><h4 id="노드-삭제하기">노드 삭제하기</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">remove</span>(data: T){
+
+  <span style="color:#66d9ef">let</span> nodeToBeRemoved: Node&lt;T&gt; = search(data: data)
+  <span style="color:#66d9ef">if</span>(nodeToBeRemoved.data == head!.data){
+    <span style="color:#66d9ef">self</span>.head = head!.next
+    head!.prev = <span style="color:#66d9ef">nil</span>
+    <span style="color:#66d9ef">return</span>
+  }<span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span>(nodeToBeRemoved.data == tail!.data){
+    <span style="color:#66d9ef">self</span>.tail = tail!.prev
+    tail!.next = <span style="color:#66d9ef">nil</span>
+    <span style="color:#66d9ef">return</span>
+  }
+
+  <span style="color:#66d9ef">let</span> prev: Node&lt;T&gt; = nodeToBeRemoved.prev!
+  <span style="color:#66d9ef">let</span> next: Node&lt;T&gt; = nodeToBeRemoved.next!
+  prev.next = next
+  next.prev = prev
+
+  nodeToBeRemoved.prev = <span style="color:#66d9ef">nil</span>
+  nodeToBeRemoved.next = <span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>​</p>
 <ul>
 <li>최종적으로 완성된 LinkedList 클래스는 아래와 같다.</li>
 </ul>
@@ -446,7 +513,11 @@
         <li><a href="#2-1-노드node-구현">2-1. 노드(Node) 구현</a></li>
         <li><a href="#2-2-linked-list">2-2. Linked List</a>
           <ul>
-            <li><a href="#노드-삭제">노드 삭제</a></li>
+            <li><a href="#리스트가-비어있는-지-검증하기">리스트가 비어있는 지 검증하기</a></li>
+            <li><a href="#리스트-맨-끝에-노드-추가하기">리스트 맨 끝에 노드 추가하기</a></li>
+            <li><a href="#노드-탐색하기">노드 탐색하기</a></li>
+            <li><a href="#원하는-위치에-노드-넣기">원하는 위치에 노드 넣기</a></li>
+            <li><a href="#노드-삭제하기">노드 삭제하기</a></li>
           </ul>
         </li>
       </ul>
