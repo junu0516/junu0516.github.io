@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://junu0516.github.io/posts/linked_list_swift/" /><meta property="og:description" content="​
 1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." />
 <meta name="twitter:description" content="​
-1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T22:44:10+09:00" />
+1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T23:00:56+09:00" />
 
 
 <style>
@@ -221,7 +221,67 @@
   <span style="color:#75715e">//파라미터로 받는 데이터를 포함하는 노드 삭제</span>
   <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">remove</span>(data: T)
 }
-</code></pre></div><ul>
+</code></pre></div><p>​</p>
+<ul>
+<li>우선 노드가 비어있는 지의 판단은 단순히 <strong>헤드 노드가 nil인 지를 검증</strong> 하면 된다.
+<ul>
+<li>여기서 헤드 노드는 리스트의 시작이 되며, 리스트가 비어있다는 것은 노드의 시작 부분인 헤드 노드가 비어있다는 뜻이기 때문이다.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">isEmpty</span>()-&gt;Bool{
+  <span style="color:#66d9ef">return</span> head==<span style="color:#66d9ef">nil</span>
+}
+</code></pre></div><p>​</p>
+<ul>
+<li>연결 리스트에서 노드의 추가는 __리스트의 맨 끝__에서만 일어난다.
+<ul>
+<li>리스트가 비어있다면 헤드 노드와 테일 노드를 추가할 노드로 두면 된다.</li>
+<li>리스트가 비어있지 않다면 현재 테일 노드의 다음 노드로 추가할 노드를 두고, 추가한 노드를 테일 노드로 바꾸면 된다.
+<ul>
+<li>단, 테일 노드를 변경하기 전, 추가할 노드의  <strong><code>prev</code></strong> 가 참조하는 노드를 기존 테일 노드로 둠에 주의한다.</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">append</span>(node: Node&lt;T&gt;){
+  <span style="color:#66d9ef">if</span>(isEmpty()){
+    head = node
+    tail = node
+  }<span style="color:#66d9ef">else</span>{
+    tail!.next = node
+    node.prev = tail
+    tail = node
+  }
+}
+</code></pre></div><p>​</p>
+<ul>
+<li>연결 리스트에서 노드의 탐색은 노드의 시작부터 끝까지 순서대로 노드를 살펴보는 식으로 구현한다.
+<ul>
+<li>노드는 배열과 달리, 순차적으로 탐색해야 하기 때문에 시간복잡도가 O(N)이 된다.</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">search</span>(index: Int)-&gt;Node&lt;T&gt;?{
+  <span style="color:#66d9ef">var</span> curr:Node&lt;T&gt; = head!
+  <span style="color:#66d9ef">if</span>(index <span style="color:#f92672">!=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>){
+    <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">_</span> <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0.</span>.&lt;index{
+      <span style="color:#66d9ef">if</span> curr.next == <span style="color:#66d9ef">nil</span>{
+        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+      }<span style="color:#66d9ef">else</span>{
+        curr = curr.next!
+      }
+    }
+  }<span style="color:#66d9ef">else</span>{
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+  }
+
+  <span style="color:#66d9ef">return</span> curr
+}
+</code></pre></div><p>​</p>
+<h4 id="노드-삭제">노드 삭제</h4>
+<ul>
 <li>최종적으로 완성된 LinkedList 클래스는 아래와 같다.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LinkedList</span>&lt;T: Equatable&gt;{
@@ -384,7 +444,11 @@
     <li><a href="#2-스위프트로-연결리스트-구현하기">2. 스위프트로 연결리스트 구현하기</a>
       <ul>
         <li><a href="#2-1-노드node-구현">2-1. 노드(Node) 구현</a></li>
-        <li><a href="#2-2-linked-list">2-2. Linked List</a></li>
+        <li><a href="#2-2-linked-list">2-2. Linked List</a>
+          <ul>
+            <li><a href="#노드-삭제">노드 삭제</a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li><a href="#3-시간복잡도-검증">3. 시간복잡도 검증</a></li>
