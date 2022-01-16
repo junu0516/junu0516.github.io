@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://junu0516.github.io/posts/linked_list_swift/" /><meta property="og:description" content="​
 1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." />
 <meta name="twitter:description" content="​
-1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T04:10:24+09:00" />
+1. 연결리스트(Linked List)  추상형 자료형 중 리스트(List) 를 구체화 한 자료구조로, 데이터를 포함하는 노드(Node) 들이 다음(혹은 이전) 노드와 연결된 포인터를 통해 서로 연결되어 있는 형태이다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-14T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-16T22:44:10+09:00" />
 
 
 <style>
@@ -139,13 +139,17 @@
 </ul>
 <p>​</p>
 <h2 id="2-스위프트로-연결리스트-구현하기">2. 스위프트로 연결리스트 구현하기</h2>
-<h3 id="2-1-node">2-1. Node</h3>
+<h3 id="2-1-노드node-구현">2-1. 노드(Node) 구현</h3>
 <ul>
-<li>리스트를 구성하는 노드(Node)가 될 클래스를 정의한다.
+<li>
+<p>위에서 언급한 대로 <strong><code>노드(Node)</code></strong> 는 데이터를 포함하고 있으며, 포인터를 통해 이전 노드와 다음 노드의 위치를 알 수 있다.</p>
+</li>
+<li>
+<p>리스트를 구성하는 노드(Node)가 될 클래스를 정의한다.</p>
 <ul>
 <li>노드는 담고 있는 데이터를 프로퍼티로 가지고 있다.</li>
 <li>노드에는 다양한 타입의 데이터가 들어가며, 이를 제네릭으로 <strong><code>&lt;T&gt;</code></strong> 로 선언한다.</li>
-<li>노드 클래스의 프로퍼티는 데이터 뿐만 아니라 연결된 이전 노드와 다음 노드에 대한 참조도 프로퍼티로 가지게 된다.</li>
+<li>노드 클래스의 프로퍼티는 데이터 뿐만 아니라 연결된 이전 노드(<strong><code>prev</code></strong>)와 다음 노드(<strong><code>next</code></strong>)에 대한 참조도 프로퍼티로 가지게 된다.</li>
 </ul>
 </li>
 </ul>
@@ -164,7 +168,61 @@
 </code></pre></div><p>​</p>
 <h3 id="2-2-linked-list">2-2. Linked List</h3>
 <ul>
-<li>연결리스트 클래스 역시 제네릭 <strong><code>&lt;T&gt;</code></strong> 를 선언하며, 여기서는 노드의 검색을 위해 해당 데이터가 비교 가능해야 하기 때문에 <strong><code>Equatable</code></strong> 을 같이 선언한다.</li>
+<li>
+<p>연결리스트 클래스 역시 제네릭 <strong><code>&lt;T&gt;</code></strong> 를 선언하며, 여기서는 노드의 검색을 위해 해당 데이터가 비교 가능해야 하기 때문에 <strong><code>Equatable</code></strong> 을 같이 선언한다.</p>
+</li>
+<li>
+<p>연결 리스트 클래스는 리스트의 맨 처음과 끝에 해당하는 헤드 노드(<strong><code>head</code></strong>) 와 테일 노드(<strong><code>tail</code></strong>) 을 각각 프로퍼티로 가지게 된다.</p>
+</li>
+<li>
+<p>연결 리스트 클래스는 각각 아래의 동작들에 대한 함수를 가지게 된다.</p>
+<ul>
+<li>리스트가 비어있는 지 여부 판별</li>
+<li>노드의 추가</li>
+<li>노드의 탐색</li>
+<li>노드의 삭제</li>
+</ul>
+</li>
+<li>
+<p>위를 토대로 연결 리스트 클래스의 구조를 나타내면 아래와 같다.</p>
+</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LinkedList</span>&lt;T: Equatable&gt;{
+
+  <span style="color:#75715e">//헤드노드</span>
+  <span style="color:#66d9ef">var</span> head:Node&lt;T&gt;?
+  <span style="color:#75715e">//테일노드</span>
+  <span style="color:#66d9ef">var</span> tail:Node&lt;T&gt;?
+
+  <span style="color:#75715e">//생성자</span>
+  <span style="color:#66d9ef">init</span>(head: Node&lt;T&gt;?){
+    <span style="color:#66d9ef">self</span>.head = head
+    <span style="color:#66d9ef">self</span>.tail = head
+  }
+
+  <span style="color:#75715e">//리스트 비어있는 지 판별</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">isEmpty</span>()-&gt;Bool
+
+  <span style="color:#75715e">//맨 끝에 노드 추가</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">append</span>(node: Node&lt;T&gt;)
+
+  <span style="color:#75715e">//입력받은 인덱스값에 해당하는 노드 검색</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">search</span>(index: Int)-&gt;Node&lt;T&gt;?
+
+  <span style="color:#75715e">//입력받은 데이터를 가진 노드 검색</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">search</span>(data: T)-&gt;Node&lt;T&gt;
+
+  <span style="color:#75715e">//리스트 사이즈 도출</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">size</span>()-&gt;Int
+  
+  <span style="color:#75715e">//원하는 인덱스에 노드 추가</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">insert</span>(node: Node&lt;T&gt;, index: Int)
+
+  <span style="color:#75715e">//파라미터로 받는 데이터를 포함하는 노드 삭제</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">remove</span>(data: T)
+}
+</code></pre></div><ul>
+<li>최종적으로 완성된 LinkedList 클래스는 아래와 같다.</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LinkedList</span>&lt;T: Equatable&gt;{
 
@@ -296,7 +354,10 @@
 <h2 id="3-시간복잡도-검증">3. 시간복잡도 검증</h2>
 <p>​</p>
 <h2 id="reference">Reference</h2>
-<p>​</p>
+<ul>
+<li><a href="https://ko.wikipedia.org/wiki/%EC%97%B0%EA%B2%B0_%EB%A6%AC%EC%8A%A4%ED%8A%B8" target="_blank">위키피디아 연결리스트</a></li>
+<li><a href="https://wayhome25.github.io/cs/2017/04/17/cs-19/" target="_blank">초보몽키의 개발공부로그</a></li>
+</ul>
 
     </div>
     <hr>
@@ -322,7 +383,7 @@
     <li><a href="#1-연결리스트linked-list">1. 연결리스트(Linked List)</a></li>
     <li><a href="#2-스위프트로-연결리스트-구현하기">2. 스위프트로 연결리스트 구현하기</a>
       <ul>
-        <li><a href="#2-1-node">2-1. Node</a></li>
+        <li><a href="#2-1-노드node-구현">2-1. 노드(Node) 구현</a></li>
         <li><a href="#2-2-linked-list">2-2. Linked List</a></li>
       </ul>
     </li>
