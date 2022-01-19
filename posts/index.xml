@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Junu-Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 18 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Operating System Concepts - Chapter 3 요약</title>
+      <link>https://junu0516.github.io/posts/os_chapter3/</link>
+      <pubDate>Tue, 18 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/posts/os_chapter3/</guid>
+      <description>공룡책 Ch 3 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다.</description>
+    </item>
+    
     <item>
       <title>스위프트 클로저 개념 정리</title>
       <link>https://junu0516.github.io/posts/swift_closure/</link>

@@ -3,13 +3,25 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://junu0516.github.io/categories/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
+  </url><url>
+    <loc>https://junu0516.github.io/categories/computer-science/</loc>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
+  </url><url>
+    <loc>https://junu0516.github.io/posts/os_chapter3/</loc>
+    <lastmod>2022-01-18T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/posts/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
+  </url><url>
+    <loc>https://junu0516.github.io/tags/</loc>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
+  </url><url>
+    <loc>https://junu0516.github.io/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/</loc>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/tags/swift/</loc>
     <lastmod>2022-01-19T00:41:35+09:00</lastmod>
@@ -17,14 +29,8 @@
     <loc>https://junu0516.github.io/categories/swiftios/</loc>
     <lastmod>2022-01-19T00:41:35+09:00</lastmod>
   </url><url>
-    <loc>https://junu0516.github.io/tags/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
-  </url><url>
     <loc>https://junu0516.github.io/posts/swift_closure/</loc>
     <lastmod>2022-01-19T00:41:35+09:00</lastmod>
-  </url><url>
-    <loc>https://junu0516.github.io/categories/computer-science/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/posts/linked_list_swift/</loc>
     <lastmod>2022-01-17T00:12:17+09:00</lastmod>
@@ -33,10 +39,7 @@
     <lastmod>2022-01-17T00:12:17+09:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/posts/os_chapter2/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
-  </url><url>
-    <loc>https://junu0516.github.io/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/</loc>
-    <lastmod>2022-01-19T15:54:09+09:00</lastmod>
+    <lastmod>2022-01-19T16:15:50+09:00</lastmod>
   </url><url>
     <loc>https://junu0516.github.io/posts/httpmsg_https/</loc>
     <lastmod>2022-01-06T23:48:50+09:00</lastmod>
