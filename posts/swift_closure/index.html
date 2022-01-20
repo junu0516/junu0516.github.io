@@ -129,7 +129,7 @@
 <img src="https://camo.githubusercontent.com/073d4db3e63450a4287978fd866b98ab9816dd2040cb87ef5395ec5a2f9a732e/68747470733a2f2f7377696674756e626f7865642e636f6d2f696d616765732f636c6f737572652d6573636170652e706e67" alt="image" style="zoom:35%"/>    
 <p>​</p>
 <h2 id="1-클로저-개념">1. 클로저 개념</h2>
-<p>클로저는 쉽게 말해 <strong>이름이 없는 함수</strong> 의 형태라고 생각하면 된다. 따라서 함수는 <strong><code>func</code></strong> 키워드가 붙은 클로저의 한 형태라 할 수 있다.</p>
+<p>스위프트에서 클로저는 {} 코드블록이 객체처럼 전달되면서 사용되는 독립적인 블록이다. 쉽게 말해 <strong>이름이 없는 함수</strong> 의 형태라고 생각하면 된다. 따라서 함수는 <strong><code>func</code></strong> 키워드가 붙은 클로저의 한 형태라 할 수 있다.</p>
 <p>​</p>
 <p>클로저는 아래와 같이 세 가지 형태로 나눠볼 수 있다.</p>
 <ul>
@@ -152,6 +152,19 @@
 <li>이름이 없고 주변 문맥에 따라 값을 획득하는 형태(축약 형태)</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> num: Int = {<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>}
+</code></pre></div><p>​</p>
+<p>위의 세 가지 예시처럼 클로저는 함수처럼 쓰이거나, 객체처럼 다른 변수에 할당할 수 있다. 스위프트에서 <strong>함수는 1급 객체로 할당 받기, 인자로 전달하기, 반환하기 등이 모두 가능하다.</strong> 스위프트에서 함수는 이름 없는 클로저이기 때문에, 결과적으로 클로저 역시 1급 객체이며 상수나 변수에 할당되거나 저장해서 사용 가능하다.</p>
+<p>​</p>
+<h2 id="2-기본적인-클로저-사용">2. 기본적인 클로저 사용</h2>
+<p>바로 위에서 클로저를 다른 상수에 할당했기 때문에 여기서는 클로저를 함수의 인자로 전달하는 예를 살펴보도록 한다.</p>
+<p>​</p>
+<p>스위프트에서 배열은 기본적으로 <strong><code>sort()</code></strong> 라는 정렬 함수를 제공한다. 해당 함수에 아무런 인자를 전달하지 않으면 배열은 오름차순으로 정렬되며, 다른 기준으로 정렬하고자 할 경우에는 원하는 기준을 함수의 인자로 전달하면 된다.</p>
+<p>바로 여기서 별도의 정렬 기준을 전달할 때 이를 클로저 형식으로 전달할 수 있다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> arr: [Int] = [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">4</span>]
+</code></pre></div><p>위와 같은 정수 배열에서 <strong><code>arr.sort()</code></strong> 를 실행하면 배열이 [1,2,3,4,5]로 자동 정렬될 것이다.</p>
+<p>이를 별도의 정렬 기준을 전달해서 내림차순으로 바꾸고 싶다면 아래와 같이 작성하면 된다. 여기서 인자로 넘긴 <strong><code>{return $0&gt;$1}</code></strong> 은 $0이 $1보다 큰 지 여부를 Bool 타입으로 리턴하는 클로저이다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//내림차순 정렬</span>
+arr.sort(by:{<span style="color:#66d9ef">return</span> $0&gt;$1})
 </code></pre></div>
     </div>
     <hr>
@@ -175,6 +188,7 @@
         <nav id="TableOfContents">
   <ul>
     <li><a href="#1-클로저-개념">1. 클로저 개념</a></li>
+    <li><a href="#2-기본적인-클로저-사용">2. 기본적인 클로저 사용</a></li>
   </ul>
 </nav></div>
 </aside>
