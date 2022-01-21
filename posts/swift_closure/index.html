@@ -16,7 +16,7 @@
 
 
 
-<title>스위프트 클로저 개념 정리 - Junu-Devlog</title>
+<title>스위프트 클로저 개념 정리(작성중) - Junu-Devlog</title>
 
 
 
@@ -24,13 +24,13 @@
 <meta name="keywords" content="swift" />
 
 
-<meta property="og:title" content="스위프트 클로저 개념 정리" />
-<meta name="twitter:title" content="스위프트 클로저 개념 정리" />
+<meta property="og:title" content="스위프트 클로저 개념 정리(작성중)" />
+<meta name="twitter:title" content="스위프트 클로저 개념 정리(작성중)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://junu0516.github.io/posts/swift_closure/" /><meta property="og:description" content="​
 자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." />
 <meta name="twitter:description" content="​
-자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-15T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-21T00:10:17+09:00" />
+자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-15T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-21T01:34:35+09:00" />
 
 
 <style>
@@ -100,7 +100,7 @@
 <article>
     
     <h2 class="post-item post-title">
-        <a href="https://junu0516.github.io/posts/swift_closure/">스위프트 클로저 개념 정리</a>
+        <a href="https://junu0516.github.io/posts/swift_closure/">스위프트 클로저 개념 정리(작성중)</a>
     </h2>
     <div class="post-item post-meta">
         <span>
@@ -126,7 +126,7 @@
 <p>자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다. 자바에서도 스트림으로 함수형 프로그래밍을 사용할 수 있지만 여전히 자바는 객체지향 언어로 쓰이는 것이 정석이다 보니 함수형 프로그래밍에 대해 이전까지는 제대로 알지 못했다. 스위프트를 사용하다보면 함수형으로 작성되어 {} 코드 블록을 인자로 넘기는 경우를 심심치 않게 보게 되는데 이를 클로저라고 부른다.</p>
 <p>스위프트에서 함수형 프로그래밍 패러다임을 이해하기 위해  클로저(Closure)를 이해하는 것은 첫걸음이자 필수이다. 따라서 이번에는 클로저의 개념과 사용에 대해 정리해보았다.</p>
 <p>​</p>
-<img src="https://camo.githubusercontent.com/073d4db3e63450a4287978fd866b98ab9816dd2040cb87ef5395ec5a2f9a732e/68747470733a2f2f7377696674756e626f7865642e636f6d2f696d616765732f636c6f737572652d6573636170652e706e67" alt="image" style="zoom:35%"/>    
+<img src="https://camo.githubusercontent.com/073d4db3e63450a4287978fd866b98ab9816dd2040cb87ef5395ec5a2f9a732e/68747470733a2f2f7377696674756e626f7865642e636f6d2f696d616765732f636c6f737572652d6573636170652e706e67" alt="image" style="zoom:33%"/>    
 <p>​</p>
 <h2 id="1-클로저-개념">1. 클로저 개념</h2>
 <p>스위프트에서 클로저는 {} 코드블록이 객체처럼 전달되면서 사용되는 독립적인 블록이다. 쉽게 말해 <strong>이름이 없는 함수</strong> 의 형태라고 생각하면 된다. 따라서 함수는 <strong><code>func</code></strong> 키워드가 붙은 클로저의 한 형태라 할 수 있다.</p>
@@ -155,7 +155,8 @@
 </code></pre></div><p>​</p>
 <p>위의 세 가지 예시처럼 클로저는 함수처럼 쓰이거나, 객체처럼 다른 변수에 할당할 수 있다. 스위프트에서 <strong>함수는 1급 객체로 할당 받기, 인자로 전달하기, 반환하기 등이 모두 가능하다.</strong> 스위프트에서 함수는 이름 없는 클로저이기 때문에, 결과적으로 클로저 역시 1급 객체이며 상수나 변수에 할당되거나 저장해서 사용 가능하다.</p>
 <p>​</p>
-<h2 id="2-기본적인-클로저-사용">2. 기본적인 클로저 사용</h2>
+<h2 id="2-클로저-사용하기">2. 클로저 사용하기</h2>
+<h3 id="2-1-기본적인-클로저-사용하기">2-1. 기본적인 클로저 사용하기</h3>
 <p>우선, 클로저의 표현은 기본적으로 아래의 형식을 따른다.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">{
   (<span style="color:#960050;background-color:#1e0010">매개변수</span>) -&gt; <span style="color:#960050;background-color:#1e0010">리턴타입</span> <span style="color:#66d9ef">in</span>
@@ -174,6 +175,31 @@ arr.sort(by:{<span style="color:#66d9ef">return</span> $0&gt;$1})
 </code></pre></div><p>애플의 <a href="https://developer.apple.com/documentation/swift/array/2296801-sort" target="_blank">공식 문서</a>를 보면 <strong><code>sort()</code></strong> 의 정의를 아래와 같이 설명하고 있다.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">mutating</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sort</span>(by areInIncreasingOrder: (Element, Element) <span style="color:#66d9ef">throws</span> -&gt; Bool) <span style="color:#66d9ef">rethrows</span>
 </code></pre></div><p>여기서 파라미터의 타입으로 <strong><code>(Element, Element) throws -&gt; Bool</code></strong> 이 선언된 것을 볼 수 있는데, 이는 2개의 인자를 받아 Bool 타입을 리턴하는 클로저를 해당 함수가 인자(by)로 받음을 의미한다. 클로저가 함수의 인자로 전달되는 대표적인 예인 것이다.</p>
+<p>​</p>
+<h3 id="2-2-후행-클로저-사용하기">2-2. 후행 클로저 사용하기</h3>
+<p>스위프트에서는 <strong><code>후행 클로저(Trailing Closure)</code></strong> 를 사용할 수 있다. 함수의 마지막 인자에 클로저가 위치할 때, 소괄호를 닫은 후 클로저를 작성해도 되는 것인데 클로저의 길이가 길거나 괄호 안에 모든 인자를 명시하기에 가독성이 떨어진다 싶을 때 유용하다.</p>
+<p>위의 <strong><code>sort()</code></strong> 의 인자로 클로저를 넘길 때, 후행 클로저를 사용하면 아래와 같이 코드를 작성할 수 있다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//기본 클로저</span>
+arr.sort(by:{<span style="color:#66d9ef">return</span> $0&gt;$1})
+
+<span style="color:#75715e">//후행 클로저</span>
+arr.sort(){<span style="color:#66d9ef">return</span> $0&gt;$1}
+</code></pre></div><p>또한, 하나의 클로저만 인자로 전달할 경우에는 함수의 소괄호를 생략해도 된다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">arr.sort{$0&gt;$1}
+</code></pre></div><p>​</p>
+<p>주의할 점은 후행 클로저로 사용 가능한 클로저는 <strong>전달인자의 맨 마지막에 위치한 것들만 가능하다는 점이다.</strong> 따라서 여러 개의 클로저를 인자로 전달할 경우에는 맨 마지막 클로저만 후행 클로저 형식으로 사용할 수 있다.</p>
+<p>아래와 같이 클로저를 인자로 받는 함수가 존재한다고 가정해보자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate</span>(<span style="color:#66d9ef">_</span> a: Int, <span style="color:#66d9ef">_</span> b: Int, <span style="color:#66d9ef">_</span> increment:(Int, Int)-&gt; Int,  <span style="color:#66d9ef">_</span> subtract: (Int, Int) -&gt; Int) -&gt; Int {
+  <span style="color:#66d9ef">let</span> left = increment(a,b)
+  <span style="color:#66d9ef">let</span> right = subtract(a,b)
+  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">left</span><span style="color:#f92672">+</span><span style="color:#66d9ef">right</span>
+}
+
+<span style="color:#66d9ef">var</span> result = calculate(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,{$0<span style="color:#f92672">+</span>$1},{$0<span style="color:#f92672">-</span>$1})
+print(result)
+<span style="color:#75715e">//2</span>
+</code></pre></div><p>​</p>
+<h3 id="2-3-클로저를-간단하게-표현하기">2-3. 클로저를 간단하게 표현하기</h3>
 <p>​</p>
 <h2 id="reference">Reference</h2>
 <ul>
@@ -208,7 +234,13 @@ arr.sort(by:{<span style="color:#66d9ef">return</span> $0&gt;$1})
         <nav id="TableOfContents">
   <ul>
     <li><a href="#1-클로저-개념">1. 클로저 개념</a></li>
-    <li><a href="#2-기본적인-클로저-사용">2. 기본적인 클로저 사용</a></li>
+    <li><a href="#2-클로저-사용하기">2. 클로저 사용하기</a>
+      <ul>
+        <li><a href="#2-1-기본적인-클로저-사용하기">2-1. 기본적인 클로저 사용하기</a></li>
+        <li><a href="#2-2-후행-클로저-사용하기">2-2. 후행 클로저 사용하기</a></li>
+        <li><a href="#2-3-클로저를-간단하게-표현하기">2-3. 클로저를 간단하게 표현하기</a></li>
+      </ul>
+    </li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
