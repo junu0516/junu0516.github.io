@@ -30,7 +30,7 @@
 <meta property="og:url" content="https://junu0516.github.io/posts/swift_closure/" /><meta property="og:description" content="​
 자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." />
 <meta name="twitter:description" content="​
-자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-15T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-21T15:51:29+09:00" />
+자바를 사용하다가 스위프트를 사용하면서 체감하는 제일 큰 차이는 함수형 프로그래밍의 사용인 것 같다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-15T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-22T16:10:04+09:00" />
 
 
 <style>
@@ -108,7 +108,7 @@
 </span>
 
 <span>
-    <i class="iconfont icon-sync-circle-sharp"></i>&nbsp;2022-01-21</span>
+    <i class="iconfont icon-sync-circle-sharp"></i>&nbsp;2022-01-22</span>
 
 
 <span class="custom-post-meta-tags">
@@ -258,6 +258,40 @@ arr.sort{ $0&gt;$1 }
 <li>위의 세 가지를 적용했을 때 한 줄의 실행문만 남으면 <strong><code>return</code></strong> 키워드 역시 생략 가능하다.</li>
 </ul>
 <p>​</p>
+<h2 id="3-값-획득capturing-values">3. 값 획득(Capturing Values)</h2>
+<p>스위프트에서 클로저는 주변 문맥으로부터 상수나 변수를 획득하여 이를 내부에서 참조하거나 수정할 수 있다. 이럴 경우 상수나 변수가 정의된 기존의 블록이 메모리상에 존재하지 않는다 해도 해당 상수 및 변수의 참조는 여전히 가능하다.</p>
+<p>​</p>
+<p>이러한 주변 문맥에서 값을 획득하는 것이 적용된 대표적 예가 중첩함수(내부함수)의 사용이다. 아래 코드를 통해 살펴보자</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">makeIncrementer</span>(forIncrement amount: Int) -&gt; () -&gt; Int{
+  <span style="color:#66d9ef">var</span> runningTotal=<span style="color:#ae81ff">0</span>
+  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">incrementer</span>() -&gt; Int{
+    runningTotal <span style="color:#f92672">+=</span> amount
+    <span style="color:#66d9ef">return</span> runningTotal
+  }
+  <span style="color:#66d9ef">return</span> incrementer
+}
+</code></pre></div><p><strong><code>makeIncrementer()</code></strong> 의 리턴타입은 <strong><code>()-&gt;Int</code></strong> , 즉 전달인자 없이 정수타입을 리턴하는 클로저이다. 내부에 <strong><code>incrementer()</code></strong> 이라는 함수가 선언되있고, 이는 외부에서 <strong><code>runningTotal</code></strong> 와 <strong><code>amount</code></strong> 값을 참조하여 수정된 <strong><code>runningTotal</code></strong> 값을 리턴한다. 이후 내부에 선언된 <strong><code>incrementer()</code></strong> 이 최종적으로 <strong><code>makeIncrementer()</code></strong> 의 리턴값이 된다. 함수도 클로저의 한 형태라는 점에서, 내부의 클로저가 외부로부터 변수를 획득하여 내부에서 수정한 것이다.</p>
+<p>만일, 아래와 같이 내부의 <strong><code>incrementer()</code></strong> 함수를 외부로 뺄 경우에는 겉으로만 봤을 때 문법적으로 이상한 코드가 된다. 아무런 전달 인자도 없기 때문에 내부에서 참조하고자 하는 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 의 값이 어디있는 지 모르기 때문이다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">incrementer</span>()-&gt; Int{
+  <span style="color:#75715e">//블록 내에서 runningTotal, amount값을 찾을 수 없음</span>
+  runningTotal <span style="color:#f92672">+=</span> amount
+  <span style="color:#66d9ef">return</span> runningTotal
+}
+</code></pre></div><p>하지만 <strong><code>makeIncrementer()</code></strong> 의 내부함수 형태와 같이 블록 주변에 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 가 정의되있다면 참조를 획득할 수 있다. 다시 말해, <strong><code>makeIncrementer()</code></strong> 의 호출이 끝나더라도, 내부에 있던 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 의 참조는 사라지지 않았기 때문에 이후에 <strong><code>incrementer()</code></strong> 이 호출되더라도 계속해서 사라지지 않은 기존 값을 사용할 수 있는 것이다.</p>
+<p>아래의 예를 통해 살펴보자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> incrementByTwo: (() -&gt; Int) = makeIncrementer(forIncrement: <span style="color:#ae81ff">2</span>)
+<span style="color:#66d9ef">let</span> first: Int = incrementByTwo()
+<span style="color:#66d9ef">let</span> second: Int = incrementByTwo()
+<span style="color:#66d9ef">let</span> third: Int = incrementByTwo()
+print(first)<span style="color:#75715e">//2</span>
+print(second)<span style="color:#75715e">//4</span>
+print(third)<span style="color:#75715e">//6</span>
+</code></pre></div><p><strong><code>incrementByTwo</code></strong> 는 <strong><code>runningTotal</code></strong> 값이 0인 상태에서  <strong><code>inrementer()</code></strong> 를 참조하고 있다.(함수가 객체처럼 취급되어 변수에 할당된 것이다.) 이후 <strong><code>first</code></strong> , <strong><code>second</code></strong> , <strong><code>third</code></strong> 에 <strong><code>incrementByTwo()</code></strong> 를 순서대로 호출하여 리턴한 값을 할당하면 차례 대로 2,4,6이 할당된 것을 확인할 수 있다.</p>
+<p>이는 <strong><code>incrementer()</code></strong> 이 세 번 호출된 것인데 각 차례마다 앞에서 수정된  <strong><code>runningTotal</code></strong> 값을 참조하고 있기 때문에 2-&gt;4-&gt;6의 순서대로 값이 변화한 것이다. <strong><code>makeIncrementer()</code></strong> 의 호출은 끝났지만 각각 인자와 내부에 선언된 값이던 <strong><code>amount</code></strong> 와 <strong><code>runningTotal</code></strong> 의 참조는 살아있었기 때문에 <strong><code>incrementer()</code></strong> 이 호출될 때마다 살아있던 참조값을 획득하여 다시 값을 수정한 것이다.</p>
+<p>​</p>
+<p>위에서 살펴본 값 획득 예를 통해 하나 더 알 수 있는 사실은, <strong>스위프트에서 클로저는 참조 타입(Closures are reference types)</strong> 라는 것이다.</p>
+<p><strong><code>incrementByTwo</code></strong> 라는 상수에 <strong><code>makeIncrementer()</code></strong> 이라는 함수를 할당한 것은 결국 이것이 리턴하는 클로저인 <strong><code>incrementer()</code></strong> 을 할당한 것인데, 여기서 클로저를 값으로써 할당한 것이 아닌 맨  클로저의 참조를 할당한 것이다. 따라서 상수 <strong><code>first</code></strong> , <strong><code>second</code></strong> , <strong><code>third</code></strong> 는 <strong><code>makeIncrementer()</code></strong> 이 맨 처음 리턴했던 클로저를 동일하게 가리키고 있던 것이다. 이로 인해 <strong><code>incrementer()</code></strong> 이 세 번 호출되면서 결과적으로 동일한 <strong><code>runningTotal</code></strong> , <strong><code>amount</code></strong> 이 참조하는 값을 가져와 쓸 수 있던 것임을 알 수 있다.</p>
+<p>​</p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>스위프트 프로그래밍: Swift 5(3판) - 야곰, 한빛미디어</li>
@@ -294,6 +328,7 @@ arr.sort{ $0&gt;$1 }
         <li><a href="#2-3-클로저를-간단하게-표현하기">2-3. 클로저를 간단하게 표현하기</a></li>
       </ul>
     </li>
+    <li><a href="#3-값-획득capturing-values">3. 값 획득(Capturing Values)</a></li>
     <li><a href="#reference">Reference</a></li>
   </ul>
 </nav></div>
