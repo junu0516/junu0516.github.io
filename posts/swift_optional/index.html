@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
+
+
+
+<title>옵셔널과 옵셔널 체이닝(작성중) - Junu-Devlog</title>
+
+
+
+
+<meta name="keywords" content="swift" />
+
+
+<meta property="og:title" content="옵셔널과 옵셔널 체이닝(작성중)" />
+<meta name="twitter:title" content="옵셔널과 옵셔널 체이닝(작성중)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://junu0516.github.io/posts/swift_optional/" /><meta property="og:description" content="​
+스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다." />
+<meta name="twitter:description" content="​
+스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-24T00:00:00+00:00" /><meta property="article:modified_time" content="2022-01-24T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://junu0516.github.io/assets/css/fuji.min.css" />
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<style>
+   
+    
+</style>
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='false'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme','light');
+      
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="header">
+            <a class="title-main" href="https://junu0516.github.io/">Junu-Devlog</a>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-12 float-left content custom-content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://junu0516.github.io/posts/swift_optional/">옵셔널과 옵셔널 체이닝(작성중)</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span>
+    <i class="iconfont icon-today-sharp"></i>&nbsp;2022-01-24
+</span>
+
+
+
+<span class="custom-post-meta-tags">
+    <i class="iconfont icon-pricetags-sharp"></i>&nbsp;
+    <a href="/tags/swift">swift</a>&nbsp;
+</span>
+<span class="custom-post-meta-categories">
+    <i class="fas fa-file-alt"></i>&nbsp;
+    <a href="/categories/swiftios">Swift&amp;Ios</a>&nbsp;
+</span>
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>​</p>
+<p>스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다.</p>
+<img src="https://assets.alexandria.raywenderlich.com/books/sa/images/29222ecc50ebce9ea64b63614c7c08a055137e27842d7ce26afd1b3526413dbd/original.png" alt="image" style="zoom:40%"/>    
+<h2 id="1-옵셔널optional">1. 옵셔널(Optional)</h2>
+<h3 id="1-1-옵셔널-선언하기">1-1. 옵셔널 선언하기</h3>
+<p>스위프트의 주요 특징 중 하나로 <strong><code>안전성(Safety)</code></strong> 를 꼽을 수 있다. 스위프트는 엄격한 문법을 통해 개발자가 일으킬 수 있는 각종 실수를 방지하는데, 대표적인 것이 <strong><code>옵셔널(Optional)</code></strong> 이다. 이전에 자바로 개발을 하다보면 런타임 도중 <strong><code>NullPointerException</code></strong> 이 발생하는 경우가 많았다. 자바의 경우 변수에 null이 할당되어도 컴파일하는 데는 문제가 없다. 하지만 스위프트에서 일반적인 변수에  <strong><code>nil</code></strong> 을 값으로 할당하면 컴파일 시점에 오류가 발생한다. 이런 상황에서 <strong>값이 있을 수도 있고, 없을 수도 있는</strong> 변수의 선언에 사용되는 것이 옵셔널이다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str1: String = <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">//값이 &#34;&#34;이지만, nil은 아님</span>
+<span style="color:#66d9ef">var</span> str2: String = <span style="color:#66d9ef">nil</span> <span style="color:#75715e">//컴파일 오류</span>
+</code></pre></div><p>위와 같은 코드에서 str2과 같이 변수를 선언하면 컴파일 오류가 발생한다. 만일 여기에 값이 있을 수도 있고, 없을 수도 있는 경우라면 옵셔널을 선언해야 한다.</p>
+<p>옵셔널의 선언은 <strong><code>Optional&lt;T&gt;</code></strong> 혹은 타입 끝에 <strong><code>?</code></strong> 을 붙이는 식으로 타입을 선언하며, 위의 경우에는 아래와 같이 옵셔널을 선언하면 된다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str2: Optional&lt;String&gt;
+<span style="color:#66d9ef">var</span> str3: String?
+</code></pre></div><p>​</p>
+<h3 id="1-2-옵셔널-추출하기optional-unwrapping">1-2. 옵셔널 추출하기(Optional Unwrapping)</h3>
+<p>옵셔널에 있는 값을 추출하는 방식은 크게 <strong>강제로 추출하는 것</strong> 과 <strong><code>옵셔널 바인딩</code></strong> 을 통해 추출하는 것이 있다.</p>
+<p>옵셔널의 <strong><code>강제 추출(Forced Unwrapping)</code></strong> 은 제일 간단한 방식으로 옵셔널 값 끝에 <strong><code>!</code></strong> 를 붙여주면 된다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str3: String?
+<span style="color:#66d9ef">var</span> unwrapped: String = str3! 
+</code></pre></div><p>위의 코드에서 unwrapped에 str3의 옵셔널에 있는 문자열 값을 강제로 추출하였다. 하지만 str3에 아무런 값을 할당하지 않았기 때문에 추출된 값은 <strong><code>nil</code></strong> 이다. 따라서 위의 코드는 컴파일은 정상적으로 될 지 몰라도, 런타임 시점에 오류가 발생하게 되는 코드이다. 오류가 발생하지 않으려면 아래와 같이 nil이 아닌 값을 할당한 후 강제로 추출해야 한다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str3: String?
+str3 = <span style="color:#e6db74">&#34;String&#34;</span>
+<span style="color:#66d9ef">var</span> unwrapped = str3!
+print(str3) <span style="color:#75715e">//String</span>
+</code></pre></div><p>즉, 옵셔널의 강제 추출은 위와 같이 <strong>nil인 값을 강제로 추출할 경우 런타임 시점에 오류가 발생할 수 있는</strong> 위험이 존재하기 때문에 주의해야 한다.</p>
+<p>​</p>
+<p><strong><code>옵셔널 바인딩(Optional Binding)</code></strong> 은 강제 추출보다 안전하게 값을 추출하는 방식이다. <strong>조건문을 통해 추출할 값이 nil인 지를 먼저 확인 하고, 아닐 경우에만 값을 추출하는 것</strong> 이라고 보면 된다. 아래의 코드를 통해 살펴보자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str4: String? = <span style="color:#e6db74">&#34;Some String&#34;</span>
+<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> unwrapped = str4{
+  print(unwrapped)
+}<span style="color:#66d9ef">else</span>{
+  print(<span style="color:#e6db74">&#34;nil&#34;</span>)
+}
+</code></pre></div><p>임시로 상수(<strong><code>let</code></strong>) unwrapped를 선언한 후, 조건문을 통해 nil이 아닌 경우에는 문자열 값을 출력하는 코드이다. 만일 unwrapped가 상수가 아닌 변수(<strong><code>var</code></strong>) 인 경우에는 블록 안에서 값을 변경할 수 있다.</p>
+<p>여러 개의 옵셔널 값을 추출하는 경우에는 아래와 같이  <strong><code>,</code></strong> 를 통해 옵셔널 변수들을 열거하고 블록 안에서 여러 개의 값을 한 번에 처리할 수 있다.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> nameOpt: String? = <span style="color:#e6db74">&#34;Jed&#34;</span>
+<span style="color:#66d9ef">var</span> ageOpt: Int? = <span style="color:#ae81ff">28</span>
+
+<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">var</span> name = nameOpt, <span style="color:#66d9ef">var</span> age = ageOpt{
+  age <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+  print(<span style="color:#e6db74">&#34;name: </span><span style="color:#e6db74">\(</span>name<span style="color:#e6db74">)</span><span style="color:#e6db74">, age: </span><span style="color:#e6db74">\(</span>age<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+} 
+</code></pre></div><p>​</p>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>스위프트 프로그래밍: Swift 5(3판) - 야곰, 한빛미디어</li>
+</ul>
+
+    </div>
+    <hr>
+    <script src="https://utteranc.es/client.js"
+        repo="junu0516/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-옵셔널optional">1. 옵셔널(Optional)</a>
+      <ul>
+        <li><a href="#1-1-옵셔널-선언하기">1-1. 옵셔널 선언하기</a></li>
+        <li><a href="#1-2-옵셔널-추출하기optional-unwrapping">1-2. 옵셔널 추출하기(Optional Unwrapping)</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode" style="display: none;">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages" style="display: none;">
+        <h3>Pages</h3>
+        <ul>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links" style="display: none;">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/junu0516" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Linkedin</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>Instagram</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags" style="display: none;">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/java/">java</a>
+            </span>
+            
+            <span>
+                <a href="/tags/spring/">spring</a>
+            </span>
+            
+            <span>
+                <a href="/tags/swift/">swift</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
+            </span>
+            
+            <span>
+                <a href="/tags/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">자료구조</a>
+            </span>
+            
+        </div>
+    </div>
+
+    
+    <div class="sidebar-item sidebar-tags" >
+        <h3>Categories</h3>
+        <ul style="list-style: none !important;">
+            
+            <li>
+                <a href="/categories/computer-science/">Computer Science</a>
+            </li>
+            
+            <li>
+                <a href="/categories/javaspring/">Java&amp;Spring</a>
+            </li>
+            
+            <li>
+                <a href="/categories/swiftios/">Swift&amp;Ios</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022
+                <a href="https://junu0516.github.io/"></a>
+                
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

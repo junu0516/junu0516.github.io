@@ -6,7 +6,17 @@
     <description>Recent content in swift on Junu-Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 15 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/tags/swift/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 24 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/tags/swift/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>옵셔널과 옵셔널 체이닝(작성중)</title>
+      <link>https://junu0516.github.io/posts/swift_optional/</link>
+      <pubDate>Mon, 24 Jan 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/posts/swift_optional/</guid>
+      <description>​
+스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다.</description>
+    </item>
+    
     <item>
       <title>스위프트 클로저 개념 정리</title>
       <link>https://junu0516.github.io/posts/swift_closure/</link>
