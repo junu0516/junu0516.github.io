@@ -179,8 +179,14 @@
 <h2 id="3-system-calls">3. System Calls</h2>
 <p><img src="https://user-images.githubusercontent.com/68586291/138590591-08befe07-22e7-4e7e-bed1-76f34bceffbb.png" alt="image" style="zoom:150%;" /></p>
 <ul>
-<li><strong>시스템 호출</strong> 로 해석하며, 운영체제의 <strong><code>커널(kernel)</code></strong> 이 제공하는 서비스에 대해, 응용 프로그램의 여러 요청에 따른 커널 접근을 위한 인터페이스를 말함</li>
-<li>보통 C, C++과 같은 언어로 쓰여있으며, 일부 low-level task에 대해서는 어셈블리어로 쓰여있기도 함
+<li>
+<p><strong>시스템 호출</strong> 로 해석하며, 운영체제의 <strong><code>커널(kernel)</code></strong> 이 제공하는 서비스에 대해, 응용 프로그램의 여러 요청에 따른 커널 접근을 위한 인터페이스를 말함</p>
+<ul>
+<li>쉽게 말해 사용자 모드에서 커널 모드로 전환해서 커널에 접근하는 것</li>
+</ul>
+</li>
+<li>
+<p>보통 C, C++과 같은 언어로 쓰여있으며, 일부 low-level task에 대해서는 어셈블리어로 쓰여있기도 함</p>
 <ul>
 <li><strong><code>어셈블리어(Assembly Language)</code></strong> : 기계어와 1:1 대응이 되는 저급 언어로, 컴퓨터 구조에 따라 상이함</li>
 </ul>
@@ -245,7 +251,7 @@
 <p><strong>프로세스 컨트롤(Process Control)</strong></p>
 <ul>
 <li>
-<p>프로세스를 실행하거나 종료하는 일을 수행함</p>
+<p>프로세스를 실행하거나 종료하는 일을 수행하며 <strong><code>fork()</code></strong> 가 실행되면 프로세스(자식 프로세스)가 생성되며, <strong><code>exec()</code></strong> 가 실행되면 프로세스를 실행하게 됨.(보통 운영체제가 시작되면 PID=1인 부모 프로세스가 실행됨)</p>
 <ul>
 <li>만일 프로그램 실행 중에 오류가 발생하면, 실행중이던 프로세스를 강제로 종료하도록 하는 시스템 호출이 일어나며 명령어 인터프리터(command interpreter)로 하여금 다음 명령을 읽어들여 수행하도록 유도하는 것</li>
 <li>때때로 오류가 발생하면 메모리 덤프(dump of memory)를 뜨고 디버거(debugger)에 의해 해당 에러에 대한 분석이 일어날 수도 있음</li>
@@ -354,7 +360,7 @@
 <ul>
 <li><strong>File Management</strong> : 파일 혹은 디렉토리의 생성, 읽기, 수정, 복사 등의 행위에 관한 것들</li>
 <li><strong>Status information</strong> : 레지스트리와 같은 설정 및 상태 정보를 저장하고 운용하는 것들</li>
-<li><strong>File modificatio</strong> : md, properties 등의 확장자를 지닌 파일을 메모장과 같은 에디터 프로그램을 통해 수정하는 것을 생각하면 됨</li>
+<li><strong>File modification</strong> : md, properties 등의 확장자를 지닌 파일을 메모장과 같은 에디터 프로그램을 통해 수정하는 것을 생각하면 됨</li>
 <li><strong>Programming-language support</strong> : 일반적인 프로그래밍 언어를 위한 컴파일러나 인터프리터, 혹은 디버거 등을 운영체제가 제공하기도 함</li>
 <li><strong>Program loading and execution</strong> : 프로그램의 실행을 위해, 정적인 코드 덩어리 상태의 프로그램을 메모리에 올려 실행 가능한 상태로 하는 것</li>
 <li><strong>Communications</strong> : 프로세스들, 유저들, 혹은 다른 컴퓨터 시스템들 간의 가상 연결 등과 같은 매커니즘을 제공하는 프로그램들</li>
