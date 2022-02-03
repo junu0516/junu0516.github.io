@@ -30,7 +30,7 @@
 <meta name="twitter:title" content="Operating System Concepts - Chapter 4 요약" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://junu0516.github.io/posts/os_chapter4/" /><meta property="og:description" content="공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." />
-<meta name="twitter:description" content="공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-02-02T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-03T19:34:22+09:00" />
+<meta name="twitter:description" content="공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-02-02T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-03T19:35:14+09:00" />
 
 
 <style>
@@ -172,7 +172,7 @@
 </ul>
 <br>
 <h2 id="2-multicore-programming">2. Multicore Programming</h2>
-<img src="https://user-images.githubusercontent.com/68586291/152324481-74fe6a45-d0f3-47f3-896b-993399ffcbf4.png" alt="image" style="zoom:80%"/>
+<img src="https://user-images.githubusercontent.com/68586291/152324481-74fe6a45-d0f3-47f3-896b-993399ffcbf4.png" alt="image" style="zoom:85%"/>
 <ul>
 <li>
 <p>멀티코어(<strong><code>multicore</code></strong>) 시스템은 하나의 칩(<strong><code>processing chip</code></strong>)에 여러 개의 코어(<strong><code>computing cores</code></strong>) 가 붙어 있는 구조로, 여기서 <strong>운영체제는 각각의 코어를 개별적인 CPU 자원으로 인식하게 됨</strong></p>
@@ -194,7 +194,91 @@
 </ul>
 <p>​</p>
 <h3 id="2-1-programming-challenges">2-1. Programming Challenges</h3>
+<blockquote>
+<p>멀티 코어 시스템 환경에서 직면하게 되는 5가지 문제들</p>
+</blockquote>
+<img src="https://user-images.githubusercontent.com/68586291/152369336-f180a533-2706-4aea-80cf-e4c67777830f.png" alt="image" style="zoom:85%"/>
+<ul>
+<li>
+<p><strong>작업의 정의(Identifying tasks)</strong> : 여러 독립적인 작업들을 병렬로 처리하고자 할 때, 어플리케이션의 작업 전체를 어떤 기준으로 어떻게 동시적인 작업 단위로 분할할 것인 지를 정의해야 함</p>
+</li>
+<li>
+<p><strong>균형(Balance)</strong>  : 분리된 개별 작업들은 동일한 값의 동등한 양의 작업을 수행하는 구조여야 함</p>
+<p>(<em>Programmers must also ensure that the tasks perform equal work of equal value.</em>)</p>
+</li>
+<li>
+<p><strong>데이터 분할(Data splitting)</strong> : 어플리케이션의 전체 작업이 개별 작업 단위로 나뉘면, 나뉜 작업들이 접근하고 다루는 데이터 또한 각각의 코어에서 다룰 수 있도록 나뉘어야 함</p>
+</li>
+<li>
+<p><strong>데이터 의존성(Data dependency)</strong> : 분할된 작업들에 의해 다뤄지는 데이터는, 이것이 <strong>두 개이상의 작업에 의존적인 지를 반드시 고려해야 하며,</strong> 하나의 작업이 다른 작업이 다루는 데이터에 접근할 경우에는 작업들 간의 순를 명확히 함으로써(<strong><code>synchronized</code></strong>) <strong>데이터의 상태가 항상 최신을 유지할 수 있어야 함</strong></p>
+</li>
+<li>
+<p><strong>테스트 및 디버깅(Testing and Debugging)</strong> : 싱글 스레드보다 멀티 스레드 환경에서의 디버깅이 훨씬 까다롭고 어려움</p>
+</li>
+</ul>
 <p>​</p>
+<h3 id="2-2-types-of-parallelism">2-2. Types of Parallelism</h3>
+<blockquote>
+<p>데이터 측면의 병렬성과, 작업 측면의 병렬성에 대해 각각 알아보도록 한다.</p>
+</blockquote>
+<img src="https://user-images.githubusercontent.com/68586291/152370173-1acbc1e1-0b04-4975-a725-c9b57afdf401.png" alt="image" style="zoom:82%"/>
+<h4 id="data-parallelism">Data parallelism</h4>
+<ul>
+<li>
+<p>각각의 코어에 동일한 데이터를 배분하여 모두 같은 작업을 수행하는 개념</p>
+<p>(<em>Distributing subsets of the same data across multiple computing cores and performing the same oepration on each core.</em>)</p>
+</li>
+<li>
+<p>예를 들어 1부터 10까지의 합계를 구하는 작업을 수행하고자 할 때, 싱글 스레드라면 반복문을 통해 1부터 10까지 차례대로 더하면 되지만 2개의 스레드로 이를 병렬처리하면 하나는 1부터 5까지, 나머지는 6부터 10까지 더한 후 합하면 됨</p>
+</li>
+</ul>
+<h4 id="task-parallelism">Task parallelism</h4>
+<ul>
+<li>
+<p>데이터가 아닌 스레드로 대표되는 작업 자체를 코어에 배분하여 작업을 수행하는 개념으로 각각의 스레드는 독자적인 작업(unique operation)을 수행함</p>
+<p>(<em>Distributing not data but tasks(threads) across multiple computing cores</em>)</p>
+</li>
+<li>
+<p>위와 달리 각기 다른 스레드가 동일한 데이터에 접근하는 상황도 포함함</p>
+</li>
+</ul>
+<p>​</p>
+<h2 id="3-multithreading-models">3. Multithreading Models</h2>
+<img src="https://user-images.githubusercontent.com/68586291/152375035-b6fd30a1-f195-4723-a321-20fa9a0d0441.png" alt="image" style="zoom:80%"/>
+<ul>
+<li>운영체제에서 스레드에 대한 지원은 유저 수준과 커널 수준으로 나눠볼 수 있음</li>
+<li>유저 스레드는 커널 상위 수준에서 관리되며 커널의 개입이 없는 반면, 커널 스레드는 운영체제에 의해 직접 관리됨</li>
+<li>유저 스레드와 커널 스레드 간의 관계를 크게 3가지 모델로 나눠볼 수 있음</li>
+</ul>
+<p>​</p>
+<h3 id="3-1-many-to-one-model">3-1. Many-to-One Model</h3>
+<img src="https://user-images.githubusercontent.com/68586291/152376253-6367e26c-2673-4eae-8bce-c9d9bbd6701a.png" alt="image" style="zoom:80%"/>
+<ul>
+<li>여러 개의 유저 스레드가 하나의 커널 스레드와 관계를 맺는 구조</li>
+<li>스레드의 관리는 유저 공간에 위치한 스레드 라이브러리에 의해 수행되며, 커널에의 접근이 없기 때문에 비용상 효율적임</li>
+<li>하지만 특정 스레드가 작업을 차단하는 시스템 호출을 일으킬 경우에는 전체 프로세스가 멈추게될 수도 있음</li>
+<li>커널 스레드에는 한 번에 하나의 유저 스레드만 접근할 수 있으며, 이로 인해 멀티 코어 환경에서 병렬적으로 여러 스레드의 작업을 수행하는 것이 불가능함</li>
+<li>이로 인해 멀티 코어 시스템의 이점을 살릴 수 없기 때문에 잘 사용되지 않는 모델임</li>
+</ul>
+<p>​</p>
+<h3 id="3-2-one-to-one-model">3-2. One-to-One Model</h3>
+<img src="https://user-images.githubusercontent.com/68586291/152378135-fce742ec-00a1-456c-baa9-1c62dba808e0.png" alt="image" style="zoom:80%"/>
+<ul>
+<li>여러 유저 스레드가 각각 하나의 커널 스레드에 일일히 대응되는 구조</li>
+<li>One-to-One과 비교했을 때, 하나의 스레드가 작업을 차단해도 다른 스레드가 작업을 계속해서 수행할 수 있기 때문에 동시성을 더욱 보장할 수 있음</li>
+<li>단, 하나의 유저 스레드를 생성할 때마다 이에 대응되는 커널 스레드를 일일히 만들어야 하는 퍼포먼스적인 부담이 존재함</li>
+<li>리눅스 및 윈도우 계열의 여러 운영체제에서 One-to-One을 사용하고 있음</li>
+</ul>
+<p>​</p>
+<h3 id="3-3-many-to-many-model">3-3. Many-to-Many Model</h3>
+<img src="https://user-images.githubusercontent.com/68586291/152378251-1aa1bb3a-dbcd-4cf6-b984-291dba51f7b6.png" alt="image" style="zoom: 80%"/>
+<ul>
+<li>여러 유저 스레드가 전체 유저 스레드의 양보다 같거나 작은 규모의 커널 스레드와 관계를 맺는 구조</li>
+<li>커널 스레드의 수는 특정 기계나 어플리케이션 환경에 따라 상이할 수 있음</li>
+<li>One-to-One과 비교했을 때, 동시성을 보장하면서 더 적은 양의 커널 스레드를 생성하면 되는 이점이 있음</li>
+<li>이를 변형하여 전체적으로는 Many-to-Many의 구조를 유지하면서 일부 One-to-One의 형식을 섞은  <strong><code>two-level model</code></strong> 도 존재함</li>
+<li>시스템의 향상으로 인해 코어의 개수가 많아지면서 커널 스레드의 수를 제한하는 것이 점점 덜 중요해지기 때문에 One-to-One이 사실상 더 많이 쓰이고 있음</li>
+</ul>
 <br>
 <h2 id="reference">Reference</h2>
 <ul>
@@ -233,6 +317,19 @@
     <li><a href="#2-multicore-programming">2. Multicore Programming</a>
       <ul>
         <li><a href="#2-1-programming-challenges">2-1. Programming Challenges</a></li>
+        <li><a href="#2-2-types-of-parallelism">2-2. Types of Parallelism</a>
+          <ul>
+            <li><a href="#data-parallelism">Data parallelism</a></li>
+            <li><a href="#task-parallelism">Task parallelism</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#3-multithreading-models">3. Multithreading Models</a>
+      <ul>
+        <li><a href="#3-1-many-to-one-model">3-1. Many-to-One Model</a></li>
+        <li><a href="#3-2-one-to-one-model">3-2. One-to-One Model</a></li>
+        <li><a href="#3-3-many-to-many-model">3-3. Many-to-Many Model</a></li>
       </ul>
     </li>
     <li><a href="#reference">Reference</a></li>
