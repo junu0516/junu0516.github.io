@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="google-site-verification" content="8a6komFDWW2cgpWnIAvQRdVsS-xAbXgPm7p6oGNyaKY" />
+<meta name="naver-site-verification" content="6ea919fd4c63f8bb48eca38f3530facd0e86ed38" />
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
+
+
+
+<title>Operating System Concepts - Chapter 4 요약 - Junu-Devlog</title>
+
+
+
+
+<meta name="keywords" content="운영체제" />
+
+
+<meta property="og:title" content="Operating System Concepts - Chapter 4 요약" />
+<meta name="twitter:title" content="Operating System Concepts - Chapter 4 요약" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://junu0516.github.io/posts/os_chapter4/" /><meta property="og:description" content="공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." />
+<meta name="twitter:description" content="공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-02-03T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-03T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://junu0516.github.io/assets/css/fuji.min.css" />
+
+
+
+
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-BT32LLFM07');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BT32LLFM07"></script>
+
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<style>
+   
+    
+</style>
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='false'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme','light');
+      
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="header">
+            <a class="title-main" href="https://junu0516.github.io/">Junu-Devlog</a>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-12 float-left content custom-content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://junu0516.github.io/posts/os_chapter4/">Operating System Concepts - Chapter 4 요약</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span>
+    <i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-03
+</span>
+
+
+
+<span class="custom-post-meta-tags">
+    <i class="iconfont icon-pricetags-sharp"></i>&nbsp;
+    <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C">운영체제</a>&nbsp;
+</span>
+<span class="custom-post-meta-categories">
+    <i class="fas fa-file-alt"></i>&nbsp;
+    <a href="/categories/computer-science">Computer Science</a>&nbsp;
+</span>
+    </div>
+    
+    <div class="post-content markdown-body">
+        <p>공룡책 Ch 4 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다.)</p>
+<p><img class="img-zoomable" src="https://media.wiley.com/product_data/coverImage300/66/11198003/1119800366.jpg" alt="img" />
+</p>
+<br>
+<h2 id="1-thread-overview">1. Thread Overview</h2>
+<img src="https://user-images.githubusercontent.com/68586291/152319022-c93157d6-0d13-4b96-9940-77003b2c039f.png" alt="image" style="zoom:70%"/>
+<ul>
+<li>한 번에 하나의 작업만을 수행하는 전통적 의미의 단일 프로세스는 싱글 스레드 방식이 되며, <strong>프로세스가 여러 개의 스레드를 가지게 될 경우 동시에 여러 작업을 수행할 수 있음</strong></li>
+</ul>
+<img src="https://user-images.githubusercontent.com/68586291/152320101-14875fda-5442-4441-abbe-3bea6ad7f8a8.png" alt="image" style="zoom:70%"/>
+<ul>
+<li>웹서버(<strong><code>Web Server</code></strong>)는 대표적인 멀티스레딩 구조로, 클라이언트의 여러 요청이 동시다발적으로 들어올 때 여러 스레드가 이를 동시에 처리함으로써 한 번에 하나씩 처리할 때보다 더욱 빠르게 응답할 수 있음</li>
+<li>스레드는 스레드 아이디, 프로그램 카운터(<strong><code>PC</code></strong>), 레지스터 집합(<strong><code>Register Set</code></strong>) , 스택 메모리 공간(<strong><code>Stack</code></strong>) 을 가지고 있는 프로세스 내부의 작업 실행 단위를 말함</li>
+<li>언급한 요소들을 프로세스로부터 프로세스가 개별적으로 할당받아 사용하게 되며, 이외의 코드(<strong><code>Code</code></strong>) , 전역 데이터 및 파일(<strong><code>Data</code></strong> , <strong><code>Files</code></strong> )은 여러 스레드가 공유하는 구조임</li>
+</ul>
+<p>​</p>
+<h3 id="1-1-benefits">1-1. Benefits</h3>
+<blockquote>
+<p>멀티스레딩 방식의 장점에 대해 알아보자</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>Responsiveness</strong> : 한 번에 여러 개의 작업을 처리할 수 있기 때문에 하나의 작업에 문제가 있더라도 다른 작업은 계속해서 수행할 수 있다는 점에서 높은 반응성을 보임</p>
+<p>(멀티스레딩 방식의 웹서버를 생각하면 됨)</p>
+</li>
+<li>
+<p><strong>Resource Sharing</strong> : 여러 스레드는 하나의 프로세스가 가진 메모리와 자원을 공유하며,  이를 통해 여러 스레드의 작업이 동일한 공간(<strong><code>same address space</code></strong>)에서 일어나도록 할 수 있음</p>
+</li>
+<li>
+<p><strong>Economy</strong> : 여러 스레드가 프로세스의 자원을 공유하는 방식은, 다른 작업을 수행하기 위해 별도로 프로세스를 만들고 이를 위한 <strong><code>Context-Switching</code></strong> 을 수행하는 것 보다 훨씬 경제적임</p>
+</li>
+<li>
+<p><strong>Scalability</strong> : 멀티 프로세서 구조에서 멀티 스레딩을 적용할 경우, 여러 프로세서(코어)에 각각의 스레드가 병렬적으로(paralell) 돌아가게 함으로써 더욱 확장성 높은 구조로 발전시킬 수 있음</p>
+<p>(<em>The benefits of multithreading can be even greater in a multiprocessor architecture, where threads may be running in parallel on different processing cores.</em>)</p>
+</li>
+</ul>
+<br>
+<h2 id="2-multicore-programming">2. Multicore Programming</h2>
+<img src="https://user-images.githubusercontent.com/68586291/152324481-74fe6a45-d0f3-47f3-896b-993399ffcbf4.png" alt="image" style="zoom:80%"/>
+<ul>
+<li>
+<p>멀티코어(<strong><code>multicore</code></strong>) 시스템은 하나의 칩(<strong><code>processing chip</code></strong>)에 여러 개의 코어(<strong><code>computing cores</code></strong>) 가 붙어 있는 구조로, 여기서 <strong>운영체제는 각각의 코어를 개별적인 CPU 자원으로 인식하게 됨</strong></p>
+</li>
+<li>
+<p>개별 코어는 <strong>한 번에 하나의 스레드 작업만을 처리할 수 있으며</strong> , 멀티 코어 환경에서의 동시성(<strong><code>concurrency</code></strong>) 의 의미는 결국 여러 코어에 각각의 스레드 작업을 할당하여 동시에 실행될 수 있도록 하는 것을 의미함</p>
+</li>
+<li>
+<p>여기서 병렬성(<strong><code>parallelism</code></strong>) 과 동시성(<strong><code>concurrency</code></strong>) 을 구분하여 알 필요가 있는데, 병렬성은 동시에 하나 이상의 작업을 수행할 수 있는 것을 의미하며 동시성은 여러 작업이 모두 처리될 수 있도록 여러 작업을 모두 지원하는 것을 의미함</p>
+</li>
+<li>
+<p>동시성의 경우 &lsquo;동시&rsquo;라는 것이 정말로 정확히 같은 시간에 여러 작업을 처리하는 것을 의미하는 것이 아닌, 문맥 교환(<strong><code>Context Switching</code></strong>)을 통해 여러 작업을 잘게 쪼개서 순차적으로 처리함으로써 결국 모든 작업이 고르게 실행되는 식으로 흘러가도록 하는 것을 의미함.</p>
+<ul>
+<li>따라서, 병렬성이 굳이 담보되지 않아도 동시성을 충족시키는 것이 가능함.</li>
+<li>한 번의 하나의 작업만 처리할 수 있는 상황에서 여러 프로세스 간의 잦은 문맥교환을 통해 동시성을 만족시키면, 결과적으로 모든 프로세스가 동시에 동일하게 동작하는 것 같이 보이지만 실제로 병렬 처리된 것은 아닌 것</li>
+</ul>
+<p>(<em>A concurrent system supports more than one task by allowing all the tasks to make progress. In contrast, a paralel system can perform more than one task simultaneously.</em>)</p>
+</li>
+</ul>
+<p>​</p>
+<h3 id="2-1-programming-challenges">2-1. Programming Challenges</h3>
+<p>​</p>
+<br>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>Abraham Silberschatz, Greg Gagne, Peter B. Galvin <em><strong>Operating System Concepts</strong></em> , Wiley</li>
+<li><a href="https://ko.wikipedia.org/wiki/%EB%B3%91%EB%A0%AC_%EC%BB%B4%ED%93%A8%ED%8C%85" target="_blank">위키 피디아 병렬 컴퓨팅</a></li>
+<li><a href="https://donghoson.tistory.com/21" target="_blank">멀티 코어 프로세서란? - 동커벨</a></li>
+<li><a href="https://ko.gadget-info.com/difference-between-concurrency" target="_blank">동시성과 병렬 처리의 차이점</a></li>
+</ul>
+
+    </div>
+    <hr>
+    <script src="https://utteranc.es/client.js"
+        repo="junu0516/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-thread-overview">1. Thread Overview</a>
+      <ul>
+        <li><a href="#1-1-benefits">1-1. Benefits</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-multicore-programming">2. Multicore Programming</a>
+      <ul>
+        <li><a href="#2-1-programming-challenges">2-1. Programming Challenges</a></li>
+      </ul>
+    </li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode" style="display: none;">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    <div class="sidebar-item">
+        <h3>About</h3>
+        <ul>
+            <li>
+                <img src="/img/profile.png" class="custom-profile-img-mobile">
+            </li>
+            <li style="margin-top: 5%;">
+                <a class="custom-social-link-mobile" href="https://github.com/junu0516" target="_blank"><i class="fab fa-github"></i></a>
+                <a class="custom-social-link-mobile" href="https://linkedin.com/in/junu0516/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a class="custom-social-link-mobile" href="https://instagram.com/junu0516" target="_blank"><i class="fab fa-instagram"></i></a>    
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-pages" style="display: none;">
+        <h3>Pages</h3>
+        <ul>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links" style="display: none;">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/junu0516" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Linkedin</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>Instagram</span></a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+    
+    <div class="sidebar-item sidebar-tags" >
+        <h3>Categories</h3>
+        <ul style="list-style: none !important;">
+            
+            <li>
+                <a href="/categories/computer-science/">Computer Science</a>
+            </li>
+            
+            <li>
+                <a href="/categories/javaspring/">Java&amp;Spring</a>
+            </li>
+            
+            <li>
+                <a href="/categories/swiftios/">Swift&amp;Ios</a>
+            </li>
+            
+        </ul>
+    </div>
+        
+        <div class="sidebar-item sidebar-tags" style="display: none;">
+            <h3>Tags</h3>
+            <div>
+                
+                <span>
+                    <a href="/tags/java/">java</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/spring/">spring</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/swift/">swift</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">자료구조</a>
+                </span>
+                
+            </div>
+        </div>
+    
+    
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022
+                <a href="https://junu0516.github.io/"></a>
+                
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>
