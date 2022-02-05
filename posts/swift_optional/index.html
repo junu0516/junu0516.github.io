@@ -18,7 +18,7 @@
 
 
 
-<title>[Swift] 옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining) - Junu-Devlog</title>
+<title>옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining) - Junu-Devlog</title>
 
 
 
@@ -26,13 +26,13 @@
 <meta name="keywords" content="swift" />
 
 
-<meta property="og:title" content="[Swift] 옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)" />
-<meta name="twitter:title" content="[Swift] 옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)" />
+<meta property="og:title" content="옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)" />
+<meta name="twitter:title" content="옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)" />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://junu0516.github.io/posts/swift_optional/" /><meta property="og:description" content="​
 스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다." />
 <meta name="twitter:description" content="​
-스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-24T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-05T17:35:37+09:00" />
+스위프트의 주요 특징 중 하나인 옵셔널과 옵셔널 체이닝에 대해 정리해보았다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-01-24T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-05T17:37:59+09:00" />
 
 
 <style>
@@ -114,7 +114,7 @@
 <article>
     
     <h2 class="post-item post-title">
-        <a href="https://junu0516.github.io/posts/swift_optional/">[Swift] 옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)</a>
+        <a href="https://junu0516.github.io/posts/swift_optional/">옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)</a>
     </h2>
     <div class="post-item post-meta">
         <span>
@@ -179,7 +179,7 @@ print(str3) <span style="color:#75715e">//String</span>
 } 
 </code></pre></div><p>​</p>
 <h2 id="2-옵셔널-체이닝과-빠른-종료">2. 옵셔널 체이닝과 빠른 종료</h2>
-<h3 id="2-1-옵셔널-체이닝">2-1. 옵셔널 체이닝</h3>
+<h3 id="2-1-옵셔널-체이닝optional-chaining">2-1. 옵셔널 체이닝(Optional Chaining)</h3>
 <p><strong><code>옵셔널 체이닝(Optional Chaining)</code></strong> 은 <strong>여러 옵셔널이 마치 자전거 체인처럼 서로 꼬리에 꼬리를 무는 형태로 반복 사용된 형태를 말한다.</strong> 만일 연결된 일련의 옵셔널 중 <strong>하나라도 값이 존재하지 않는다면 최종적으로 nil을 반환하게 된다.</strong></p>
 <p>아래와 같은 클래스 구조가 있다고 가정해보자.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Room</span>{
@@ -247,9 +247,9 @@ print(String(roomNumberUnwrapped!)
 }<span style="color:#66d9ef">else</span>{
     print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
 }
-</code></pre></div><p>Address-&gt;Building-&gt;Room 타입 순서로 각각의 값이 존재하는 지를 차례대로 확인한 후, 최종적으로 roomNumber이 nil인 지 확인하기 때문에 런타임 시점에 오류가 발생하지 않는다. 하지만 위의 코드는 <strong>옵셔널 바인딩을 중첩사용하는 부분에서 들여쓰기가 많이 지기 때문에 가독성 측면에서 좋지 않다.</strong></p>
+</code></pre></div><p>Address-&gt;Building-&gt;Room 타입 순서로 각각의 값이 존재하는 지를 차례대로 확인한 후, 최종적으로 roomNumber이 nil인 지 확인하기 때문에 런타임 시점에 오류가 발생하지 않을 것이다. 하지만 위의 코드는 <strong>옵셔널 바인딩을 중첩사용하는 부분에서 들여쓰기가 많이 지기 때문에 가독성 측면에서 좋지 않다.</strong></p>
 <p>​</p>
-<p>바로 여기서 옵셔널 바인딩 부분에 옵셔널 체이닝을 적용하면 코드가 훨씬 간결해진다.</p>
+<p>바로 여기서 옵셔널 바인딩 부분에 옵셔널 체이닝을 같이 적용하면 코드가 훨씬 간결해진다. <strong><code>if let {}</code></strong> 형식의 nil 체크를 일일히 할 필요 없이 옵셔널 체이닝 한 번으로 여러 번의 옵셔널 바인딩을 한 번에 끝낼 수 있다.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
 <span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
 
@@ -259,11 +259,65 @@ print(String(roomNumberUnwrapped!)
 }<span style="color:#66d9ef">else</span>{
     print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
 }
-</code></pre></div><br>
+</code></pre></div><p>​</p>
+<p>값을 받아오는 것 외에도 <strong>옵셔널 체이닝을 통해 값을 할당하는 것도 가능하다.</strong> 단, <strong>값을 읽을 때와 마찬가지로 옵셔널 체이닝 중간에 nil이 없어야 한다.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">person.address?.building?.room?.number = <span style="color:#ae81ff">1000</span>
+print(person.address?.building?.room?.number) <span style="color:#75715e">//nil</span>
+</code></pre></div><p>위의 경우에는 number까지 가기 전에 이미 address에 값이 없기 때문에  결과적으로 room 프로퍼티도 존재하지 않으므로 값을 할당할 수가 없다. 따라서 값을 할당하고자 한다면 <strong>옵셔널 체이닝상에 있는 모든 프로퍼티에 값을 할당해야 한다.</strong></p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">person.address = Address(<span style="color:#e6db74">&#34;seoul&#34;</span>)
+person.address?.building = Building(<span style="color:#e6db74">&#34;Geumho&#34;</span>)
+person.address?.building?.room = Room(<span style="color:#ae81ff">500</span>)
+person.address?.building?.room?.number = <span style="color:#ae81ff">1000</span>
+
+print(person.address?.building?.room?.number) <span style="color:#75715e">// Optional(1000)</span>
+</code></pre></div><p>​</p>
+<h3 id="2-2-빠른-종료early-exit">2-2. 빠른 종료(Early Exit)</h3>
+<p>일반적인 옵셔널 바인딩은 <strong><code>if-else</code></strong> 구문을 통해 특정 조건을 만족하는 경우와, 그렇지 않은 경우에 대한 처리를 각각 해준다. 하지만 조건에 부합하지 않을 경우 해당 코드 블록을 좀 더 빠르게 종료하고자 한다면  <strong><code>guard</code></strong> 키워드를 사용하는 것이 더욱 유리하다. <strong><code>guard</code></strong> 구문은 <strong><code>guard-else</code></strong> 형식을 사용하게 되며, 반드시 조건에 부합하지 않는 경우를 명시한 else 구문이 뒤따라와야 한다.</p>
+<p>아래의 형식으로 <strong><code>guard</code></strong>  를 사용하면 되며, 만일 Bool타입 값이 false인 경우에는 해당 코드 블록을 종료하는 실행문과 같은 코드를 작성함으로써 <strong>조건에 부합하지 않을 때 바로 실행을 종료하도록 처리할 수 있다.</strong></p>
+<pre tabindex="0"><code>guard (Bool 타입 값) else{
+    //조건에 부합하지 않을 경우 실행문
+}
+</code></pre><p>​</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// if-else</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0.</span>..<span style="color:#ae81ff">3</span>{
+  <span style="color:#66d9ef">if</span> i == <span style="color:#ae81ff">2</span> {
+    print(i)
+  }<span style="color:#66d9ef">else</span>{
+    <span style="color:#66d9ef">continue</span>
+  }
+}
+
+<span style="color:#75715e">// guard</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0.</span>..<span style="color:#ae81ff">3</span>{
+  <span style="color:#66d9ef">guard</span> i == <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">else</span>{
+    <span style="color:#66d9ef">continue</span>
+  }
+  print(i)
+}
+</code></pre></div><p>위의 코드는 실제로 같은 기능을 수행하는 코드에서  <strong><code>if-else</code></strong> 와 <strong><code>guard</code></strong> 를 사용했을 때의 차이를 보여주는 예시이다. 후자의 경우 i가 2가 아닐 경우에는 <strong>다른 구문을 실행하지 않고 그즉시 해당 분기를 즉시 건너 뛰도록(continue) 처리할 수 있으며, 굳이 조건을 만족하는 경우와 그렇지 않은 경우를 모두 일일히 명시할 필요가 없어 가독성 측면에서 더욱 유리하다.</strong></p>
+<p>​</p>
+<p>그렇다면 2-1에서 사용했던 <strong><code>if-else</code></strong> 형식으로 선언된 옵셔널 바인딩 + 옵셔널 체이닝을 <strong><code>guard</code></strong> 구문으로 바꿔보도록 하자.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
+<span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
+
+<span style="color:#75715e">//옵셔널바인딩 + 옵셔널체이닝에 guard 적용</span>
+<span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> roomNumber: Int = person.address?.building?.room?.number <span style="color:#66d9ef">else</span>{
+  print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
+  <span style="color:#75715e">//값이 존재하지 않을 경우 바로 실행 종료</span>
+  <span style="color:#66d9ef">return</span>
+}
+print(roomNumber)
+</code></pre></div><p>옵셔널 체이닝상의 모든 옵셔널을 차례대로 언래핑(<strong><code>unwrapping</code></strong>) 하면서 하나라도 값이 없을 경우에는 바로 <strong><code>else</code></strong> 뒤의 예외 처리 구문을 실행한 후 해당 블록을 실행 종료한다.</p>
+<p>단, <strong><code>if-esle</code></strong> 와 다른 점은 <strong><code>guard</code></strong> 구문은 <strong><code>return</code></strong> , <strong><code>break</code></strong> , <strong><code>continue</code></strong> , <strong><code>throw</code></strong> 등의 <strong>제어문 전환 명령어를 사용할 수 있는 상황에서만 사용해야 한다.</strong> 즉, 함수와 같은 구문을 감싸고 있는 {} 코드블록이 반드시 존재해야 하는 것이다.</p>
+<p>만일 바로 위의 예시 코드를 코드 블록으로 감싸져 있지 않은 채로 외부에 <strong><code>return</code></strong> 없이 선언하게 되면 아래와 같은 컴파일 오류를 확인할 수 있을 것이다.</p>
+<pre tabindex="0"><code>guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
+</code></pre><br>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>스위프트 프로그래밍: Swift 5(3판) - 야곰, 한빛미디어</li>
+<li><a href="https://seons-dev.tistory.com/132" target="_blank">Swift: 기초문법 [Unwrapping with guard] - 서근 개발노트</a></li>
 </ul>
+<p>​</p>
 
     </div>
     <hr>
@@ -294,7 +348,8 @@ print(String(roomNumberUnwrapped!)
     </li>
     <li><a href="#2-옵셔널-체이닝과-빠른-종료">2. 옵셔널 체이닝과 빠른 종료</a>
       <ul>
-        <li><a href="#2-1-옵셔널-체이닝">2-1. 옵셔널 체이닝</a></li>
+        <li><a href="#2-1-옵셔널-체이닝optional-chaining">2-1. 옵셔널 체이닝(Optional Chaining)</a></li>
+        <li><a href="#2-2-빠른-종료early-exit">2-2. 빠른 종료(Early Exit)</a></li>
       </ul>
     </li>
     <li><a href="#reference">Reference</a></li>
