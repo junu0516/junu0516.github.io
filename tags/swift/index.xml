@@ -8,7 +8,7 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 24 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/tags/swift/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>옵셔널과 옵셔널 체이닝</title>
+      <title>[Swift] 옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)</title>
       <link>https://junu0516.github.io/posts/swift_optional/</link>
       <pubDate>Mon, 24 Jan 2022 00:00:00 +0000</pubDate>
       
