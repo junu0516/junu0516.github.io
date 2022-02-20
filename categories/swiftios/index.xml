@@ -6,7 +6,16 @@
     <description>Recent content in Swift&amp;iOS on Junu-Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 24 Jan 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/categories/swiftios/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 19 Feb 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/categories/swiftios/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>스위프트의 Delegate Pattern 정리(작성중)</title>
+      <link>https://junu0516.github.io/posts/swift_delegate/</link>
+      <pubDate>Sat, 19 Feb 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/posts/swift_delegate/</guid>
+      <description>스위프트로 다양한 ViewController을 다루면서 Delegate Procotol이라는 개념을 처음 접하게 되었다. 간단히 말해 특정 이벤트나 액션이 일어나면, 미리 위임자로 지정된 delegate object가 다른 객체를 대신해 특정 행위를 하게되는 형태를 의미한다.</description>
+    </item>
+    
     <item>
       <title>옵셔널(Optional)과 옵셔널 체이닝(Optional Chaining)</title>
       <link>https://junu0516.github.io/posts/swift_optional/</link>

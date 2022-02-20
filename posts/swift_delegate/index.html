@@ -18,17 +18,19 @@
 
 
 
-<title>Junu-Devlog</title>
+<title>스위프트의 Delegate Pattern 정리(작성중) - Junu-Devlog</title>
 
 
 
 
-<link rel="alternate" type="application/rss+xml" href="https://junu0516.github.io/index.xml" title="Junu-Devlog" />
+<meta name="keywords" content="swift" />
 
-<meta property="og:title" content="Junu-Devlog" />
-<meta name="twitter:title" content="Junu-Devlog" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://junu0516.github.io/" /><meta name="twitter:card" content="summary" /><meta property="og:updated_time" content="2022-02-20T23:16:35+09:00" />
+
+<meta property="og:title" content="스위프트의 Delegate Pattern 정리(작성중)" />
+<meta name="twitter:title" content="스위프트의 Delegate Pattern 정리(작성중)" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://junu0516.github.io/posts/swift_delegate/" /><meta property="og:description" content="스위프트로 다양한 ViewController을 다루면서 Delegate Procotol이라는 개념을 처음 접하게 되었다. 간단히 말해 특정 이벤트나 액션이 일어나면, 미리 위임자로 지정된 delegate object가 다른 객체를 대신해 특정 행위를 하게되는 형태를 의미한다." />
+<meta name="twitter:description" content="스위프트로 다양한 ViewController을 다루면서 Delegate Procotol이라는 개념을 처음 접하게 되었다. 간단히 말해 특정 이벤트나 액션이 일어나면, 미리 위임자로 지정된 delegate object가 다른 객체를 대신해 특정 행위를 하게되는 형태를 의미한다." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-02-19T00:00:00+00:00" /><meta property="article:modified_time" content="2022-02-19T00:00:00+00:00" />
 
 
 <style>
@@ -107,145 +109,57 @@
             
             <div class="col-12 col-md-12 float-left content custom-content">
                 
-
-
-
-<div class="post">
-    <h3 class="post-item post-title">
-        <a href="https://junu0516.github.io/posts/os_chapter1/">Operating System Concepts - Chapter 1 요약</a>
-    </h3>
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://junu0516.github.io/posts/swift_delegate/">스위프트의 Delegate Pattern 정리(작성중)</a>
+    </h2>
     <div class="post-item post-meta">
         <span>
-    <i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-21
-</span>
-
-<span>
-    <i class="iconfont icon-sync-circle-sharp"></i>&nbsp;2022-01-25</span>
-
-
-<span class="custom-post-meta-tags">
-    <i class="iconfont icon-pricetags-sharp"></i>&nbsp;
-    <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C">운영체제</a>&nbsp;
-</span>
-<span class="custom-post-meta-categories">
-    <i class="fas fa-file-alt"></i>&nbsp;
-    <a href="/categories/computer-science">Computer Science</a>&nbsp;
-</span>
-    </div>
-    <div class="post-item post-summary markdown-body" onclick="location.href='https:\/\/junu0516.github.io\/posts\/os_chapter1\/';">
-        공룡책 Ch 1 요약 (원서를 읽고 요약하는 과정에서 잘못된 내용이 있을 수 있습니다.
-    </div>
-</div>
-
-<div class="post">
-    <h3 class="post-item post-title">
-        <a href="https://junu0516.github.io/posts/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%EC%9D%98_di%EC%99%80_ioc/">Spring DI와 IoC</a>
-    </h3>
-    <div class="post-item post-meta">
-        <span>
-    <i class="iconfont icon-today-sharp"></i>&nbsp;2021-09-20
+    <i class="iconfont icon-today-sharp"></i>&nbsp;2022-02-19
 </span>
 
 
 
 <span class="custom-post-meta-tags">
     <i class="iconfont icon-pricetags-sharp"></i>&nbsp;
-    <a href="/tags/spring">spring</a>&nbsp;
-    <a href="/tags/java">java</a>&nbsp;
+    <a href="/tags/swift">swift</a>&nbsp;
 </span>
 <span class="custom-post-meta-categories">
     <i class="fas fa-file-alt"></i>&nbsp;
-    <a href="/categories/javaspring">Java&amp;Spring</a>&nbsp;
+    <a href="/categories/swiftios">Swift&amp;iOS</a>&nbsp;
 </span>
     </div>
-    <div class="post-item post-summary markdown-body" onclick="location.href='https:\/\/junu0516.github.io\/posts\/%EC%8A%A4%ED%94%84%EB%A7%81%EC%97%90%EC%84%9C%EC%9D%98_di%EC%99%80_ioc\/';">
-        Spring DI와 IoC의 개념에 대해 알아보자.
-1. DI(Dependency Injection, 의존성 주입) DI(Dependency Injection) 은 스프링 프레임워크의 의존성 주입을 일컫는 말로, 특정 객체를 미리 생성 후 주입하는 것을 말한다.
+    
+    <div class="post-content markdown-body">
+        <p>스위프트로 다양한 ViewController을 다루면서 Delegate Procotol이라는 개념을 처음 접하게 되었다. 간단히 말해 특정 이벤트나 액션이 일어나면, 미리 위임자로 지정된 delegate object가 다른 객체를 대신해 특정 행위를 하게되는 형태를 의미한다. 신기하면서도 매우 생소하게 다가오는 개념이라 한 번 다시 정리해보고자 한다..!</p>
+<img src="https://user-images.githubusercontent.com/68586291/154847216-f3efbd1c-92ab-4bab-99e7-1598baa6f222.png" alt="image" style="zoom:70%;"/>
+<h2 id="reference">Reference</h2>
+
     </div>
-</div>
-<div class="pagination"><div class="pag-first">
-    <a href="/"><i class="iconfont icon-caret-back-circle-sharp"></i></a>
-  </div><div class="pag-previous">
-    <a href="/page/2/"><i class="iconfont icon-chevron-back-circle-sharp"></i></a>
-  </div><div class="pag-item">
-    <a href="/">1</a>
-  </div><div class="pag-item">
-    <a href="/page/2/">2</a>
-  </div><div class="pag-item pag-current">
-    <a href="/page/3/">3</a>
-  </div></div>
+    <hr>
+    <script src="https://utteranc.es/client.js"
+        repo="junu0516/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+
+
+
+
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
     
     
-    <div class="sidebar-item">
-        <h3>About</h3>
-        <div class="custom-profile-imgbox">
-            <img src="/img/profile.png" class="custom-profile-img">
-        </div>
-        <div class="custom-social-link-box">
-            <a class="custom-social-link" href="https://github.com/junu0516" target="_blank"><i class="fab fa-github"></i></a>
-            <a class="custom-social-link" href="https://linkedin.com/in/junu0516/" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a class="custom-social-link" href="https://instagram.com/junu0516" target="_blank"><i class="fab fa-instagram"></i></a>    
-        </div>
-    </div>
-    
-    <div class="sidebar-item">
-        <h3>Categories</h3>
-        <div>
-            <ul>
-                
-                <li>
-                    <a href="/categories/computer-science/">Computer Science</a>
-                </li>
-                
-                <li>
-                    <a href="/categories/javaspring/">Java&amp;Spring</a>
-                </li>
-                
-                <li>
-                    <a href="/categories/swiftios/">Swift&amp;iOS</a>
-                </li>
-                
-            </ul>            
-        </div>
-    </div>
-    <br>
-    
-    <div class="sidebar-item sidebar-tags custom-tags">
-        <h3>Tags</h3>
-        <div>
-            
-            <span>
-                <a href="/tags/java/">java</a>
-            </span>
-            
-            <span>
-                <a href="/tags/spring/">spring</a>
-            </span>
-            
-            <span>
-                <a href="/tags/swift/">swift</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
-            </span>
-            
-            <span>
-                <a href="/tags/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">자료구조</a>
-            </span>
-            
-        </div>
-    </div>
- 
-    <br><br></b>
-    
-    
+    <div class="sidebar-item sidebar-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
 </aside>
 
         </div>
@@ -356,6 +270,8 @@
                 
             </div>
         </div>
+    
+    
     
     
   </div>
