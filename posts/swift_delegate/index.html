@@ -172,7 +172,7 @@
     }
 }
 </code></pre></div><p>위의 코드는 이러한 지침을 적용해서 작성한 간단한 ViewController 클래스 코드이다. 작성한  <strong><em>imagePicker.delegate = self</em></strong>  는 클래스가 가지고 있는 UIImagePickerController 인스턴스의 <strong><code>delegate object</code></strong> 가 자기 자신(MyViewController)이 될 것임을 의미한다. 또한 이를 위해 해당 클래스가  <strong><code>UIImageControllerDelegate</code></strong> 을 채택하고 있음을 명시하였다.</p>
-<p>이후 선택 버튼(selectButton)을 누르면 미리 지정해둔 <strong><code>selectedButtonTouched</code></strong> 액션 메소드가 실행되면서 화면에 사진선태</p>
+<p>이후 선택 버튼(selectButton)을 누르면 미리 지정해둔 <strong><code>selectedButtonTouched</code></strong> 액션 메소드가 실행되면서 화면에 사진선택을 위한 창이 뜨게 된다.</p>
 <p>​</p>
 <h3 id="1-2-uiimagepickercontrollerdelegate">1-2. UIImagePickerControllerDelegate</h3>
 <p>그렇다면 채택한 <strong><code>UIImageControllerDelegate</code></strong> 프로토콜은 구체적으로 무슨 역할을 하는 걸까?</p>
