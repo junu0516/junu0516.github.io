@@ -140,8 +140,9 @@
 </blockquote>
 <br>
 <h2 id="1-http-메시지-구조">1. Http 메시지 구조</h2>
-<pre tabindex="0"><code>모든 Http 통신에서의 정보는 Http 메시지로부터 나온다!
-</code></pre><ul>
+<pre><code>모든 Http 통신에서의 정보는 Http 메시지로부터 나온다!
+</code></pre>
+<ul>
 <li>Http 프로토콜이라고 하면 보통 서버/클라이언트 모델을 따르는 네트워크 프로토콜을 일컫음</li>
 <li>서버와 클라이언트는 각각 요청 &amp; 응답(Request, Response)를 통해 서로 정보를 주고받음</li>
 <li>Http는 <strong>비연결 지향(Connectionless)</strong> 적인 특징으로 인해, 일단 클라이언트가 보낸 요청에 대해 응답이 오면 연결을 끊음
@@ -182,8 +183,9 @@
 <ul>
 <li>
 <p><strong>리퀘스트 라인(요청 라인)</strong> : 요청에 사용될 메소드(GET, POST 등)와 요청 URI, 그리고 사용되는 HTTP 버전 정보가 명시되어 있음</p>
-<pre tabindex="0"><code>GET/search HTTP/1.1 
-</code></pre></li>
+<pre><code>GET/search HTTP/1.1 
+</code></pre>
+</li>
 </ul>
 </li>
 <li>
@@ -191,13 +193,15 @@
 <ul>
 <li>
 <p><strong>상태 라인(응답 라인)</strong> : 리스폰스 결과를 나타내는 상태코드와 설명, 그리고 사용된 HTTP 버전 정보가 명시되어 있음</p>
-<pre tabindex="0"><code>HTTP/1.1 200 OK
-</code></pre></li>
+<pre><code>HTTP/1.1 200 OK
+</code></pre>
+</li>
 <li>
 <p><strong>keep-alive 헤더</strong> : 아래와 같이 명시되며, 연결을 계속 유지하겠다는 것을 의미함(HTTP 1.1부터 기본적으로 동작)</p>
-<pre tabindex="0"><code>Connection:Keep-Alive
+<pre><code>Connection:Keep-Alive
 Keep-Alive: timeout=5, max=1000
-</code></pre><ul>
+</code></pre>
+<ul>
 <li>기본적으로 Http 통신은 TCP 통신을 기반으로 동작하는데, TCP 통신은 일단 전송하면 연결이 끊어지므로 Http 역시 전송이 끝나면 연결이 끊어지며 이후의 일에 대해서는 신경쓰지 않음</li>
 <li>따라서 이러한 문제를 막고자 Keep-Alive 헤더가 사용되는 것이며, <strong>특정 시간(timeout)</strong> 동안 <strong>최대 요청(max)</strong> 의 수를 명시함</li>
 </ul>

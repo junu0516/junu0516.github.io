@@ -143,176 +143,192 @@
 <h2 id="1-옵셔널optional">1. 옵셔널(Optional)</h2>
 <h3 id="1-1-옵셔널-선언하기">1-1. 옵셔널 선언하기</h3>
 <p>스위프트의 주요 특징 중 하나로 <strong><code>안전성(Safety)</code></strong> 를 꼽을 수 있다. 스위프트는 엄격한 문법을 통해 개발자가 일으킬 수 있는 각종 실수를 방지하는데, 대표적인 것이 <strong><code>옵셔널(Optional)</code></strong> 이다. 이전에 자바로 개발을 하다보면 런타임 도중 <strong><code>NullPointerException</code></strong> 이 발생하는 경우가 많았다. 자바의 경우 변수에 null이 할당되어도 컴파일하는 데는 문제가 없었기 때문에 런타임 시점에 예상치 못하게 해당 예외가 종종 발생하곤 했다. 스위프트에서는 이를 방지하고자 일반적인 변수에  <strong><code>nil</code></strong> 을 값으로 할당하면 컴파일 시점에 오류가 발생한다. 이런 상황에서 <strong>값이 있을 수도 있고, 없을 수도 있는</strong> 변수의 선언에 사용되는 것이 옵셔널이다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str1: String = <span style="color:#e6db74">&#34;&#34;</span> <span style="color:#75715e">//값이 &#34;&#34;이지만, nil은 아님</span>
-<span style="color:#66d9ef">var</span> str2: String = <span style="color:#66d9ef">nil</span> <span style="color:#75715e">//컴파일 오류</span>
-</code></pre></div><p>위와 같은 코드에서 str2과 같이 변수를 선언하면 컴파일 오류가 발생한다. 만일 여기에 값이 있을 수도 있고, 없을 수도 있는 경우라면 옵셔널을 선언해야 한다.</p>
+<pre><code class="language-swift">var str1: String = &quot;&quot; //값이 &quot;&quot;이지만, nil은 아님
+var str2: String = nil //컴파일 오류
+</code></pre>
+<p>위와 같은 코드에서 str2과 같이 변수를 선언하면 컴파일 오류가 발생한다. 만일 여기에 값이 있을 수도 있고, 없을 수도 있는 경우라면 옵셔널을 선언해야 한다.</p>
 <p>옵셔널의 선언은 <strong><code>Optional&lt;T&gt;</code></strong> 혹은 타입 끝에 <strong><code>?</code></strong> 을 붙이는 식으로 타입을 선언하며, 위의 경우에는 아래와 같이 옵셔널을 선언하면 된다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str2: Optional&lt;String&gt;
-<span style="color:#66d9ef">var</span> str3: String?
-</code></pre></div><p>​</p>
+<pre><code class="language-swift">var str2: Optional&lt;String&gt;
+var str3: String?
+</code></pre>
+<p>​</p>
 <h3 id="1-2-옵셔널-추출하기optional-unwrapping">1-2. 옵셔널 추출하기(Optional Unwrapping)</h3>
 <p>옵셔널에 있는 값을 추출하는 방식은 크게 <strong>강제로 추출하는 것</strong> 과 <strong><code>옵셔널 바인딩</code></strong> 을 통해 추출하는 것이 있다.</p>
 <p>옵셔널의 <strong><code>강제 추출(Forced Unwrapping)</code></strong> 은 제일 간단한 방식으로 옵셔널 값 끝에 <strong><code>!</code></strong> 를 붙여주면 된다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str3: String?
-<span style="color:#66d9ef">var</span> unwrapped: String = str3! 
-</code></pre></div><p>위의 코드에서 unwrapped에 str3의 옵셔널에 있는 문자열 값을 강제로 추출하였다. 하지만 str3에 아무런 값을 할당하지 않았기 때문에 추출된 값은 <strong><code>nil</code></strong> 이다. 따라서 위의 코드는 컴파일은 정상적으로 될 지 몰라도, 런타임 시점에 오류가 발생하게 되는 코드이다. 오류가 발생하지 않으려면 아래와 같이 nil이 아닌 값을 할당한 후 강제로 추출해야 한다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str3: String?
-str3 = <span style="color:#e6db74">&#34;String&#34;</span>
-<span style="color:#66d9ef">var</span> unwrapped = str3!
-print(str3) <span style="color:#75715e">//String</span>
-</code></pre></div><p>즉, 옵셔널의 강제 추출은 위와 같이 <strong>nil인 값을 강제로 추출할 경우 런타임 시점에 오류가 발생할 수 있는</strong> 위험이 존재하기 때문에 주의해야 한다.</p>
+<pre><code class="language-swift">var str3: String?
+var unwrapped: String = str3! 
+</code></pre>
+<p>위의 코드에서 unwrapped에 str3의 옵셔널에 있는 문자열 값을 강제로 추출하였다. 하지만 str3에 아무런 값을 할당하지 않았기 때문에 추출된 값은 <strong><code>nil</code></strong> 이다. 따라서 위의 코드는 컴파일은 정상적으로 될 지 몰라도, 런타임 시점에 오류가 발생하게 되는 코드이다. 오류가 발생하지 않으려면 아래와 같이 nil이 아닌 값을 할당한 후 강제로 추출해야 한다.</p>
+<pre><code class="language-swift">var str3: String?
+str3 = &quot;String&quot;
+var unwrapped = str3!
+print(str3) //String
+</code></pre>
+<p>즉, 옵셔널의 강제 추출은 위와 같이 <strong>nil인 값을 강제로 추출할 경우 런타임 시점에 오류가 발생할 수 있는</strong> 위험이 존재하기 때문에 주의해야 한다.</p>
 <p>​</p>
 <p><strong><code>옵셔널 바인딩(Optional Binding)</code></strong> 은 강제 추출보다 안전하게 값을 추출하는 방식이다. <strong>조건문을 통해 추출할 값이 nil인 지를 먼저 확인 하고, 아닐 경우에만 값을 추출하는 것</strong> 이라고 보면 된다. 아래의 코드를 통해 살펴보자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> str4: String? = <span style="color:#e6db74">&#34;Some String&#34;</span>
-<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> unwrapped = str4{
+<pre><code class="language-swift">var str4: String? = &quot;Some String&quot;
+if let unwrapped = str4{
   print(unwrapped)
-}<span style="color:#66d9ef">else</span>{
-  print(<span style="color:#e6db74">&#34;nil&#34;</span>)
+}else{
+  print(&quot;nil&quot;)
 }
-</code></pre></div><p>임시로 상수(<strong><code>let</code></strong>) unwrapped를 선언한 후, 조건문을 통해 nil이 아닌 경우에는 문자열 값을 출력하는 코드이다. 만일 unwrapped가 상수가 아닌 변수(<strong><code>var</code></strong>) 인 경우에는 블록 안에서 값을 변경할 수 있다.</p>
+</code></pre>
+<p>임시로 상수(<strong><code>let</code></strong>) unwrapped를 선언한 후, 조건문을 통해 nil이 아닌 경우에는 문자열 값을 출력하는 코드이다. 만일 unwrapped가 상수가 아닌 변수(<strong><code>var</code></strong>) 인 경우에는 블록 안에서 값을 변경할 수 있다.</p>
 <p>여러 개의 옵셔널 값을 추출하는 경우에는 아래와 같이  <strong><code>,</code></strong> 를 통해 옵셔널 변수들을 열거하고 블록 안에서 여러 개의 값을 한 번에 처리할 수 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> nameOpt: String? = <span style="color:#e6db74">&#34;Jed&#34;</span>
-<span style="color:#66d9ef">var</span> ageOpt: Int? = <span style="color:#ae81ff">28</span>
+<pre><code class="language-swift">var nameOpt: String? = &quot;Jed&quot;
+var ageOpt: Int? = 28
 
-<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">var</span> name = nameOpt, <span style="color:#66d9ef">var</span> age = ageOpt{
-  age <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
-  print(<span style="color:#e6db74">&#34;name: </span><span style="color:#e6db74">\(</span>name<span style="color:#e6db74">)</span><span style="color:#e6db74">, age: </span><span style="color:#e6db74">\(</span>age<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+if var name = nameOpt, var age = ageOpt{
+  age += 1
+  print(&quot;name: \(name), age: \(age)&quot;)
 } 
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <h2 id="2-옵셔널-체이닝과-빠른-종료">2. 옵셔널 체이닝과 빠른 종료</h2>
 <h3 id="2-1-옵셔널-체이닝optional-chaining">2-1. 옵셔널 체이닝(Optional Chaining)</h3>
 <p><strong><code>옵셔널 체이닝(Optional Chaining)</code></strong> 은 <strong>여러 옵셔널이 마치 자전거 체인처럼 서로 꼬리에 꼬리를 무는 형태로 반복 사용된 형태를 말한다.</strong> 만일 연결된 일련의 옵셔널 중 <strong>하나라도 값이 존재하지 않는다면 최종적으로 nil을 반환하게 된다.</strong></p>
 <p>아래와 같은 클래스 구조가 있다고 가정해보자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Room</span>{
-  <span style="color:#66d9ef">var</span> number: Int
-  <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">_</span> number: Int){
-    <span style="color:#66d9ef">self</span>.number = number
+<pre><code class="language-swift">class Room{
+  var number: Int
+  init(_ number: Int){
+    self.number = number
   }
 }
 
-<span style="color:#75715e">//Building은 내부에 Room 타입 프로퍼티를 가지고 있음</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Building</span>{
-  <span style="color:#66d9ef">var</span> name: String
-  <span style="color:#66d9ef">var</span> room: Room?
+//Building은 내부에 Room 타입 프로퍼티를 가지고 있음
+class Building{
+  var name: String
+  var room: Room?
 
-  <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">_</span> name: String){
-    <span style="color:#66d9ef">self</span>.name = name
+  init(_ name: String){
+    self.name = name
   }
 }
 
-<span style="color:#75715e">//Address는 내부에 Building 타입 프로퍼티를 가지고 있음</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Address</span>{
-  <span style="color:#66d9ef">var</span> city: String
-  <span style="color:#66d9ef">var</span> building: Building?
+//Address는 내부에 Building 타입 프로퍼티를 가지고 있음
+class Address{
+  var city: String
+  var building: Building?
 
-  <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">_</span> city: String){
-    <span style="color:#66d9ef">self</span>.city = city
+  init(_ city: String){
+    self.city = city
   }
 }
 
-<span style="color:#75715e">//Person은 내부에 Address 타입 프로퍼티를 가지고 있음</span>
-<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Person</span>{
-  <span style="color:#66d9ef">var</span> name: String
-  <span style="color:#66d9ef">var</span> address: Address?
+//Person은 내부에 Address 타입 프로퍼티를 가지고 있음
+class Person{
+  var name: String
+  var address: Address?
 
-  <span style="color:#66d9ef">init</span>(<span style="color:#66d9ef">_</span> name: String){
-    <span style="color:#66d9ef">self</span>.name = name
+  init(_ name: String){
+    self.name = name
   }
 }
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <p>Room-&gt;Building -&gt; Address -&gt; Person 순서로 각각의 타입을 내부에 프로퍼티로 두고 있는 형태이다. 여기서 Person 타입의 인스턴스를 하나 생성하고, Room 타입 인스턴의 number 값을 알기 위해 아래와 같이 옵셔널 체이닝과 강제 추출(Forced Unwrapping)을 적용해보았다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
-<span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
+<pre><code class="language-swift">//Person 인스턴스 선언
+let person: Person = Person(&quot;jed&quot;)
 
-<span style="color:#75715e">//옵셔널 강제추출(여기서는 최종적으로 nil이 됨)</span>
-<span style="color:#66d9ef">let</span> roomNumberUnwrapped: Int = person.address?.building?.room?.number
+//옵셔널 강제추출(여기서는 최종적으로 nil이 됨)
+let roomNumberUnwrapped: Int = person.address?.building?.room?.number
 print(String(roomNumberUnwrapped!)
-</code></pre></div><p>위와 같은 방식으로 선언했을 때 roomNumberUnwrapped의 값은 nil이 된다. Person의 프로퍼티 중 address에 값이 없기 때문에 <strong>옵셔널 체이닝 중간에 nil이 리턴된 것이다.</strong> 따라서 값을 강제로 추출하려고 하면 런타임 시접에 nil을 출력하려고 하기 때문에 오류가 발생한다.</p>
+</code></pre>
+<p>위와 같은 방식으로 선언했을 때 roomNumberUnwrapped의 값은 nil이 된다. Person의 프로퍼티 중 address에 값이 없기 때문에 <strong>옵셔널 체이닝 중간에 nil이 리턴된 것이다.</strong> 따라서 값을 강제로 추출하려고 하면 런타임 시접에 nil을 출력하려고 하기 때문에 오류가 발생한다.</p>
 <p>​</p>
 <p>그렇다면 오류를 방지하기 위해 <strong><code>옵셔널 바인딩(Optional Binding)</code></strong> 을 적용해보도록 하자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
-<span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
-<span style="color:#66d9ef">var</span> roomNumber: Int? <span style="color:#66d9ef">nil</span>
+<pre><code class="language-swift">//Person 인스턴스 선언
+let person: Person = Person(&quot;jed&quot;)
+var roomNumber: Int? nil
 
-<span style="color:#75715e">//옵셔널 바인딩을 적용해서 roomNumber 값 가져오기</span>
-<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> address: Address = person.address{
-  <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> building: Building = address.building{
-    <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> room: Room = building.room{
+//옵셔널 바인딩을 적용해서 roomNumber 값 가져오기
+if let address: Address = person.address{
+  if let building: Building = address.building{
+    if let room: Room = building.room{
       roomNumber = room.number
     }
   }
 }
 
-<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> number: Int = roomNumber{
+if let number: Int = roomNumber{
     print(number)
-}<span style="color:#66d9ef">else</span>{
-    print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
+}else{
+    print(&quot;Cannot find room number&quot;)
 }
-</code></pre></div><p>Address-&gt;Building-&gt;Room 타입 순서로 각각의 값이 존재하는 지를 차례대로 확인한 후, 최종적으로 roomNumber이 nil인 지 확인하기 때문에 런타임 시점에 오류가 발생하지 않을 것이다. 하지만 위의 코드는 <strong>옵셔널 바인딩을 중첩사용하는 부분에서 들여쓰기가 많이 지기 때문에 가독성 측면에서 좋지 않다.</strong></p>
+</code></pre>
+<p>Address-&gt;Building-&gt;Room 타입 순서로 각각의 값이 존재하는 지를 차례대로 확인한 후, 최종적으로 roomNumber이 nil인 지 확인하기 때문에 런타임 시점에 오류가 발생하지 않을 것이다. 하지만 위의 코드는 <strong>옵셔널 바인딩을 중첩사용하는 부분에서 들여쓰기가 많이 지기 때문에 가독성 측면에서 좋지 않다.</strong></p>
 <p>​</p>
 <p>바로 여기서 옵셔널 바인딩 부분에 옵셔널 체이닝을 같이 적용하면 코드가 훨씬 간결해진다. <strong><code>if let {}</code></strong> 형식의 nil 체크를 일일히 할 필요 없이 옵셔널 체이닝 한 번으로 여러 번의 옵셔널 바인딩을 한 번에 끝낼 수 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
-<span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
+<pre><code class="language-swift">//Person 인스턴스 선언
+let person: Person = Person(&quot;jed&quot;)
 
-<span style="color:#75715e">//옵셔널 바인딩에 옵셔널 체이닝 적용</span>
-<span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> roomNumber: Int = person.address?.building?.room?.number{
+//옵셔널 바인딩에 옵셔널 체이닝 적용
+if let roomNumber: Int = person.address?.building?.room?.number{
     print(roomNumber)
-}<span style="color:#66d9ef">else</span>{
-    print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
+}else{
+    print(&quot;Cannot find room number&quot;)
 }
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <p>값을 받아오는 것 외에도 <strong>옵셔널 체이닝을 통해 값을 할당하는 것도 가능하다.</strong> 단, <strong>값을 읽을 때와 마찬가지로 옵셔널 체이닝 중간에 nil이 없어야 한다.</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">person.address?.building?.room?.number = <span style="color:#ae81ff">1000</span>
-print(person.address?.building?.room?.number) <span style="color:#75715e">//nil</span>
-</code></pre></div><p>위의 경우에는 number까지 가기 전에 이미 address에 값이 없기 때문에  결과적으로 room 프로퍼티도 존재하지 않으므로 값을 할당할 수가 없다. 따라서 값을 할당하고자 한다면 <strong>옵셔널 체이닝상에 있는 모든 프로퍼티에 값을 할당해야 한다.</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">person.address = Address(<span style="color:#e6db74">&#34;seoul&#34;</span>)
-person.address?.building = Building(<span style="color:#e6db74">&#34;Geumho&#34;</span>)
-person.address?.building?.room = Room(<span style="color:#ae81ff">500</span>)
-person.address?.building?.room?.number = <span style="color:#ae81ff">1000</span>
+<pre><code class="language-swift">person.address?.building?.room?.number = 1000
+print(person.address?.building?.room?.number) //nil
+</code></pre>
+<p>위의 경우에는 number까지 가기 전에 이미 address에 값이 없기 때문에  결과적으로 room 프로퍼티도 존재하지 않으므로 값을 할당할 수가 없다. 따라서 값을 할당하고자 한다면 <strong>옵셔널 체이닝상에 있는 모든 프로퍼티에 값을 할당해야 한다.</strong></p>
+<pre><code class="language-swift">person.address = Address(&quot;seoul&quot;)
+person.address?.building = Building(&quot;Geumho&quot;)
+person.address?.building?.room = Room(500)
+person.address?.building?.room?.number = 1000
 
-print(person.address?.building?.room?.number) <span style="color:#75715e">// Optional(1000)</span>
-</code></pre></div><p>​</p>
+print(person.address?.building?.room?.number) // Optional(1000)
+</code></pre>
+<p>​</p>
 <h3 id="2-2-빠른-종료early-exit">2-2. 빠른 종료(Early Exit)</h3>
 <p>일반적인 옵셔널 바인딩은 <strong><code>if-else</code></strong> 구문을 통해 특정 조건을 만족하는 경우와, 그렇지 않은 경우에 대한 처리를 각각 해준다. 하지만 조건에 부합하지 않을 경우 해당 코드 블록을 좀 더 빠르게 종료하고자 한다면  <strong><code>guard</code></strong> 키워드를 사용하는 것이 더욱 유리하다. <strong><code>guard</code></strong> 구문은 <strong><code>guard-else</code></strong> 형식을 사용하게 되며, 반드시 조건에 부합하지 않는 경우를 명시한 else 구문이 뒤따라와야 한다.</p>
 <p>아래의 형식으로 <strong><code>guard</code></strong>  를 사용하면 되며, 만일 Bool타입 값이 false인 경우에는 해당 코드 블록을 종료하는 실행문과 같은 코드를 작성함으로써 <strong>조건에 부합하지 않을 때 바로 실행을 종료하도록 처리할 수 있다.</strong></p>
-<pre tabindex="0"><code>guard (Bool 타입 값) else{
+<pre><code>guard (Bool 타입 값) else{
     //조건에 부합하지 않을 경우 실행문
 }
-</code></pre><p>​</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">// if-else</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0.</span>..<span style="color:#ae81ff">3</span>{
-  <span style="color:#66d9ef">if</span> i == <span style="color:#ae81ff">2</span> {
+</code></pre>
+<p>​</p>
+<pre><code class="language-swift">// if-else
+for i in 0...3{
+  if i == 2 {
     print(i)
-  }<span style="color:#66d9ef">else</span>{
-    <span style="color:#66d9ef">continue</span>
+  }else{
+    continue
   }
 }
 
-<span style="color:#75715e">// guard</span>
-<span style="color:#66d9ef">for</span> i <span style="color:#66d9ef">in</span> <span style="color:#ae81ff">0.</span>..<span style="color:#ae81ff">3</span>{
-  <span style="color:#66d9ef">guard</span> i == <span style="color:#ae81ff">2</span> <span style="color:#66d9ef">else</span>{
-    <span style="color:#66d9ef">continue</span>
+// guard
+for i in 0...3{
+  guard i == 2 else{
+    continue
   }
   print(i)
 }
-</code></pre></div><p>위의 코드는 실제로 같은 기능을 수행하는 코드에서  <strong><code>if-else</code></strong> 와 <strong><code>guard</code></strong> 를 사용했을 때의 차이를 보여주는 예시이다. 후자의 경우 i가 2가 아닐 경우에는 <strong>다른 구문을 실행하지 않고 그즉시 해당 분기를 즉시 건너 뛰도록(continue) 처리할 수 있으며, 굳이 조건을 만족하는 경우와 그렇지 않은 경우를 모두 일일히 명시할 필요가 없어 가독성 측면에서 더욱 유리하다.</strong></p>
+</code></pre>
+<p>위의 코드는 실제로 같은 기능을 수행하는 코드에서  <strong><code>if-else</code></strong> 와 <strong><code>guard</code></strong> 를 사용했을 때의 차이를 보여주는 예시이다. 후자의 경우 i가 2가 아닐 경우에는 <strong>다른 구문을 실행하지 않고 그즉시 해당 분기를 즉시 건너 뛰도록(continue) 처리할 수 있으며, 굳이 조건을 만족하는 경우와 그렇지 않은 경우를 모두 일일히 명시할 필요가 없어 가독성 측면에서 더욱 유리하다.</strong></p>
 <p>​</p>
 <p>그렇다면 2-1에서 사용했던 <strong><code>if-else</code></strong> 형식으로 선언된 옵셔널 바인딩 + 옵셔널 체이닝을 <strong><code>guard</code></strong> 구문으로 바꿔보도록 하자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//Person 인스턴스 선언</span>
-<span style="color:#66d9ef">let</span> person: Person = Person(<span style="color:#e6db74">&#34;jed&#34;</span>)
+<pre><code class="language-swift">//Person 인스턴스 선언
+let person: Person = Person(&quot;jed&quot;)
 
-<span style="color:#75715e">//옵셔널바인딩 + 옵셔널체이닝에 guard 적용</span>
-<span style="color:#66d9ef">guard</span> <span style="color:#66d9ef">let</span> roomNumber: Int = person.address?.building?.room?.number <span style="color:#66d9ef">else</span>{
-  print(<span style="color:#e6db74">&#34;Cannot find room number&#34;</span>)
-  <span style="color:#75715e">//값이 존재하지 않을 경우 바로 실행 종료</span>
-  <span style="color:#66d9ef">return</span>
+//옵셔널바인딩 + 옵셔널체이닝에 guard 적용
+guard let roomNumber: Int = person.address?.building?.room?.number else{
+  print(&quot;Cannot find room number&quot;)
+  //값이 존재하지 않을 경우 바로 실행 종료
+  return
 }
 print(roomNumber)
-</code></pre></div><p>옵셔널 체이닝상의 모든 옵셔널을 차례대로 언래핑(<strong><code>unwrapping</code></strong>) 하면서 하나라도 값이 없을 경우에는 바로 <strong><code>else</code></strong> 뒤의 예외 처리 구문을 실행한 후 해당 블록을 실행 종료한다.</p>
+</code></pre>
+<p>옵셔널 체이닝상의 모든 옵셔널을 차례대로 언래핑(<strong><code>unwrapping</code></strong>) 하면서 하나라도 값이 없을 경우에는 바로 <strong><code>else</code></strong> 뒤의 예외 처리 구문을 실행한 후 해당 블록을 실행 종료한다.</p>
 <p>단, <strong><code>if-esle</code></strong> 와 다른 점은 <strong><code>guard</code></strong> 구문은 <strong><code>return</code></strong> , <strong><code>break</code></strong> , <strong><code>continue</code></strong> , <strong><code>throw</code></strong> 등의 <strong>제어문 전환 명령어를 사용할 수 있는 상황에서만 사용해야 한다.</strong> 즉, 함수와 같은 구문을 감싸고 있는 {} 코드블록이 반드시 존재해야 하는 것이다.</p>
 <p>만일 바로 위의 예시 코드를 코드 블록으로 감싸져 있지 않은 채로 외부에 <strong><code>return</code></strong> 없이 선언하게 되면 아래와 같은 컴파일 오류를 확인할 수 있을 것이다.</p>
-<pre tabindex="0"><code>guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
-</code></pre><br>
+<pre><code>guard' body must not fall through, consider using a 'return' or 'throw' to exit the scope
+</code></pre>
+<br>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>스위프트 프로그래밍: Swift 5(3판) - 야곰, 한빛미디어</li>

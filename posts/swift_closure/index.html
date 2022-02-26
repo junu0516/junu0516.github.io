@@ -150,119 +150,134 @@
 <ul>
 <li>이름이 있지만, 값을 획득하지 않는 형태(전역 함수)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">print</span>() {
-  print(<span style="color:#e6db74">&#34;Hello&#34;</span>)
+<pre><code class="language-swift">func print() {
+  print(&quot;Hello&quot;)
 } 	
-</code></pre></div><ul>
+</code></pre>
+<ul>
 <li>내부 함수와 같이 이름이 있으면서 다른 함수 내부의 값을 획득할 수 있는 형태(중첩 합수)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">outer</span>(){
-  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">print</span>(<span style="color:#66d9ef">_</span> name: String) {
-    print(<span style="color:#e6db74">&#34;Hello </span><span style="color:#e6db74">\(</span>name<span style="color:#e6db74">)</span><span style="color:#e6db74">&#34;</span>)
+<pre><code class="language-swift">func outer(){
+  func print(_ name: String) {
+    print(&quot;Hello \(name)&quot;)
   }
-  <span style="color:#66d9ef">var</span> name: String = <span style="color:#e6db74">&#34;Jed&#34;</span>
+  var name: String = &quot;Jed&quot;
   print(name)
 }
-</code></pre></div><ul>
+</code></pre>
+<ul>
 <li>이름이 없고 주변 문맥에 따라 값을 획득하는 형태(축약 형태)</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> num: Int = {<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>}
-</code></pre></div><p>​</p>
+<pre><code class="language-swift">let num: Int = {return 0}
+</code></pre>
+<p>​</p>
 <p>위의 세 가지 예시처럼 클로저는 함수처럼 쓰이거나, 객체처럼 다른 변수에 할당할 수 있다. 스위프트에서 <strong>함수는 1급 객체로 할당 받기, 인자로 전달하기, 반환하기 등이 모두 가능하다.</strong> 스위프트에서 함수는 이름 없는 클로저이기 때문에, 결과적으로 클로저 역시 1급 객체이며 상수나 변수에 할당되거나 저장해서 사용 가능하다.</p>
 <p>​</p>
 <h2 id="2-클로저-사용하기">2. 클로저 사용하기</h2>
 <h3 id="2-1-기본적인-클로저-사용하기">2-1. 기본적인 클로저 사용하기</h3>
 <p>우선, 클로저의 표현은 기본적으로 아래의 형식을 따른다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">{
-  (<span style="color:#960050;background-color:#1e0010">매개변수</span>) -&gt; <span style="color:#960050;background-color:#1e0010">리턴타입</span> <span style="color:#66d9ef">in</span>
-  	<span style="color:#960050;background-color:#1e0010">실행코드</span> <span style="color:#f92672">+</span> <span style="color:#960050;background-color:#1e0010">리턴</span>
+<pre><code class="language-swift">{
+  (매개변수) -&gt; 리턴타입 in
+  	실행코드 + 리턴
 }
-</code></pre></div><p>매개변수와 리턴타입, 코드가 존재한다는 점에서 함수와 비슷한 형식이며 <strong><code>in</code></strong> 은 실행 코드와 매개변수+리턴타입 선언부의 분리를 위한 것이다.</p>
+</code></pre>
+<p>매개변수와 리턴타입, 코드가 존재한다는 점에서 함수와 비슷한 형식이며 <strong><code>in</code></strong> 은 실행 코드와 매개변수+리턴타입 선언부의 분리를 위한 것이다.</p>
 <p>​</p>
 <p>바로 위에서 클로저를 다른 상수에 할당했기 때문에 여기서는 클로저를 함수의 인자로 전달하는 예를 살펴보도록 한다.</p>
 <p>스위프트에서 배열은 기본적으로 <strong><code>sort()</code></strong> 라는 정렬 함수를 제공한다. 해당 함수에 아무런 인자를 전달하지 않으면 배열은 오름차순으로 정렬되며, 다른 기준으로 정렬하고자 할 경우에는 원하는 기준을 함수의 인자로 전달하면 된다.</p>
 <p>바로 여기서 별도의 정렬 기준을 전달할 때 이를 클로저 형식으로 전달할 수 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> arr: [Int] = [<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">3</span>,<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">5</span>,<span style="color:#ae81ff">4</span>]
-</code></pre></div><p>위와 같은 정수 배열에서 <strong><code>arr.sort()</code></strong> 를 실행하면 배열이 [1,2,3,4,5]로 자동 정렬될 것이다. 이를 별도의 정렬 기준을 전달해서 내림차순으로 바꾸고 싶다면 아래와 같이 작성하면 된다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//내림차순 정렬</span>
-arr.sort(by:{(<span style="color:#66d9ef">_</span> a: Int,<span style="color:#66d9ef">_</span> b: Int)-&gt;Bool <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+<pre><code class="language-swift">var arr: [Int] = [1,3,2,5,4]
+</code></pre>
+<p>위와 같은 정수 배열에서 <strong><code>arr.sort()</code></strong> 를 실행하면 배열이 [1,2,3,4,5]로 자동 정렬될 것이다. 이를 별도의 정렬 기준을 전달해서 내림차순으로 바꾸고 싶다면 아래와 같이 작성하면 된다.</p>
+<pre><code class="language-swift">//내림차순 정렬
+arr.sort(by:{(_ a: Int,_ b: Int)-&gt;Bool in
+	return a&gt;b
 })
-</code></pre></div><p>애플의 <a href="https://developer.apple.com/documentation/swift/array/2296801-sort" target="_blank">공식 문서</a>를 보면 <strong><code>sort()</code></strong> 의 정의를 아래와 같이 설명하고 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">mutating</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sort</span>(by areInIncreasingOrder: (Element, Element) <span style="color:#66d9ef">throws</span> -&gt; Bool) <span style="color:#66d9ef">rethrows</span>
-</code></pre></div><p>여기서 파라미터의 타입으로 <strong><code>(Element, Element) throws -&gt; Bool</code></strong> 이 선언된 것을 볼 수 있는데, 이는 2개의 인자를 받아 Bool 타입을 리턴하는 클로저를 해당 함수가 인자(by)로 받음을 의미한다. 클로저가 함수의 인자로 전달되는 대표적인 예인 것이다.</p>
+</code></pre>
+<p>애플의 <a href="https://developer.apple.com/documentation/swift/array/2296801-sort" target="_blank">공식 문서</a>를 보면 <strong><code>sort()</code></strong> 의 정의를 아래와 같이 설명하고 있다.</p>
+<pre><code class="language-swift">mutating func sort(by areInIncreasingOrder: (Element, Element) throws -&gt; Bool) rethrows
+</code></pre>
+<p>여기서 파라미터의 타입으로 <strong><code>(Element, Element) throws -&gt; Bool</code></strong> 이 선언된 것을 볼 수 있는데, 이는 2개의 인자를 받아 Bool 타입을 리턴하는 클로저를 해당 함수가 인자(by)로 받음을 의미한다. 클로저가 함수의 인자로 전달되는 대표적인 예인 것이다.</p>
 <p>​</p>
 <h3 id="2-2-후행-클로저-사용하기">2-2. 후행 클로저 사용하기</h3>
 <p>스위프트에서는 <strong><code>후행 클로저(Trailing Closure)</code></strong> 를 사용할 수 있다. 함수의 마지막 인자에 클로저가 위치할 때, 소괄호를 닫은 후 클로저를 작성해도 되는 것인데 클로저의 길이가 길거나 괄호 안에 모든 인자를 명시하기에 가독성이 떨어진다 싶을 때 유용하다.</p>
 <p>위의 <strong><code>sort()</code></strong> 의 인자로 클로저를 넘길 때, 후행 클로저를 사용하면 아래와 같이 코드를 작성할 수 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//기본 클로저</span>
-arr.sort(by:{(<span style="color:#66d9ef">_</span> a: Int,<span style="color:#66d9ef">_</span> b: Int)-&gt;Bool <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+<pre><code class="language-swift">//기본 클로저
+arr.sort(by:{(_ a: Int,_ b: Int)-&gt;Bool in
+	return a&gt;b
 })
 
-<span style="color:#75715e">//후행 클로저</span>
-arr.sort(){(<span style="color:#66d9ef">_</span> a: Int,<span style="color:#66d9ef">_</span> b: Int)-&gt;Bool <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+//후행 클로저
+arr.sort(){(_ a: Int,_ b: Int)-&gt;Bool in
+	return a&gt;b
 }
-</code></pre></div><p>또한, 하나의 클로저만 인자로 전달할 경우에는 함수의 소괄호를 생략해도 된다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">arr.sort{(<span style="color:#66d9ef">_</span> a: Int,<span style="color:#66d9ef">_</span> b: Int)-&gt;Bool <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+</code></pre>
+<p>또한, 하나의 클로저만 인자로 전달할 경우에는 함수의 소괄호를 생략해도 된다.</p>
+<pre><code class="language-swift">arr.sort{(_ a: Int,_ b: Int)-&gt;Bool in
+	return a&gt;b
 }
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <p>주의할 점은 후행 클로저로 사용 가능한 클로저는 <strong>전달인자의 맨 마지막에 위치한 것들만 가능하다는 점이다.</strong> 따라서 여러 개의 클로저를 인자로 전달할 경우에는 맨 마지막 클로저만 후행 클로저 형식으로 사용할 수 있다.</p>
 <p>아래와 같이 클로저를 인자로 받는 함수가 존재한다고 가정해보자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">calculate</span>(<span style="color:#66d9ef">_</span> a: Int, <span style="color:#66d9ef">_</span> b: Int, <span style="color:#66d9ef">_</span> increment:(Int, Int)-&gt; Int,  <span style="color:#66d9ef">_</span> subtract: (Int, Int) -&gt; Int) -&gt; Int {
-  <span style="color:#66d9ef">let</span> left = increment(a,b)
-  <span style="color:#66d9ef">let</span> right = subtract(a,b)
-  <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">left</span><span style="color:#f92672">+</span><span style="color:#66d9ef">right</span>
+<pre><code class="language-swift">func calculate(_ a: Int, _ b: Int, _ increment:(Int, Int)-&gt; Int,  _ subtract: (Int, Int) -&gt; Int) -&gt; Int {
+  let left = increment(a,b)
+  let right = subtract(a,b)
+  return left+right
 }
 
-<span style="color:#75715e">//마지막 인자를 괄호밖으로 빼줬음</span>
-<span style="color:#66d9ef">var</span> result = calculate(<span style="color:#ae81ff">1</span>,<span style="color:#ae81ff">2</span>,{$0<span style="color:#f92672">+</span>$1}){$0<span style="color:#f92672">-</span>$1}
+//마지막 인자를 괄호밖으로 빼줬음
+var result = calculate(1,2,{$0+$1}){$0-$1}
 print(result)
-<span style="color:#75715e">//2</span>
-</code></pre></div><p>위의 코드에서 <strong><code>calculate()</code></strong> 의 마지막 인자인 <strong><code>subtract()</code></strong> 에 해당하는 클로저를 소괄호 밖으로 빼줬다. <strong><code>sort()</code></strong> 예시와의 차이는 <strong><code>calculate()</code></strong> 는 전달인자의 개수가 여러개이다. 따라서 맨 마지막 클로저만 후행 클로저로 사용하되, 나머지 인자들의 존재로 인해 소괄호는 생략하지 못한 것이다.</p>
+//2
+</code></pre>
+<p>위의 코드에서 <strong><code>calculate()</code></strong> 의 마지막 인자인 <strong><code>subtract()</code></strong> 에 해당하는 클로저를 소괄호 밖으로 빼줬다. <strong><code>sort()</code></strong> 예시와의 차이는 <strong><code>calculate()</code></strong> 는 전달인자의 개수가 여러개이다. 따라서 맨 마지막 클로저만 후행 클로저로 사용하되, 나머지 인자들의 존재로 인해 소괄호는 생략하지 못한 것이다.</p>
 <p>​</p>
 <p>클로저가 여러개인 경우에는 <strong><code>다중 후행 클로저(Multiple Trailing Closure)</code></strong> 문법을 사용할 수 있다. <a href="https://docs.swift.org/swift-book/LanguageGuide/Closures.html" target="_blank">애플 공식 문서</a> 에서는 다음과 같은 상황에 다중 후행 클로저를 사용할 수 있다고 설명하고 있다. 아래와 같은 함수가 존재한다고 가정해보자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">loadPicture</span>(from server: Server, completion: (Picture) -&gt; Void, onFailure: () -&gt; Void) {
-  <span style="color:#66d9ef">if</span> <span style="color:#66d9ef">let</span> picture = download(<span style="color:#e6db74">&#34;photo.jpg&#34;</span>, from: server) {
+<pre><code class="language-swift">func loadPicture(from server: Server, completion: (Picture) -&gt; Void, onFailure: () -&gt; Void) {
+  if let picture = download(&quot;photo.jpg&quot;, from: server) {
     completion(picture)
-  } <span style="color:#66d9ef">else</span> {
+  } else {
     onFailure()
   }
 }
-</code></pre></div><p><strong><code>loadPicture()</code></strong> 은 서버로부터 jpg 파일을 다운받아(<strong><code>download()</code></strong>)서 성공할 경우에는 <strong><code>completion()</code></strong> 을 호출하고, 그렇지 않을 경우에는 <strong><code>onFailure()</code></strong> 을 호출하는 함수이다. 특정 로직의 성공, 실패에 따라 각기 다른 처리를 클로저를 통해 명시하는 것이다.</p>
+</code></pre>
+<p><strong><code>loadPicture()</code></strong> 은 서버로부터 jpg 파일을 다운받아(<strong><code>download()</code></strong>)서 성공할 경우에는 <strong><code>completion()</code></strong> 을 호출하고, 그렇지 않을 경우에는 <strong><code>onFailure()</code></strong> 을 호출하는 함수이다. 특정 로직의 성공, 실패에 따라 각기 다른 처리를 클로저를 통해 명시하는 것이다.</p>
 <p>이를 다중 후행 클로저를 통해 호출하면 아래와 같이 <strong>첫 번째 클로저의 이름은 생략한 채로 전달 인자를 명시하는 소괄호 밖에 여러 개의 중괄호를 열고 닫음으로써 각 클로저를 표현할 수 있다.</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">loadPicture(from: someServer) { picture <span style="color:#66d9ef">in</span>
-	someView.currentPicture = picture <span style="color:#75715e">//completion()에 해당함</span>
+<pre><code class="language-swift">loadPicture(from: someServer) { picture in
+	someView.currentPicture = picture //completion()에 해당함
 } onFailure: {
-  print(<span style="color:#e6db74">&#34;Couldn&#39;t download the next picture.&#34;</span>)
+  print(&quot;Couldn't download the next picture.&quot;)
 }    
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <h3 id="2-3-클로저를-간단하게-표현하기">2-3. 클로저를 간단하게 표현하기</h3>
 <p>위에서 살펴봤듯이 함수의 인자로 클로저를 전달할 때는, <strong>함수에서 정의한 대로 전달인자와 리턴타입을 지켜야 한다.</strong> 따라서 함수를 호출했을 때 컴파일 오류 없이 클로저가 잘 전달되었다는 것은 <strong>클로저가 형식을 제대로 지켰음을 의미한다.</strong> 문맥에 따라 넘겨진 클로저의 인자 타입과 리턴 타입 등을 유추할 수 있는 것이다.</p>
 <p>2-1에서 다룬 <strong><code>Array.sort()</code></strong> 를 다시 살펴보면 아래와 같은 형식으로 클로저를 인자로 넘길 것을 정의하고 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">sort(by areInIncreasingOrder: (Element, Element) <span style="color:#66d9ef">throws</span> -&gt; Bool)
-</code></pre></div><p>여기서 클로저의 인자타입인 (Element, Element) 와 리턴타입 -&gt;Bool 모두 문맥에 따라 유추 가능한 부분이다. 그래서 아래와 같이 이를 모두 생략한 채로 함수를 호출하는 것이 가능하다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//before</span>
-arr.sort(by:{(<span style="color:#66d9ef">_</span> a: Int,<span style="color:#66d9ef">_</span> b: Int)-&gt;Bool <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+<pre><code class="language-swift">sort(by areInIncreasingOrder: (Element, Element) throws -&gt; Bool)
+</code></pre>
+<p>여기서 클로저의 인자타입인 (Element, Element) 와 리턴타입 -&gt;Bool 모두 문맥에 따라 유추 가능한 부분이다. 그래서 아래와 같이 이를 모두 생략한 채로 함수를 호출하는 것이 가능하다.</p>
+<pre><code class="language-swift">//before
+arr.sort(by:{(_ a: Int,_ b: Int)-&gt;Bool in
+	return a&gt;b
 })
 
-<span style="color:#75715e">//after</span>
-arr.sort{(a,b) <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+//after
+arr.sort{(a,b) in
+	return a&gt;b
 }
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <p>위의 코드에서 간략화된 부분을 보면 클로저의 전달인자 타입과 리턴타입을 생략했지만 여전히 전달 인자명인 <strong><code>a</code></strong> , <strong><code>b</code></strong> 가 반복적으로 사용되고 있다. 스위프트는 이러한 부분 역시 <strong>단축 인자의 사용을 통해 인자의 이름을 일일히 사용하지 않아도 되도록 하고 있다.</strong></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//before</span>
-arr.sort{(a,b) <span style="color:#66d9ef">in</span>
-	<span style="color:#66d9ef">return</span> a&gt;b
+<pre><code class="language-swift">//before
+arr.sort{(a,b) in
+	return a&gt;b
 }
 
-<span style="color:#75715e">//after</span>
+//after
 arr.sort{ $0&gt;$1 }
-</code></pre></div><p>첫번째 전달인자부터 시작해서 $0, $1의 순서로 전달인자의 이름을 달러기호(<strong><code>$</code></strong>)와 숫자의 조합으로 표현하여 대체한 것이다. 이렇게 단축 인자를 사용하게 되면 클로저 내에서 전달 인자 부분을 표시할 필요가 없어지므로 자연스레 <strong><code>in</code></strong> 키워드 역시 사용할 필요가 없어진다.</p>
+</code></pre>
+<p>첫번째 전달인자부터 시작해서 $0, $1의 순서로 전달인자의 이름을 달러기호(<strong><code>$</code></strong>)와 숫자의 조합으로 표현하여 대체한 것이다. 이렇게 단축 인자를 사용하게 되면 클로저 내에서 전달 인자 부분을 표시할 필요가 없어지므로 자연스레 <strong><code>in</code></strong> 키워드 역시 사용할 필요가 없어진다.</p>
 <p>또한 마지막으로 <strong><code>return $0&gt;$1</code></strong> 과 같이 단 한줄의 실행문만 남은 경우라면 <strong><code>return</code></strong> 도 생략할 수 있다.(마지막 실행문의 결과값이 리턴값이 되는 것으로 유추 가능하기 때문이다.)</p>
 <p>​</p>
 <p>살펴본 클로저 문법의 축약법은 아래와 같이 요약할 수 있다.</p>
@@ -277,31 +292,34 @@ arr.sort{ $0&gt;$1 }
 <p>스위프트에서 클로저는 주변 문맥으로부터 상수나 변수를 획득하여 이를 내부에서 참조하거나 수정할 수 있다. 이럴 경우 상수나 변수가 정의된 기존의 블록이 메모리상에 존재하지 않는다 해도 해당 상수 및 변수의 참조는 여전히 가능하다.</p>
 <p>​</p>
 <p>이러한 주변 문맥에서 값을 획득하는 것이 적용된 대표적 예가 중첩함수(내부함수)의 사용이다. 아래 코드를 통해 살펴보자</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">makeIncrementer</span>(forIncrement amount: Int) -&gt; () -&gt; Int{
-  <span style="color:#66d9ef">var</span> runningTotal=<span style="color:#ae81ff">0</span>
-  <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">incrementer</span>() -&gt; Int{
-    runningTotal <span style="color:#f92672">+=</span> amount
-    <span style="color:#66d9ef">return</span> runningTotal
+<pre><code class="language-swift">func makeIncrementer(forIncrement amount: Int) -&gt; () -&gt; Int{
+  var runningTotal=0
+  func incrementer() -&gt; Int{
+    runningTotal += amount
+    return runningTotal
   }
-  <span style="color:#66d9ef">return</span> incrementer
+  return incrementer
 }
-</code></pre></div><p><strong><code>makeIncrementer()</code></strong> 의 리턴타입은 <strong><code>()-&gt;Int</code></strong> , 즉 전달인자 없이 정수타입을 리턴하는 클로저이다. 내부에 <strong><code>incrementer()</code></strong> 이라는 함수가 선언되있고, 이는 외부에서 <strong><code>runningTotal</code></strong> 와 <strong><code>amount</code></strong> 값을 참조하여 수정된 <strong><code>runningTotal</code></strong> 값을 리턴한다. 이후 내부에 선언된 <strong><code>incrementer()</code></strong> 이 최종적으로 <strong><code>makeIncrementer()</code></strong> 의 리턴값이 된다. 함수도 클로저의 한 형태라는 점에서, 내부의 클로저가 외부로부터 변수를 획득하여 내부에서 수정한 것이다.</p>
+</code></pre>
+<p><strong><code>makeIncrementer()</code></strong> 의 리턴타입은 <strong><code>()-&gt;Int</code></strong> , 즉 전달인자 없이 정수타입을 리턴하는 클로저이다. 내부에 <strong><code>incrementer()</code></strong> 이라는 함수가 선언되있고, 이는 외부에서 <strong><code>runningTotal</code></strong> 와 <strong><code>amount</code></strong> 값을 참조하여 수정된 <strong><code>runningTotal</code></strong> 값을 리턴한다. 이후 내부에 선언된 <strong><code>incrementer()</code></strong> 이 최종적으로 <strong><code>makeIncrementer()</code></strong> 의 리턴값이 된다. 함수도 클로저의 한 형태라는 점에서, 내부의 클로저가 외부로부터 변수를 획득하여 내부에서 수정한 것이다.</p>
 <p>만일, 아래와 같이 내부의 <strong><code>incrementer()</code></strong> 함수를 외부로 뺄 경우에는 겉으로만 봤을 때 문법적으로 이상한 코드가 된다. 아무런 전달 인자도 없기 때문에 내부에서 참조하고자 하는 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 의 값이 어디있는 지 모르기 때문이다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">incrementer</span>()-&gt; Int{
-  <span style="color:#75715e">//블록 내에서 runningTotal, amount값을 찾을 수 없음</span>
-  runningTotal <span style="color:#f92672">+=</span> amount
-  <span style="color:#66d9ef">return</span> runningTotal
+<pre><code class="language-swift">func incrementer()-&gt; Int{
+  //블록 내에서 runningTotal, amount값을 찾을 수 없음
+  runningTotal += amount
+  return runningTotal
 }
-</code></pre></div><p>하지만 <strong><code>makeIncrementer()</code></strong> 의 내부함수 형태와 같이 블록 주변에 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 가 정의되있다면 참조를 획득할 수 있다. 다시 말해, <strong><code>makeIncrementer()</code></strong> 의 호출이 끝나더라도, 내부에 있던 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 의 참조는 사라지지 않았기 때문에 이후에 <strong><code>incrementer()</code></strong> 이 호출되더라도 계속해서 사라지지 않은 기존 값을 사용할 수 있는 것이다.</p>
+</code></pre>
+<p>하지만 <strong><code>makeIncrementer()</code></strong> 의 내부함수 형태와 같이 블록 주변에 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 가 정의되있다면 참조를 획득할 수 있다. 다시 말해, <strong><code>makeIncrementer()</code></strong> 의 호출이 끝나더라도, 내부에 있던 <strong><code>runningTotal</code></strong> 과 <strong><code>amount</code></strong> 의 참조는 사라지지 않았기 때문에 이후에 <strong><code>incrementer()</code></strong> 이 호출되더라도 계속해서 사라지지 않은 기존 값을 사용할 수 있는 것이다.</p>
 <p>아래의 예를 통해 살펴보자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">let</span> incrementByTwo: (() -&gt; Int) = makeIncrementer(forIncrement: <span style="color:#ae81ff">2</span>)
-<span style="color:#66d9ef">let</span> first: Int = incrementByTwo()
-<span style="color:#66d9ef">let</span> second: Int = incrementByTwo()
-<span style="color:#66d9ef">let</span> third: Int = incrementByTwo()
-print(first)<span style="color:#75715e">//2</span>
-print(second)<span style="color:#75715e">//4</span>
-print(third)<span style="color:#75715e">//6</span>
-</code></pre></div><p><strong><code>incrementByTwo</code></strong> 는 <strong><code>runningTotal</code></strong> 값이 0인 상태에서  <strong><code>inrementer()</code></strong> 를 참조하고 있다.(함수가 객체처럼 취급되어 변수에 할당된 것이다.) 이후 <strong><code>first</code></strong> , <strong><code>second</code></strong> , <strong><code>third</code></strong> 에 <strong><code>incrementByTwo()</code></strong> 를 순서대로 호출하여 리턴한 값을 할당하면 차례 대로 2,4,6이 할당된 것을 확인할 수 있다.</p>
+<pre><code class="language-swift">let incrementByTwo: (() -&gt; Int) = makeIncrementer(forIncrement: 2)
+let first: Int = incrementByTwo()
+let second: Int = incrementByTwo()
+let third: Int = incrementByTwo()
+print(first)//2
+print(second)//4
+print(third)//6
+</code></pre>
+<p><strong><code>incrementByTwo</code></strong> 는 <strong><code>runningTotal</code></strong> 값이 0인 상태에서  <strong><code>inrementer()</code></strong> 를 참조하고 있다.(함수가 객체처럼 취급되어 변수에 할당된 것이다.) 이후 <strong><code>first</code></strong> , <strong><code>second</code></strong> , <strong><code>third</code></strong> 에 <strong><code>incrementByTwo()</code></strong> 를 순서대로 호출하여 리턴한 값을 할당하면 차례 대로 2,4,6이 할당된 것을 확인할 수 있다.</p>
 <p>이는 <strong><code>incrementer()</code></strong> 이 세 번 호출된 것인데 각 차례마다 앞에서 수정된  <strong><code>runningTotal</code></strong> 값을 참조하고 있기 때문에 2-&gt;4-&gt;6의 순서대로 값이 변화한 것이다. <strong><code>makeIncrementer()</code></strong> 의 호출은 끝났지만 각각 인자와 내부에 선언된 값이던 <strong><code>amount</code></strong> 와 <strong><code>runningTotal</code></strong> 의 참조는 살아있었기 때문에 <strong><code>incrementer()</code></strong> 이 호출될 때마다 살아있던 참조값을 획득하여 다시 값을 수정한 것이다.</p>
 <p>​</p>
 <p>위에서 살펴본 값 획득 예를 통해 하나 더 알 수 있는 사실은, <strong>스위프트에서 클로저는 참조 타입(Closures are reference types)</strong> 라는 것이다.</p>
@@ -313,35 +331,40 @@ print(third)<span style="color:#75715e">//6</span>
 <p>​</p>
 <p>클로저를 인자로 전달할 때 변수명 옆의 <strong><code>:</code></strong> 뒤에 <strong><code>@escaping</code></strong> 어노테이션을 붙여 탈출 클로저임을 명시할 수 있으며, 이후 해당 클로저는 함수 외부에서 사용 가능하게 된다.</p>
 <p>클로저가 함수를 탈출한다는 것이 구체적으로 어떤 의미인지 살펴보도록 하자. 아래 코드는 클로저 타입의 외부 변수에 <strong><code>setClosure()</code></strong> 을 통해 클로저를 할당하는 코드이다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> someClosure: ()-&gt;Void = {}
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setClosure</span>(<span style="color:#66d9ef">_</span> closure: ()-&gt;Void){
+<pre><code class="language-swift">var someClosure: ()-&gt;Void = {}
+func setClosure(_ closure: ()-&gt;Void){
   someClosure = closure
 }
-setClosure({print(<span style="color:#e6db74">&#34;hello&#34;</span>)})
+setClosure({print(&quot;hello&quot;)})
 someClosure()
-</code></pre></div><p>위의 코드를 실행하려고 하면 Xcode에서 아래와 같은 메시지가 나타나는 것을 확인할 수 있을 것이다.</p>
-<pre tabindex="0"><code>Assigning non-escaping parameter 'closure' to an @escaping closure
-</code></pre><p>전달인자로 넘긴 <strong><code>closure</code></strong> 은 탈출 클로저 선언을 하지 않았기 때문에 비탈출 클로저이다. 그런데 함수 외부의 <strong><code>someClosure</code></strong> 에 <strong><code>closure</code></strong> 이 참조하는 클로저값을 넘기는 것은 곧, 해당 클로저가 함수 외부로 호출될 수 있음을 의미하기 때문에 위의 코드는 전달인자로 넘긴 클로저를 탈출 클로저로 선언해야 한다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#75715e">//탈출 클로저 선언</span>
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setClosure</span>(<span style="color:#66d9ef">_</span> closure: @escaping ()-&gt;Void){
+</code></pre>
+<p>위의 코드를 실행하려고 하면 Xcode에서 아래와 같은 메시지가 나타나는 것을 확인할 수 있을 것이다.</p>
+<pre><code>Assigning non-escaping parameter 'closure' to an @escaping closure
+</code></pre>
+<p>전달인자로 넘긴 <strong><code>closure</code></strong> 은 탈출 클로저 선언을 하지 않았기 때문에 비탈출 클로저이다. 그런데 함수 외부의 <strong><code>someClosure</code></strong> 에 <strong><code>closure</code></strong> 이 참조하는 클로저값을 넘기는 것은 곧, 해당 클로저가 함수 외부로 호출될 수 있음을 의미하기 때문에 위의 코드는 전달인자로 넘긴 클로저를 탈출 클로저로 선언해야 한다.</p>
+<pre><code class="language-swift">//탈출 클로저 선언
+func setClosure(_ closure: @escaping ()-&gt;Void){
   someClosure = closure
 }
-</code></pre></div><p>​</p>
+</code></pre>
+<p>​</p>
 <h2 id="5-자동-클로저auto-closure">5. 자동 클로저(Auto Closure)</h2>
 <p>자동 클로저는 함수의 전달 인자로 사용되는 코드를 자동으로 클로저로 만들어주는 것을 말한다. 자동 클로저의 사용은 탈출 클로저와 동일하게 함수 선언 시에 <strong><code>:</code></strong> 옆에 <strong><code>@autoclosure</code></strong> 를 선언을 통해 가능하다. 단, 자동 클로저로 사용하기 위한 클로저는 <strong>인자가 없고 리턴값만 존재하는 형태여야 한다.</strong></p>
 <p>위에서 살펴본 <strong><code>setClosure()</code></strong> 에 자동 클로저를 적용해보도록 하자.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">var</span> someClosure: ()-&gt;Void = {}
-<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setClosure</span>(<span style="color:#66d9ef">_</span> closure: @escaping ()-&gt;Void){
+<pre><code class="language-swift">var someClosure: ()-&gt;Void = {}
+func setClosure(_ closure: @escaping ()-&gt;Void){
   someClosure = closure
 }
-setClosure({print(<span style="color:#e6db74">&#34;hello&#34;</span>)})
+setClosure({print(&quot;hello&quot;)})
 someClosure()
-</code></pre></div><p>여기서 <strong><code>setClosure()</code></strong> 을 호출하여 전달 인자로 {print(&ldquo;hello&rdquo;)} 라는 클로저를 넘겼다. <strong>이는 전달인자는 없고 리턴값은 Void인 클로저이다.</strong> 여기서 <strong><code>closure</code></strong> 를 아래와 같이 자동클로저를 적용하면 아래와 같이 <strong><code>setClosure()</code></strong> 을 호출할 수 있다.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">setClosure</span>(<span style="color:#66d9ef">_</span> closure: <span style="color:#66d9ef">@autoclosure</span> @escaping ()-&gt;Void){
+</code></pre>
+<p>여기서 <strong><code>setClosure()</code></strong> 을 호출하여 전달 인자로 {print(&ldquo;hello&rdquo;)} 라는 클로저를 넘겼다. <strong>이는 전달인자는 없고 리턴값은 Void인 클로저이다.</strong> 여기서 <strong><code>closure</code></strong> 를 아래와 같이 자동클로저를 적용하면 아래와 같이 <strong><code>setClosure()</code></strong> 을 호출할 수 있다.</p>
+<pre><code class="language-swift">func setClosure(_ closure: @autoclosure @escaping ()-&gt;Void){
   someClosure = closure
 }
-setClosure(print(<span style="color:#e6db74">&#34;hello&#34;</span>))
-</code></pre></div><p>전달인자로 클로저를 넘길 때 중괄호 <strong><code>{}</code></strong>  없이 일반적인 코드를 넘기면 이를 알아서 감싸서 클로저로 처리해주는 것이다. 단,  <strong>자동 클로저는 기본적으로 비탈출클로저</strong>  이기 때문에 위와 같이 클로저를 탈출시키려면  <strong><code>@escaping</code></strong> 을 같이 선언해야 한다.</p>
+setClosure(print(&quot;hello&quot;))
+</code></pre>
+<p>전달인자로 클로저를 넘길 때 중괄호 <strong><code>{}</code></strong>  없이 일반적인 코드를 넘기면 이를 알아서 감싸서 클로저로 처리해주는 것이다. 단,  <strong>자동 클로저는 기본적으로 비탈출클로저</strong>  이기 때문에 위와 같이 클로저를 탈출시키려면  <strong><code>@escaping</code></strong> 을 같이 선언해야 한다.</p>
 <h2 id="reference">Reference</h2>
 <ul>
 <li>스위프트 프로그래밍: Swift 5(3판) - 야곰, 한빛미디어</li>
