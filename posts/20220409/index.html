@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="google-site-verification" content="8a6komFDWW2cgpWnIAvQRdVsS-xAbXgPm7p6oGNyaKY" />
+<meta name="google-site-verification" content="zay748i0W0MCuBwf1nUr2vN14G8yetObcQNhc8yGA44" />
+<meta name="naver-site-verification" content="6ea919fd4c63f8bb48eca38f3530facd0e86ed38" />
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
+
+
+
+<title>스위프트 Protocol Extension과 Method Dispatch - Junu-Devlog</title>
+
+
+
+
+<meta name="keywords" content="swift" />
+
+
+<meta property="og:title" content="스위프트 Protocol Extension과 Method Dispatch" />
+<meta name="twitter:title" content="스위프트 Protocol Extension과 Method Dispatch" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://junu0516.github.io/posts/20220409/" /><meta property="og:description" content="Extension의 일반적으로 알려진 이점 Swift의 extension 키워드는 일반적으로 아래와 같은 기능을 수행" />
+<meta name="twitter:description" content="Extension의 일반적으로 알려진 이점 Swift의 extension 키워드는 일반적으로 아래와 같은 기능을 수행" /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-04-09T00:00:00+00:00" /><meta property="article:modified_time" content="2022-04-09T00:00:00+00:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://junu0516.github.io/assets/css/fuji.min.css" />
+
+
+
+
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-BT32LLFM07');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BT32LLFM07"></script>
+
+
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+<style>
+   
+    
+</style>
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='false'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme','light');
+      
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="header">
+            <a class="title-main" href="https://junu0516.github.io/">Junu-Devlog</a>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-12 float-left content custom-content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://junu0516.github.io/posts/20220409/">스위프트 Protocol Extension과 Method Dispatch</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span>
+    <i class="iconfont icon-today-sharp"></i>&nbsp;2022-04-09
+</span>
+
+
+
+<span class="custom-post-meta-tags">
+    <i class="iconfont icon-pricetags-sharp"></i>&nbsp;
+    <a href="/tags/swift">swift</a>&nbsp;
+</span>
+<span class="custom-post-meta-categories">
+    <i class="fas fa-file-alt"></i>&nbsp;
+    <a href="/categories/swiftios">Swift&amp;iOS</a>&nbsp;
+</span>
+    </div>
+    
+    <div class="post-content markdown-body">
+        <br>
+<img src="https://blog.kakaocdn.net/dn/k0sby/btqDai34xCO/UnpjAH8R5RV10Ws8L5kjDk/img.png" alt="image" style="zoom:35%;"/>
+<br>
+<h2 id="extension의-일반적으로-알려진-이점">Extension의 일반적으로 알려진 이점</h2>
+<p>Swift의 <strong><code>extension</code></strong> 키워드는 일반적으로 아래와 같은 기능을 수행</p>
+<ul>
+<li>원하는 타입에 대해 인스턴스 속성이나 타입 속성(<strong><code>static</code></strong>)을 추가적으로 정의할 수 있음</li>
+<li>새로운 인스턴스 메소드나 타입 메소드를 정의할 수 있음</li>
+<li>새로운 생성자를 정의할 수 있음</li>
+<li>서브스크립트를 정의할 수 있음</li>
+<li>새로운 내장 타입(nested type)을 정의할 수 있음</li>
+<li>이미 존재하는 타입에 대해 새로운 프로토콜의 채택을 추가할 수 있음</li>
+</ul>
+<p>각 언급에 대한 예시는 <a href="https://docs.swift.org/swift-book/LanguageGuide/Extensions.html" target="_blank">여기</a> 를 추후 필요 시에 참고하도록 하자!</p>
+<p>​</p>
+<h2 id="extension과-method-disaptch디스패치">Extension과 Method Disaptch디스패치</h2>
+<blockquote>
+<p>값 타입, 참조 타입, 프로토콜에 <strong><code>extension</code></strong> 을 적용했을 때 각각 Static Dispatch, Dynamic Dispatch 중 어느 것의 대상이 되는 지 알아보자!</p>
+</blockquote>
+<ul>
+<li>
+<p>Static Dispatch, Dynamic Dispatch는 각각 스위프트 코드에서 성능을 좌우하는 중요 요소 중 하나임</p>
+<blockquote>
+<h4 id="__method-dispatch__"><strong>Method Dispatch?</strong></h4>
+<ul>
+<li>
+<p>간단히 말해, 메소드를 호출해야 할 때 이와 관련된 명령 정보가 메모리상의 어디에 위치했는 지를 찾아가는 과정이라 보면 됨</p>
+</li>
+<li>
+<p>좀 더 구체적으로 얘기하면, 타입별로 가지고 있는 Virtual Method Table 이라는 배열을 참고해서 위치를 찾아가는 것</p>
+</li>
+<li>
+<p>상황에 따라서 컴파일 시점에 작성된 코드만 보고도 위치를 알 수 있는 상황이 있고, 런타임 시점에 프로세스가 어떻게 동작하는 지를 봐야 알 수 있는 상황이 있음</p>
+</li>
+<li>
+<p>전자의 경우에는 Static Dispatch, 후자의 경우에는 Dynamic Dispatch가 각각 적용된다고 보면 됨</p>
+</li>
+<li>
+<p>당연히 위치를 찾는 과정이 런타임 시점에 일어나는 것은 부가적인 연산이 발생함을 의미하기 때문에 성능을 떨어뜨리는 요인이 될 수 있음</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>일반적으로는 명령의 위치를 찾는 과정은 런타임 시점보다는 컴파일 시점에 미리 알아두는 것이 효율적이기 때문에, 가능하면 Static Dispatch의 대상이 되도록 하는 것이 성능상 좋음</p>
+</li>
+<li>
+<p>보통, 구조체나 열거형과 같이 상속의 가능성이 없는 값 타입(Value Type) 데이터 구조는 Static Dispatch의 대상임</p>
+<p><em>내부에 참조 타입 속성을 가지고 있다면 이야기가 달라지겠지만, <del>여기서는 거기까진 생각하지 않겠다</del></em></p>
+<pre><code class="language-swift">//상속이 불가능하기 때문에, 아래 타입의 인스턴스들은 형태가 바뀌지 않으므로 컴파일 시점에 명령의 수행 정보를 미리 확정지어 알 수 있음
+struct SomeStruct {
+  var name: String = &quot;Some Struct&quot;
+  func someFunction() {
+    print(&quot;Hello World&quot;)
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>클래스와 같은 참조 타입(Reference Type)의 데이터 구조는 상속의 가능성이 존재하기 때문에 Dynamic Dispatch의 대상임</p>
+<ul>
+<li>실제로 오버라이딩이 되어 있더라도, 이를 따지지 않고 우선은 참조 타입일 경우에는 <strong>상속의 가능성이 항상 존재</strong> 하기 때문에, 런타임 시점에 정확히 어떤 메소드가 호출되야 하는 지를 확인하는 것</li>
+</ul>
+<pre><code class="language-swift">//아래와 같이 상속이 가능하기 때문에 동일한 메소드라도, 어떤 메소드가 호출될 지 확정지어 알 수 없음
+class SomeClass {
+  var name: String = &quot;Some Class&quot;
+  func someFuncion() {
+    print(&quot;This method can be overwritten!&quot;)
+  }
+}
+
+class SomeChildClass: SomeClass {
+  override func someFunction() {
+    print(&quot;This method is overwritten by Child Class!&quot;)
+  }
+}
+
+//부모 타입 변수지만, 인스턴스는 자식 타입을 할당(업캐스팅)
+var someInstance: SomeClass = SomeChildClass()
+//런타임 시점에 이것이 부모 타입 메소드인 지, 오버라이딩 된 자식 타입의 메소드인 지를 결정해야 하는 것
+someInstance.someFunction()
+</code></pre>
+</li>
+<li>
+<p><strong><code>extension</code></strong> 을 단순한 기능의 확장 용도로 사용하는 경우에도, Static &amp; Dynamic Dispatch의 적용 여부는 기본적으로 위의 기준을 따라간다고 보면 됨</p>
+<ul>
+<li>단, 참조 타입의 경우 컴파일러가 오버라이딩이 없을 것임을 미리 알 수 있는 상황이라면 Static Dispatch가 적용됨</li>
+</ul>
+<pre><code class="language-swift">//final 클래스는 상속이 불가능하므로, Static Dispatch의 대상이 됨
+final class SomeFinalClass{
+  func someMethod(){
+    print(&quot;This method cannot be overwritten&quot;)
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>프로토콜의 경우에는 기본적으로 선언만 제공하고, 구현은 채택의 대상에 따라 달리지기 때문에 기본적으로 Dynamic Dispatch가 적용됨</p>
+<blockquote>
+<h4 id="protocol-witness-table">Protocol Witness Table</h4>
+<ul>
+<li>보통 프로토콜을 채택한 타입마다 <strong><code>protocol witness table</code></strong> 이라는 것을 가지게 됨</li>
+<li>일반적인 클래스의 메소드가 <strong><code>virtual method table</code></strong> 을 따라가지만, 프로토콜 채택 후 준수한 메소드의 경우에는 <strong><code>protocol witness table</code></strong> 을 따라가서 호출할 메소드를 찾게 됨</li>
+<li>서로 이름과 용도는 다르지만, 결국은 둘 다 런타임 시점에 메소드를 호출할 때 명령의 수행정보를 찾기 위한 과정이라는 점에서  Dynamic Dispatch가 적용되는 것</li>
+</ul>
+</blockquote>
+</li>
+<li>
+<p>하지만 <strong><code>extension</code></strong> 을 통해 프로토콜을 확장시킬 경우에는, Static Dispatch가 예외적으로 적용될 수 있음</p>
+<ul>
+<li>프로토콜 본체에 있는 메소드를 재정의하는 경우에는 Dynamic Dispatch의 대상이 됨</li>
+<li>프로토콜의 확장부에만 메소드를 정의할 경우에는 Static Dispatch의 대상이 됨</li>
+</ul>
+<pre><code class="language-swift">//여기에 선언되는 것들은 Dynamic Dispatch의 대상
+protocol SomeProtocol {
+  func func1()
+}
+
+//위에 선언되지 않고 아래에만 선언되는 것들은 Static Dispatch의 대상
+extension SomeProtocol {
+  //Dynamic Dispatch
+  func func1() {
+    print(&quot;Hello&quot;)
+  }
+
+  //Static Dispatch - 해당 메소드는 본체에는 정의되있지 않음
+  func func2(){
+    print(&quot;Hello2&quot;)
+  }
+}
+</code></pre>
+</li>
+</ul>
+<p>​</p>
+<h2 id="protocol-extension-in-swift">Protocol Extension in Swift</h2>
+<ul>
+<li>
+<p>바로 위에서 언급한 것을 종합해보면, 프로토콜의 본체에 명시된 것들은 Dynamic Dispatch의 대상이 되고 본체에 명시되지 않고  <strong><code>extension</code></strong> 확장부에만 명시된 것들은 Static Dispatch의 대상이 됨</p>
+</li>
+<li>
+<p>좀 더 나아가서 아래와 같은 상황을 가정해보자</p>
+<ul>
+<li>Apartment라는 빈 프로토콜을 선언한 후 해당 프로토콜의 <strong><code>extension</code></strong> 에 구현해야 할 메소드를 정의하고, Trimage 라는 프로토콜 구현체에서 프로토콜 메소드를 재정의</li>
+<li><strong><code>extension</code></strong> 확장부에는 아래와 같이 디폴트 구현체를 같이 선언</li>
+</ul>
+<pre><code class="language-swift">import Foundation
+
+protocol Apartment {}
+
+extension Apartment {
+    func call() {
+        print(&quot;This is Apartment&quot;)
+    }
+}
+
+class Trimage: Apartment {
+    func call(){
+        print(&quot;This is Trimage in SeongSu&quot;)
+    }
+}
+</code></pre>
+<ul>
+<li>이후 아래와 같이 추상 타입으로 선언한 변수에 구현체 인스턴스를 할당한 후, 메소드를 호출</li>
+</ul>
+<pre><code class="language-swift">let building: Apartment = Trimage()
+building.call()
+</code></pre>
+<ul>
+<li>출력을 확인해보면, 구현체에서 정의한 대로 출력될 것 같지만 정작 <strong><code>extension</code></strong> 확장부에 정의한 디폴트 구현체 내용대로 호출됨</li>
+</ul>
+<pre><code>This is Apartment
+</code></pre>
+<ul>
+<li>만일 Apartment 프로토콜에 해당 메소드를 정의했다면? 위와 달리 클래스에서 재정의한 내용대로 호출되는 것을 확인할 수 있음</li>
+</ul>
+<pre><code class="language-swift">protocol Apartment {
+  func call()
+}
+</code></pre>
+<pre><code>This is Trimage in SeongSu
+</code></pre>
+</li>
+<li>
+<p>위와 같이 <strong>프로토콜 본체에 메소드가 정의되있는 지의 여부</strong> 에 따라 결과적으로, 추상타입 변수에 할당된 프로토콜 <strong>구현체 인스턴스가 호출하는 구체적인 메소드가 달라짐을 알 수 있음</strong></p>
+</li>
+<li>
+<p>처음의 상황, 즉 프로토콜 본체에 메소드를 명시한 상황에서는 프로토콜 타입의 구현체가 구현체 내부에서 재정의한 메소드와, <strong><code>extension</code></strong> 확장부에서 디폴트로 구현한 메소드 중 어느 것을 호출할 지 알아야 하기 때문에 Dynamic Dispatch가 여기에 관여하게 됨</p>
+</li>
+<li>
+<p>하지만 두번 째 상황, 즉 프로토콜 본체 없이 <strong><code>extension</code></strong> 확장부에만 디폴트로 구현한 메소드는 프로토콜 구현체에서 똑같이 메소드를 재정의하더라도 <strong>변수가 프로토콜 타입으로 정의된 상황이라면, 무조건 디폴트 메소드가 호출됨</strong></p>
+</li>
+<li>
+<p>이는 위에서 언급한 대로 Static Dispatch가 여기에 관여하기 때문에, 컴파일 시점에 어떤 것을 호출할 지 미리 결정되었기 때문</p>
+<ul>
+<li>추가로 이러한 상황에서는 <strong><code>Protocol Witness Table</code></strong> 을 런타임 시점에 거치지 않는다는 것을 알 수 있음</li>
+</ul>
+</li>
+</ul>
+<h2 id="결론">결론</h2>
+<ul>
+<li>
+<p><strong><code>extension</code></strong> 은 본체에서 미쳐 정의하지 못한 <strong>기능을 다양하게 확장</strong>할 수 있음</p>
+<ul>
+<li>String, UIColor 등 Swift에서 기본적으로 제공하는 타입에 대해 <strong><code>extension</code></strong> 사용을 통해 개발자가 원하는 방식으로 기능을 추가해서 사용할 수 있음</li>
+</ul>
+</li>
+<li>
+<p><strong><code>extension</code></strong> 확장부에서 추가로 정의한 것들은 <strong>확장 대상이 값 타입(Value Type), 참조 타입(Reference Type)인 지에 따라 각각 Static Dispatch와 Dynamic Dispath의 대상</strong>이 됨</p>
+</li>
+<li>
+<p>단, 프로토콜의 경우는 기본적으로 Dynamic Dispatch의 대상이 되지만 <strong><code>extension</code></strong> 확장부에 디폴트 구현을 정의할 경우 이것의 청사진이 <strong>프로토콜 본체에 명시되있지 않다면 Static Dispatch의 대상</strong>이 됨</p>
+<pre><code class="language-swift">protocol SomeProcotol {
+  func someFun1()
+}
+
+extension SomeProcotol {
+  //Dynamic Dispatch의 대상
+  func someFun1(){
+    print(&quot;This method is target for dynamic dispatching&quot;)
+  }
+
+  //Static Dispatch의 대상
+  func someFun2(){
+    print(&quot;This method can be overwritten, but is target for static dispatching&quot;)
+  }
+}
+</code></pre>
+</li>
+<li>
+<p><strong>따라서 어떤 추상 타입을 정의하고자 할 때, 가능하면 Static Dispatch의 대상이 되도록 하는 것이 성능상 유리하기 때문에 위와 같은 특성의 적용을 고려해볼 수 있을 것</strong></p>
+</li>
+</ul>
+<br>
+<h2 id="reference">Reference</h2>
+<ul>
+<li>
+<p><a href="https://docs.swift.org/swift-book/LanguageGuide/Protocols.html" target="_blank">Protocol - Swift 공식문서</a></p>
+</li>
+<li>
+<p><a href="https://docs.swift.org/swift-book/LanguageGuide/Extensions.html" target="_blank">Extension - Swift 공식문서</a></p>
+</li>
+<li>
+<p><a href="https://jcsoohwancho.github.io/2019-11-01-Swift%EC%9D%98-Dispatch-%EA%B7%9C%EC%B9%99/" target="_blank">Swift의 Dispatch 규칙</a></p>
+</li>
+</ul>
+
+    </div>
+    <hr>
+    <script src="https://utteranc.es/client.js"
+        repo="junu0516/blog"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script>
+</article>
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    
+    <div class="sidebar-item sidebar-toc">
+        <nav id="TableOfContents">
+  <ul>
+    <li><a href="#extension의-일반적으로-알려진-이점">Extension의 일반적으로 알려진 이점</a></li>
+    <li><a href="#extension과-method-disaptch디스패치">Extension과 Method Disaptch디스패치</a>
+      <ul>
+        <li>
+          <ul>
+            <li><a href="#__method-dispatch__"><strong>Method Dispatch?</strong></a></li>
+            <li><a href="#protocol-witness-table">Protocol Witness Table</a></li>
+          </ul>
+        </li>
+      </ul>
+    </li>
+    <li><a href="#protocol-extension-in-swift">Protocol Extension in Swift</a></li>
+    <li><a href="#결론">결론</a></li>
+    <li><a href="#reference">Reference</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode" style="display: none;">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    <div class="sidebar-item">
+        <h3>About</h3>
+        <ul>
+            <li>
+                <img src="/img/profile.png" class="custom-profile-img-mobile">
+            </li>
+            <li style="margin-top: 5%;">
+                <a class="custom-social-link-mobile" href="https://github.com/junu0516" target="_blank"><i class="fab fa-github"></i></a>
+                <a class="custom-social-link-mobile" href="https://linkedin.com/in/junu0516/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                <a class="custom-social-link-mobile" href="https://instagram.com/junu0516" target="_blank"><i class="fab fa-instagram"></i></a>    
+            </li>
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-pages" style="display: none;">
+        <h3>Pages</h3>
+        <ul>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links" style="display: none;">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/junu0516" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/dsrkafuu" target="_blank"><span>Linkedin</span></a>
+            </li>
+            
+            <li>
+                <a href="https://space.bilibili.com/19767474" target="_blank"><span>Instagram</span></a>
+            </li>
+            
+        </ul>
+    </div>
+
+
+    
+    <div class="sidebar-item sidebar-tags" >
+        <h3>Categories</h3>
+        <ul style="list-style: none !important;">
+            
+            <li>
+                <a href="/categories/computer-science/">Computer Science</a>
+            </li>
+            
+            <li>
+                <a href="/categories/javaspring/">Java&amp;Spring</a>
+            </li>
+            
+            <li>
+                <a href="/categories/swiftios/">Swift&amp;iOS</a>
+            </li>
+            
+            <li>
+                <a href="/categories/thoughts/">Thoughts</a>
+            </li>
+            
+        </ul>
+    </div>
+        
+        <div class="sidebar-item sidebar-tags" style="display: none;">
+            <h3>Tags</h3>
+            <div>
+                
+                <span>
+                    <a href="/tags/java/">java</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/spring/">spring</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/swift/">swift</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EB%84%A4%ED%8A%B8%EC%9B%8C%ED%81%AC/">네트워크</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EC%9A%B4%EC%98%81%EC%B2%B4%EC%A0%9C/">운영체제</a>
+                </span>
+                
+                <span>
+                    <a href="/tags/%EC%9E%90%EB%A3%8C%EA%B5%AC%EC%A1%B0/">자료구조</a>
+                </span>
+                
+            </div>
+        </div>
+    
+    
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022
+                <a href="https://junu0516.github.io/"></a>
+                
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>
