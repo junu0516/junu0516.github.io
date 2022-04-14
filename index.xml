@@ -6,7 +6,16 @@
     <description>Recent content on Junu-Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 12 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>드롭박스 테스트</title>
+      <link>https://junu0516.github.io/posts/%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%E1%84%8B%E1%85%B4_di%E1%84%8B%E1%85%AA_ioc-%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB/</link>
+      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>https://junu0516.github.io/posts/%E1%84%89%E1%85%B3%E1%84%91%E1%85%B3%E1%84%85%E1%85%B5%E1%86%BC%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5%E1%84%8B%E1%85%B4_di%E1%84%8B%E1%85%AA_ioc-%E1%84%87%E1%85%A9%E1%86%A8%E1%84%89%E1%85%A1%E1%84%87%E1%85%A9%E1%86%AB/</guid>
+      <description>설치</description>
+    </item>
+    
     <item>
       <title>스위프트 Protocol Extension과 Method Dispatch</title>
       <link>https://junu0516.github.io/posts/20220409/</link>
