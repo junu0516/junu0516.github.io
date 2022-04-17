@@ -6,18 +6,7 @@
     <description>Recent content in Swift&amp;iOS on Junu-Devlog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 12 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/categories/swiftios/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>TODOList 배포 테스트</title>
-      <link>https://junu0516.github.io/posts/dropbox/</link>
-      <pubDate>Tue, 12 Apr 2022 00:00:00 +0000</pubDate>
-      
-      <guid>https://junu0516.github.io/posts/dropbox/</guid>
-      <description>Jed&amp;amp; Selina
-Ebony &amp;amp; Bibi
-Sol</description>
-    </item>
-    
+    <lastBuildDate>Sat, 09 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://junu0516.github.io/categories/swiftios/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>스위프트 Protocol Extension과 Method Dispatch</title>
       <link>https://junu0516.github.io/posts/20220409/</link>
