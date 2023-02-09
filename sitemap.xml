@@ -37,16 +37,6 @@
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url><url>
-    <loc>https://junu0516.github.io/categories/thoughts/</loc>
-    <lastmod>2022-04-10T22:23:31+09:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url><url>
-    <loc>https://junu0516.github.io/posts/20220307/</loc>
-    <lastmod>2022-04-10T22:23:31+09:00</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url><url>
     <loc>https://junu0516.github.io/posts/swift_delegate/</loc>
     <lastmod>2022-02-28T00:28:32+09:00</lastmod>
     <changefreq>daily</changefreq>
